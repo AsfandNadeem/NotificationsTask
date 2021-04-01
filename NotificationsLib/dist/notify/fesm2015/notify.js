@@ -147,7 +147,7 @@ class NotifyService {
         this.elementService = elementService;
         this.appRef = appRef;
         this.maxLimit = 1;
-        this.Queue = [];
+        this.Queue = Array();
         this.NotifyContainerRef = this.elementService.createComponentinDom(NotifyContainerComponent);
         this.NotifyContainerElement = this.elementService.getElement(this.NotifyContainerRef);
         this.elementService.addChildtoElement(this.NotifyContainerElement);
@@ -162,31 +162,34 @@ class NotifyService {
         childComponentRef.instance.type = type;
         const sub = childComponentRef.instance.destroy.subscribe(() => {
             sub.unsubscribe();
-            this.destroy(childComponentRef, type);
+            this.destroy(childComponentRef);
         });
         //Add child component to parent
         this.elementService.addChildtoElement(childElement, this.NotifyContainerElement);
-        // setTimeout(() => {
-        //   this.destroy(childComponentRef, type);
-        // }, 5000);
+        if (type == "info") {
+            setTimeout(() => {
+                if (childComponentRef) {
+                    this.destroy(childComponentRef);
+                }
+            }, 10000);
+        }
     }
     open(header, message, category) {
         if (this.maxLimit <= 5) {
             this.appendComponentToContainer(header, message + this.maxLimit, category);
             this.maxLimit++;
-            console.log(this.maxLimit);
         }
         else {
-            this.Queue.push(message);
+            this.Queue.push({ header: header, message: message, type: category });
         }
     }
-    destroy(childComponentRef, type) {
+    destroy(childComponentRef) {
         this.elementService.destroyElement(childComponentRef);
         if (this.maxLimit > 0) {
             this.maxLimit--;
-            console.log(this.maxLimit);
             if (this.Queue.length >= 1) {
-                this.appendComponentToContainer('Header', this.Queue.shift() + ' ' + this.maxLimit + ' ' + this.Queue.length, type);
+                this.appendComponentToContainer(this.Queue[0].header, this.Queue[0].message, this.Queue[0].type);
+                this.Queue.shift();
             }
         }
     }

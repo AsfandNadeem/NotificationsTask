@@ -1,6 +1,7 @@
 import { ComponentRef } from '@angular/core';
 import { ApplicationRef, ComponentFactoryResolver, EmbeddedViewRef, Injectable, Injector } from '@angular/core';
 import { ElementAttachmentService } from './elementAttachment.service';
+import { INotification } from './notification.interface';
 import { NotifyContainerComponent } from './notify-container/notify-container.component';
 import { NotifyComponent } from './notify.component';
 
@@ -10,7 +11,7 @@ import { NotifyComponent } from './notify.component';
 export class NotifyService {
 
   maxLimit = 1;
-  Queue = [];
+  Queue = Array<INotification>();
 
   private NotifyContainerElement: HTMLElement;
   private NotifyContainerRef: ComponentRef<NotifyContainerComponent>;
@@ -23,7 +24,7 @@ export class NotifyService {
   }
 
 
-  private appendComponentToContainer(header:string, message: string, type: string) {
+  private appendComponentToContainer(header: string, message: string, type: string) {
     //Create Child Component
     const childComponentRef = this.elementService.createComponentinDom(NotifyComponent);
     //Get child Component
@@ -39,35 +40,37 @@ export class NotifyService {
 
     const sub = childComponentRef.instance.destroy.subscribe(() => {
       sub.unsubscribe();
-      this.destroy(childComponentRef, type);
+      this.destroy(childComponentRef);
     });
     //Add child component to parent
     this.elementService.addChildtoElement(childElement, this.NotifyContainerElement);
 
 
-    // setTimeout(() => {
-    //   this.destroy(childComponentRef, type);
-    // }, 5000);
+    if (type == "info") {
+      setTimeout(() => {
+        if(childComponentRef)
+        {this.destroy(childComponentRef);}
+      }, 10000);
+    }
   }
 
   open(header, message, category) {
     if (this.maxLimit <= 5) {
       this.appendComponentToContainer(header, message + this.maxLimit, category);
       this.maxLimit++;
-      console.log(this.maxLimit);
     }
     else {
-      this.Queue.push(message);
+      this.Queue.push({header:header,message:message, type:category});
     }
   }
 
-  destroy(childComponentRef: ComponentRef<any>, type: string) {
+  destroy(childComponentRef: ComponentRef<any>) {
     this.elementService.destroyElement(childComponentRef);
     if (this.maxLimit > 0) {
       this.maxLimit--;
-      console.log(this.maxLimit);
       if (this.Queue.length >= 1) {
-        this.appendComponentToContainer('Header', this.Queue.shift() + ' ' + this.maxLimit + ' ' + this.Queue.length, type);
+        this.appendComponentToContainer(this.Queue[0].header, this.Queue[0].message, this.Queue[0].type);
+        this.Queue.shift();
       }
     }
   }
