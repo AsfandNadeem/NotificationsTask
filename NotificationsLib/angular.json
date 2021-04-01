@@ -1,0 +1,165 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "notify": {
+      "projectType": "library",
+      "root": "projects/notify",
+      "sourceRoot": "projects/notify/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/notify/tsconfig.lib.json",
+            "project": "projects/notify/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/notify/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/notify/src/test.ts",
+            "tsConfig": "projects/notify/tsconfig.spec.json",
+            "karmaConfig": "projects/notify/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/notify/tsconfig.lib.json",
+              "projects/notify/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "NotificationsApplication": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "projects/notifications-application",
+      "sourceRoot": "projects/notifications-application/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/NotificationsApplication",
+            "index": "projects/notifications-application/src/index.html",
+            "main": "projects/notifications-application/src/main.ts",
+            "polyfills": "projects/notifications-application/src/polyfills.ts",
+            "tsConfig": "projects/notifications-application/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "projects/notifications-application/src/favicon.ico",
+              "projects/notifications-application/src/assets"
+            ],
+            "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "projects/notifications-application/src/styles.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/notifications-application/src/environments/environment.ts",
+                  "with": "projects/notifications-application/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "NotificationsApplication:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "NotificationsApplication:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "NotificationsApplication:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/notifications-application/src/test.ts",
+            "polyfills": "projects/notifications-application/src/polyfills.ts",
+            "tsConfig": "projects/notifications-application/tsconfig.spec.json",
+            "karmaConfig": "projects/notifications-application/karma.conf.js",
+            "assets": [
+              "projects/notifications-application/src/favicon.ico",
+              "projects/notifications-application/src/assets"
+            ],
+            "styles": [
+              "projects/notifications-application/src/styles.css"
+            ],
+            "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/notifications-application/tsconfig.app.json",
+              "projects/notifications-application/tsconfig.spec.json",
+              "projects/notifications-application/e2e/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/notifications-application/e2e/protractor.conf.js",
+            "devServerTarget": "NotificationsApplication:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "NotificationsApplication:serve:production"
+            }
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "notify"
+}
