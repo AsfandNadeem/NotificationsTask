@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuardService } from './shared/auth-guard.service';
+import { HomepageComponent } from './user/homepage/homepage.component';
 import { LoginComponent } from './user/login/login.component';
 import { SendNotificationsComponent } from './user/send-notifications/send-notifications.component';
 import { SignUpComponent } from './user/sign-up/sign-up.component';
@@ -19,18 +21,17 @@ const routes: Routes = [
     }]
   },
   {
-    path: 'sendNotifications', component: UserComponent,
-    children: [{
-      path: '', component: SendNotificationsComponent
-    }]
+    path: 'homepage', component: HomepageComponent, canActivate: [AuthGuardService]
   },
   {
-    path: '', redirectTo: '/sendNotifications', pathMatch:  'full'
-  }
+    path: '', redirectTo: '/login', pathMatch:  'full'
+  },
+  { path: '**', redirectTo: '/login' }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [AuthGuardService]
 })
 export class AppRoutingModule { }

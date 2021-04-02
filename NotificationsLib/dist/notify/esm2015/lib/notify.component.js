@@ -67,7 +67,7 @@ NotifyComponent.ɵcmp = i0.ɵɵdefineComponent({ type: NotifyComponent, selector
         i0.ɵɵtextInterpolate(ctx.header);
         i0.ɵɵadvance(6);
         i0.ɵɵtextInterpolate(ctx.message);
-    } }, styles: [".stack-top[_ngcontent-%COMP%]{text-align:center;padding:0;width:50%;box-shadow:0 10px 19px 10px rgba(0,0,0,.04);color:#000;transition:.2s cubic-bezier(.75,0,.75,.9);top:\"0\";right:\"50%\";transform:translateY(-239%)}"] });
+    } }, styles: [".stack-top[_ngcontent-%COMP%]{text-align:center;padding:0;width:50%;box-shadow:0 10px 19px 10px rgba(0,0,0,.04);color:#000;transition:.2s cubic-bezier(.75,0,.75,.9);top:\"0\";right:\"50%\";transform:translateY(-212%);z-index:1}"] });
 (function () { (typeof ngDevMode === "undefined" || ngDevMode) && i0.ɵsetClassMetadata(NotifyComponent, [{
         type: Component,
         args: [{
