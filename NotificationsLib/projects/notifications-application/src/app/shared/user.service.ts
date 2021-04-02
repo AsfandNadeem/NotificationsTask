@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Subject} from 'rxjs';
+import {map} from 'rxjs/operators';
 import {Router} from '@angular/router';
 import { environment } from '../../environments/environment';
 import {User} from './user';
+import { NotificationsModel } from './notifications-model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +17,9 @@ export class UserService {
   private tokenTimer: any;
   private userId: any;
   private authStatusListener = new Subject<boolean>();
+
+  private notifications: NotificationsModel [] = [];
+  private notificationsUpdated = new Subject<{notifications: NotificationsModel[], maxNotifications: number}>();
   userN: any;
   message: any;
   selectedUser: User = {
@@ -122,6 +127,42 @@ export class UserService {
   }
 
 
+
+  getNotifications() {
+    this.http
+        .get<{message: string, notifications: any, maxNotifications: number}>(
+            environment.apiBaseUrl+'/user/getNotifications'
+        )
+        .pipe(map((notificationData) => {
+            return { notification: notificationData.notifications.map((notification: { _id: any; header: any; body: any; type: any;}) => {
+                    return {
+                        _id: notification._id,
+                        header: notification.header,
+                        body: notification.body,
+                        type: notification.type
+                    };
+                }), maxNotifications: notificationData.maxNotifications  };
+        }))// change rterieving data
+        .subscribe(transformedNotificationsData => {
+            this.notifications = transformedNotificationsData.notification;
+            this.notificationsUpdated.next({
+              notifications: [...this.notifications],
+                    maxNotifications: transformedNotificationsData.maxNotifications
+                }
+            );
+        });
+}
+
+getNotificationsUpdateListener() {
+    return this.notificationsUpdated.asObservable();
+}
+
+
+
+deleteNotification(id: string) {
+  console.log(id);
+    return this.http.delete(environment.apiBaseUrl+'/user/deleteNotification/' + id);
+}
 
 
 }
