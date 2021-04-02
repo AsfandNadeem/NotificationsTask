@@ -84,7 +84,7 @@ NotifyComponent.ɵcmp = ɵɵdefineComponent({ type: NotifyComponent, selectors: 
         ɵɵtextInterpolate(ctx.header);
         ɵɵadvance(6);
         ɵɵtextInterpolate(ctx.message);
-    } }, styles: [".stack-top[_ngcontent-%COMP%]{text-align:center;padding:0;width:50%;box-shadow:0 10px 19px 10px rgba(0,0,0,.04);color:#000;transition:.2s cubic-bezier(.75,0,.75,.9);top:\"0\";right:\"50%\";transform:translateY(-212%);z-index:1}"] });
+    } }, styles: [".stack-top[_ngcontent-%COMP%]{top:0;right:50%;transform:translate(50%,calc(0% + 20px));position:absolute;display:flex;opacity:0;box-shadow:0 10px 19px 10px rgb(0 0 0/4%);border-radius:4px;background-color:#fff;font-family:Raleway,Arial,sans-serif;transition:.2s cubic-bezier(.75,0,.75,.9)}"] });
 (function () { (typeof ngDevMode === "undefined" || ngDevMode) && ɵsetClassMetadata(NotifyComponent, [{
         type: Component,
         args: [{
