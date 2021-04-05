@@ -67,7 +67,7 @@ NotifyComponent.ɵcmp = i0.ɵɵdefineComponent({ type: NotifyComponent, selector
         i0.ɵɵtextInterpolate(ctx.header);
         i0.ɵɵadvance(6);
         i0.ɵɵtextInterpolate(ctx.message);
-    } }, styles: [".stack-top[_ngcontent-%COMP%]{top:0;right:50%;transform:translate(50%,calc(0% + 20px));position:absolute;display:flex;opacity:1;box-shadow:0 10px 19px 10px rgb(0 0 0/4%);border-radius:4px;background-color:#fff;font-family:Raleway,Arial,sans-serif;transition:.2s cubic-bezier(.75,0,.75,.9);z-index:1}"] });
+    } }, styles: [".stack-top[_ngcontent-%COMP%]{text-align:center;padding:0;width:50%;box-shadow:0 10px 19px 10px rgba(0,0,0,.04);color:#000;top:\"0\";right:\"50%\";display:flex;transform:translate(1%,calc(100% - 950px));z-index:1}"] });
 (function () { (typeof ngDevMode === "undefined" || ngDevMode) && i0.ɵsetClassMetadata(NotifyComponent, [{
         type: Component,
         args: [{

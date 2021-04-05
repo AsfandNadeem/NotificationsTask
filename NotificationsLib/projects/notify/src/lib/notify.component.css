@@ -1,17 +1,19 @@
-/* .stack-top {
+.stack-top {
     text-align: center;
     padding: 0px;
     width: 50%;
     box-shadow: 0 10px 19px 10px rgba(0, 0, 0, 0.04);
     color: black;
-    transition: 200ms cubic-bezier(0.75, 0, 0.75, 0.9);
+    /* transition: 200ms cubic-bezier(0.75, 0, 0.75, 0.9); */
     top: '0';
     right: '50%';
-    transform: translate(0%, -212%);
+    display: flex;
+    transform: translate(1%, calc(100% - 950px));
     z-index: 1;
-} */
+}
 
-.stack-top {
+
+/* .stack-top {
     top: 0px;
     right: 50%;
     transform: translate(50%, calc(0% + 20px));
@@ -26,4 +28,4 @@
     -webkit-transition: .2s cubic-bezier(.75, 0, .75, .9);
     transition: .2s cubic-bezier(.75, 0, .75, .9);
     z-index: 1;
-}
+} */

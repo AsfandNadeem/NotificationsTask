@@ -57,7 +57,7 @@ export class NotifyService {
   }
 
   open(header, message, category) {
-    if (this.maxLimit <= 5) {
+    if (this.maxLimit < 5) {
       this.appendComponentToContainer(header, message + this.maxLimit, category);
       this.maxLimit++;
     }

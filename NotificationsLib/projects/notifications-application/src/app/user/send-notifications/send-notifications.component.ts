@@ -25,6 +25,7 @@ serverErrorMessages: string;
     this.userService.addNotification(form.value.header, form.value.body, form.value.category).subscribe(
       res => {
         form.reset();
+        this.categories=["info","error","warning"];
         this.categorySelected = "info";
       },
       err => {
