@@ -57,7 +57,7 @@ export class UserService {
 
 
   login(email: string, password: string) {
-    return this.http.post<{ token: string, expiresIn: number, userId: string, username: string }>(
+    return this.http.post<{ token: string, expiresIn: number}>(
       environment.apiBaseUrl + '/user/login',
       { email, password })
       .subscribe(response => {
