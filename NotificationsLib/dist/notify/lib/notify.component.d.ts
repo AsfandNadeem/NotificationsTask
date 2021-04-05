@@ -1,15 +1,16 @@
+import { Renderer2 } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { NotifyService } from './notify.service';
 import * as i0 from "@angular/core";
 export declare class NotifyComponent implements OnInit {
     private NotifyService;
+    renderer: Renderer2;
     header: string;
     message: string;
     type: string;
     destroy: EventEmitter<any>;
-    notifref: NotifyComponent;
-    constructor(NotifyService: NotifyService);
+    constructor(NotifyService: NotifyService, renderer: Renderer2);
     ngOnInit(): void;
     getBackground(): string;
     onClose(): void;

@@ -1,4 +1,4 @@
-import { ɵɵdefineComponent, ɵɵprojectionDef, ɵɵprojection, ɵsetClassMetadata, Component, EventEmitter, ɵɵdirectiveInject, ɵɵelementStart, ɵɵtext, ɵɵelementEnd, ɵɵlistener, ɵɵadvance, ɵɵstyleProp, ɵɵtextInterpolate, Input, Output, ɵɵinject, ComponentFactoryResolver, ApplicationRef, Injector, ɵɵdefineInjectable, Injectable, ɵɵdefineNgModule, ɵɵdefineInjector, ɵɵsetNgModuleScope, NgModule } from '@angular/core';
+import { ɵɵdefineComponent, ɵɵprojectionDef, ɵɵprojection, ɵsetClassMetadata, Component, EventEmitter, ɵɵdirectiveInject, Renderer2, ɵɵelementStart, ɵɵtext, ɵɵelementEnd, ɵɵlistener, ɵɵadvance, ɵɵstyleProp, ɵɵtextInterpolate, Input, Output, ɵɵinject, ComponentFactoryResolver, ApplicationRef, Injector, ɵɵdefineInjectable, Injectable, ɵɵdefineNgModule, ɵɵdefineInjector, ɵɵsetNgModuleScope, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 const _c0 = ["*"];
@@ -23,21 +23,14 @@ NotifyContainerComponent.ɵcmp = ɵɵdefineComponent({ type: NotifyContainerComp
 
 class NotifyComponent {
     // @HostBinding('class.redbackground') warning: boolean;
-    constructor(NotifyService) {
+    constructor(NotifyService, renderer) {
         this.NotifyService = NotifyService;
+        this.renderer = renderer;
         this.type = '';
         this.destroy = new EventEmitter();
     }
     ngOnInit() {
     }
-    // isWarning(): boolean {
-    //   if (this.type === 'warning') {
-    //     return true;
-    //   }
-    //   else {
-    //     return false;
-    //   }
-    // }
     getBackground() {
         if (this.type === 'warning') {
             return 'orange';
@@ -53,7 +46,7 @@ class NotifyComponent {
         this.destroy.emit();
     }
 }
-NotifyComponent.ɵfac = function NotifyComponent_Factory(t) { return new (t || NotifyComponent)(ɵɵdirectiveInject(NotifyService)); };
+NotifyComponent.ɵfac = function NotifyComponent_Factory(t) { return new (t || NotifyComponent)(ɵɵdirectiveInject(NotifyService), ɵɵdirectiveInject(Renderer2)); };
 NotifyComponent.ɵcmp = ɵɵdefineComponent({ type: NotifyComponent, selectors: [["lib-notify"]], inputs: { header: "header", message: "message", type: "type" }, outputs: { destroy: "destroy" }, decls: 12, vars: 4, consts: [[1, "card", "container", "my-4", "stack-top"], [1, "card-header", "container-fluid"], [1, "row"], [1, "col"], ["type", "button", 3, "click"], [1, "card-body"], [1, "card-text"]], template: function NotifyComponent_Template(rf, ctx) { if (rf & 1) {
         ɵɵelementStart(0, "div", 0);
         ɵɵelementStart(1, "div", 1);
@@ -93,7 +86,7 @@ NotifyComponent.ɵcmp = ɵɵdefineComponent({ type: NotifyComponent, selectors: 
                 styleUrls: ['./notify.component.css'
                 ]
             }]
-    }], function () { return [{ type: NotifyService }]; }, { header: [{
+    }], function () { return [{ type: NotifyService }, { type: Renderer2 }]; }, { header: [{
             type: Input
         }], message: [{
             type: Input

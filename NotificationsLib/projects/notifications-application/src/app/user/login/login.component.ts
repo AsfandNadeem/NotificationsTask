@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import {Router} from '@angular/router';
+import { Subscription } from 'rxjs';
 
 
 import {UserService} from "../../shared/user.service";
@@ -11,13 +12,14 @@ import {UserService} from "../../shared/user.service";
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
 
   emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
+  private loginSub: Subscription;
   message = '';
   constructor(public userService: UserService, private router: Router) {
-    this.userService.getLoginErrors().subscribe(error => {
+   this.loginSub = this.userService.getLoginErrors().subscribe(error => {
       this.message = error;
     });
   }
@@ -29,11 +31,14 @@ export class LoginComponent implements OnInit {
   }
 
   onLogin(form: NgForm) {
-    console.log(form.value.email + '' + form.value.password);
     if (form.invalid) {
       return;
     }
     this.userService.login(form.value.email, form.value.password)
+  }
+
+  ngOnDestroy(){
+    this.loginSub.unsubscribe();
   }
 
 

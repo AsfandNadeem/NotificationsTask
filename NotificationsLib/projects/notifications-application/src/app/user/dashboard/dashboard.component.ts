@@ -16,6 +16,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['Header', 'Body', 'Type', 'Actions'];
   notifications: NotificationsModel[] = [];
   private notificationsSub: Subscription;
+  editField = false;
+  editId = "";
+  headerField = "";
+  bodyField = "";
+  typeField = "";
+  categories=["info","error","warning"];
+
 
   constructor(private userService: UserService,private notify: NotifyService) { }
 
@@ -48,6 +55,32 @@ export class DashboardComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.notificationsSub.unsubscribe();
     this.notify.destroyAll();
+  }
+
+  editRow(id: string, header: string, body: string, type:string){
+    this.editField = true;
+    this.editId = id;
+    this.headerField = header;
+    this.bodyField = body;
+    this.typeField = type;
+  }
+
+
+  cancelEdit(){
+    this.editField = false;
+    this.editId = "";
+    this.headerField = "";
+    this.bodyField = "";
+    this.typeField = "";
+
+  }
+
+  updateEdit() {
+    this.userService.editNotification(this.editId,this.headerField,this.bodyField,this.typeField).subscribe(() => {
+      this.userService.getNotifications();
+      this.cancelEdit();
+    });
+
   }
 
 }

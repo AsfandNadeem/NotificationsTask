@@ -1,9 +1,9 @@
 import { HostBinding, Input } from '@angular/core';
+import { Renderer2 } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { Output } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { NotifyService } from './notify.service';
-
 @Component({
   selector: 'lib-notify',
   templateUrl: './notify.component.html',
@@ -15,26 +15,15 @@ export class NotifyComponent implements OnInit {
   @Input() message: string;
   @Input() type = '';
   @Output() destroy: EventEmitter<any> = new EventEmitter();
-
-  notifref: NotifyComponent;
+  
   // @HostBinding('class.redbackground') warning: boolean;
-  constructor(private NotifyService: NotifyService) {
+  constructor(private NotifyService: NotifyService,public renderer: Renderer2) {
 
   }
 
   ngOnInit(): void {
 
   }
-
-  // isWarning(): boolean {
-  //   if (this.type === 'warning') {
-  //     return true;
-  //   }
-  //   else {
-  //     return false;
-  //   }
-
-  // }
 
   getBackground(): string {
     if (this.type === 'warning') {

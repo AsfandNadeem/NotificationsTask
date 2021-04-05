@@ -114,7 +114,7 @@ module.exports.createNotification =
 module.exports.getNotifications = (req, res, next) => {
 
     try {
-        const notificationsQuery = Notification.find({ userId: req.userData.userId }).sort({ 'created_at': 1 });
+        const notificationsQuery = Notification.find({ userId: req.userData.userId }).sort({ 'created_at': -1 });
         let fetchedNotifications;
 
         notificationsQuery
@@ -153,3 +153,32 @@ module.exports.deleteNotification =
             });
         }
     }
+
+
+module.exports.updateNotification = (req, res, next) => {
+    try {
+        Notification.findOne({ _id: req.params.id }, (err, notifDoc) => {
+            if (notifDoc) {
+                const notification = ({
+                    _id: notifDoc._id,
+                    header: req.body.header,
+                    body: req.body.body,
+                    type: req.body.type
+                });
+                Notification.updateOne({ _id: notifDoc._id }, notification).then(result => {
+                    if (result.nModified > 0) {
+                        return res.status(200).json({ success: true, message: 'Notification Updated' });
+                    } else {
+                        res.status(401).json({ message: "Unable to update!" });
+                    }
+                });
+            } else {
+                res.status(401).json({ success: false, message: 'Notification not Found' });
+            }
+        });
+    } catch {
+        return res.status(401).json({
+            message: "failed"
+        });
+    }
+}

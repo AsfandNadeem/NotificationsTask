@@ -32,21 +32,14 @@
 
     var NotifyComponent = /** @class */ (function () {
         // @HostBinding('class.redbackground') warning: boolean;
-        function NotifyComponent(NotifyService) {
+        function NotifyComponent(NotifyService, renderer) {
             this.NotifyService = NotifyService;
+            this.renderer = renderer;
             this.type = '';
             this.destroy = new i0.EventEmitter();
         }
         NotifyComponent.prototype.ngOnInit = function () {
         };
-        // isWarning(): boolean {
-        //   if (this.type === 'warning') {
-        //     return true;
-        //   }
-        //   else {
-        //     return false;
-        //   }
-        // }
         NotifyComponent.prototype.getBackground = function () {
             if (this.type === 'warning') {
                 return 'orange';
@@ -63,7 +56,7 @@
         };
         return NotifyComponent;
     }());
-    NotifyComponent.ɵfac = function NotifyComponent_Factory(t) { return new (t || NotifyComponent)(i0.ɵɵdirectiveInject(NotifyService)); };
+    NotifyComponent.ɵfac = function NotifyComponent_Factory(t) { return new (t || NotifyComponent)(i0.ɵɵdirectiveInject(NotifyService), i0.ɵɵdirectiveInject(i0.Renderer2)); };
     NotifyComponent.ɵcmp = i0.ɵɵdefineComponent({ type: NotifyComponent, selectors: [["lib-notify"]], inputs: { header: "header", message: "message", type: "type" }, outputs: { destroy: "destroy" }, decls: 12, vars: 4, consts: [[1, "card", "container", "my-4", "stack-top"], [1, "card-header", "container-fluid"], [1, "row"], [1, "col"], ["type", "button", 3, "click"], [1, "card-body"], [1, "card-text"]], template: function NotifyComponent_Template(rf, ctx) {
             if (rf & 1) {
                 i0.ɵɵelementStart(0, "div", 0);
@@ -107,7 +100,7 @@
                         styleUrls: ['./notify.component.css'
                         ]
                     }]
-            }], function () { return [{ type: NotifyService }]; }, { header: [{
+            }], function () { return [{ type: NotifyService }, { type: i0.Renderer2 }]; }, { header: [{
                     type: i0.Input
                 }], message: [{
                     type: i0.Input
