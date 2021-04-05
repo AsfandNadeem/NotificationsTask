@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
+import { NotifyService } from 'notify';
 import { Subscription } from 'rxjs';
 import { NotificationsModel } from '../../shared/notifications-model';
 import { UserService } from '../../shared/user.service';
@@ -9,23 +10,23 @@ import { UserService } from '../../shared/user.service';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent implements OnInit, OnDestroy{
+export class DashboardComponent implements OnInit, OnDestroy {
 
   dataSource: MatTableDataSource<NotificationsModel>;
   displayedColumns: string[] = ['Header', 'Body', 'Type', 'Actions'];
   notifications: NotificationsModel[] = [];
   private notificationsSub: Subscription;
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService,private notify: NotifyService) { }
 
   ngOnInit(): void {
 
     this.userService.getNotifications();
     this.notificationsSub = this.userService.getNotificationsUpdateListener()
-        .subscribe((notificationData: { notifications: NotificationsModel[] }) => {
-            this.notifications = notificationData.notifications;
-            this.dataSource = new MatTableDataSource(notificationData.notifications);
-        });
+      .subscribe((notificationData: { notifications: NotificationsModel[] }) => {
+        this.notifications = notificationData.notifications;
+        this.dataSource = new MatTableDataSource(notificationData.notifications);
+      });
   }
 
 
@@ -46,6 +47,7 @@ export class DashboardComponent implements OnInit, OnDestroy{
 
   ngOnDestroy(): void {
     this.notificationsSub.unsubscribe();
+    this.notify.destroyAll();
   }
 
 }

@@ -1,5 +1,5 @@
 <mat-sidenav-container class="example-container">
-    <mat-sidenav #drawer mode="side" *ngIf="isUserAuthenticated" opened role="navigation" style="width:20%;">
+    <mat-sidenav #drawer mode="side" *ngIf="isUserAuthenticated" opened role="navigation" style="width:20%;" style="overflow: hidden;">
         <mat-nav-list>
             <a mat-list-item (click)="onNotify()" [ngClass]="{
                             'positive' : showform,

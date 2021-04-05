@@ -9,5 +9,7 @@ router.post('/user/register', userRoute.register);
 router.post('/user/login', userRoute.login);
 
 router.post('/user/saveNotification', checkAuth, userRoute.createNotification);
+router.get('/user/getNotifications', checkAuth, userRoute.getNotifications);
+router.delete('/user/deleteNotification/:id', checkAuth, userRoute.deleteNotification);
 
 module.exports = router;

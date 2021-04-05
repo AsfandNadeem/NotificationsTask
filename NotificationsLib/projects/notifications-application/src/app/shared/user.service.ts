@@ -142,7 +142,7 @@ export class UserService {
                         type: notification.type
                     };
                 }), maxNotifications: notificationData.maxNotifications  };
-        }))// change rterieving data
+        }))// change retrieving data
         .subscribe(transformedNotificationsData => {
             this.notifications = transformedNotificationsData.notification;
             this.notificationsUpdated.next({
@@ -160,7 +160,6 @@ getNotificationsUpdateListener() {
 
 
 deleteNotification(id: string) {
-  console.log(id);
     return this.http.delete(environment.apiBaseUrl+'/user/deleteNotification/' + id);
 }
 

@@ -12,6 +12,7 @@ export class NotifyService {
 
   maxLimit = 1;
   Queue = Array<INotification>();
+  private _children:ComponentRef<NotifyComponent>[] = [];
 
   private NotifyContainerElement: HTMLElement;
   private NotifyContainerRef: ComponentRef<NotifyContainerComponent>;
@@ -37,13 +38,14 @@ export class NotifyService {
     childComponentRef.instance.type = type;
 
 
-
+    
     const sub = childComponentRef.instance.destroy.subscribe(() => {
       sub.unsubscribe();
       this.destroy(childComponentRef);
     });
     //Add child component to parent
     this.elementService.addChildtoElement(childElement, this.NotifyContainerElement);
+    this._children.push(childComponentRef);
 
 
     if (type == "info") {
@@ -66,6 +68,7 @@ export class NotifyService {
 
   destroy(childComponentRef: ComponentRef<any>) {
     this.elementService.destroyElement(childComponentRef);
+    (this._children).splice((this._children).indexOf(childComponentRef), 1);
     if (this.maxLimit > 0) {
       this.maxLimit--;
       if (this.Queue.length >= 1) {
@@ -73,6 +76,13 @@ export class NotifyService {
         this.Queue.shift();
       }
     }
+  }
+
+
+  destroyAll()
+  {
+    this._children.forEach(cmp=>cmp.destroy());
+    this._children.splice(0,this._children.length);
   }
 
 

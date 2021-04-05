@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import {NotifyService} from 'notify';
 import { UserService } from '../../shared/user.service';
@@ -8,7 +8,7 @@ import { UserService } from '../../shared/user.service';
   templateUrl: './send-notifications.component.html',
   styleUrls: ['./send-notifications.component.css']
 })
-export class SendNotificationsComponent implements OnInit {
+export class SendNotificationsComponent implements OnInit, OnDestroy {
 categories=["info","error","warning"];
 categorySelected = "info";
 serverErrorMessages: string;
@@ -34,6 +34,11 @@ serverErrorMessages: string;
       }
   );
     
+  }
+
+  ngOnDestroy()
+  {
+    this.notify.destroyAll();
   }
 
 }

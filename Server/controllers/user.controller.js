@@ -109,3 +109,47 @@ module.exports.createNotification =
         }
 
     }
+
+
+module.exports.getNotifications = (req, res, next) => {
+
+    try {
+        const notificationsQuery = Notification.find({ userId: req.userData.userId }).sort({ 'created_at': 1 });
+        let fetchedNotifications;
+
+        notificationsQuery
+            .then(documents => {
+                fetchedNotifications = documents;
+                return fetchedNotifications.length;
+            })
+            .then(count => {
+                res.status(200).json({
+                    message: "Notifications fetched successfully!",
+                    notifications: fetchedNotifications,
+                    maxNotifications: count
+                });
+            });
+    } catch {
+        return res.status(401).json({
+            message: "failed"
+        });
+    }
+}
+
+
+module.exports.deleteNotification =
+    (req, res, next) => {
+        try {
+            Notification.deleteOne({ _id: req.params.id }).then(result => {
+                if (result.n > 0) {
+                    res.status(200).json({ message: "Deleted successful!" });
+                } else {
+                    res.status(401).json({ message: "Not authorized to delete!" });
+                }
+            });
+        } catch {
+            return res.status(401).json({
+                message: "failed"
+            });
+        }
+    }

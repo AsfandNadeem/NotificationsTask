@@ -1,6 +1,11 @@
 <mat-card style="width: 59%;
     margin: 20%;
     margin-top: 10%;">
+
+    <h3 matLine style="text-align: center"> Notifications </h3>
+    <mat-form-field>
+        <input matInput (keyup)="applyFilter($event.target.value)">
+    </mat-form-field>
     <div class="table-responsive">
         <table mat-table [dataSource]="dataSource">
             <ng-container matColumnDef="Header">
@@ -13,7 +18,6 @@
                 <td mat-cell *matCellDef="let element"> {{element.body}} </td>
             </ng-container>
 
-            <!-- Weight Column -->
             <ng-container matColumnDef="Type">
                 <th mat-header-cell *matHeaderCellDef> Type </th>
                 <td mat-cell *matCellDef="let element"> {{element.type}} </td>
@@ -21,9 +25,8 @@
 
             <ng-container matColumnDef="Actions">
                 <th mat-header-cell *matHeaderCellDef> Actions </th>
-                <td *matCellDef="let element" style="    border-bottom-width: 1px;
-    border-bottom-style: solid;     border-bottom-color: rgba(0,0,0,.12);">
-                    <button style="border: 0; background: white;" (click)="onDelete(element._id)"><mat-icon>delete</mat-icon>
+                <td mat-cell *matCellDef="let element">
+                    <button style="background: white;" (click)="onDelete(element._id)"><mat-icon>delete</mat-icon>
                 </button>
                 </td>
             </ng-container>

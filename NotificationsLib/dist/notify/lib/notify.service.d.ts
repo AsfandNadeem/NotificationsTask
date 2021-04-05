@@ -8,12 +8,14 @@ export declare class NotifyService {
     private appRef;
     maxLimit: number;
     Queue: INotification[];
+    private _children;
     private NotifyContainerElement;
     private NotifyContainerRef;
     constructor(elementService: ElementAttachmentService, appRef: ApplicationRef);
     private appendComponentToContainer;
     open(header: any, message: any, category: any): void;
     destroy(childComponentRef: ComponentRef<any>): void;
+    destroyAll(): void;
     static ɵfac: i0.ɵɵFactoryDef<NotifyService, never>;
     static ɵprov: i0.ɵɵInjectableDef<NotifyService>;
 }

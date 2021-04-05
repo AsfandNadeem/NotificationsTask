@@ -84,7 +84,7 @@ NotifyComponent.ɵcmp = ɵɵdefineComponent({ type: NotifyComponent, selectors: 
         ɵɵtextInterpolate(ctx.header);
         ɵɵadvance(6);
         ɵɵtextInterpolate(ctx.message);
-    } }, styles: [".stack-top[_ngcontent-%COMP%]{top:0;right:50%;transform:translate(50%,calc(0% + 20px));position:absolute;display:flex;opacity:0;box-shadow:0 10px 19px 10px rgb(0 0 0/4%);border-radius:4px;background-color:#fff;font-family:Raleway,Arial,sans-serif;transition:.2s cubic-bezier(.75,0,.75,.9)}"] });
+    } }, styles: [".stack-top[_ngcontent-%COMP%]{top:0;right:50%;transform:translate(50%,calc(0% + 20px));position:absolute;display:flex;opacity:1;box-shadow:0 10px 19px 10px rgb(0 0 0/4%);border-radius:4px;background-color:#fff;font-family:Raleway,Arial,sans-serif;transition:.2s cubic-bezier(.75,0,.75,.9);z-index:1}"] });
 (function () { (typeof ngDevMode === "undefined" || ngDevMode) && ɵsetClassMetadata(NotifyComponent, [{
         type: Component,
         args: [{
@@ -148,6 +148,7 @@ class NotifyService {
         this.appRef = appRef;
         this.maxLimit = 1;
         this.Queue = Array();
+        this._children = [];
         this.NotifyContainerRef = this.elementService.createComponentinDom(NotifyContainerComponent);
         this.NotifyContainerElement = this.elementService.getElement(this.NotifyContainerRef);
         this.elementService.addChildtoElement(this.NotifyContainerElement);
@@ -166,6 +167,7 @@ class NotifyService {
         });
         //Add child component to parent
         this.elementService.addChildtoElement(childElement, this.NotifyContainerElement);
+        this._children.push(childComponentRef);
         if (type == "info") {
             setTimeout(() => {
                 if (childComponentRef) {
@@ -185,6 +187,7 @@ class NotifyService {
     }
     destroy(childComponentRef) {
         this.elementService.destroyElement(childComponentRef);
+        (this._children).splice((this._children).indexOf(childComponentRef), 1);
         if (this.maxLimit > 0) {
             this.maxLimit--;
             if (this.Queue.length >= 1) {
@@ -192,6 +195,10 @@ class NotifyService {
                 this.Queue.shift();
             }
         }
+    }
+    destroyAll() {
+        this._children.forEach(cmp => cmp.destroy());
+        this._children.splice(0, this._children.length);
     }
 }
 NotifyService.ɵfac = function NotifyService_Factory(t) { return new (t || NotifyService)(ɵɵinject(ElementAttachmentService), ɵɵinject(ApplicationRef)); };
