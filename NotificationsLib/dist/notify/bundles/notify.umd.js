@@ -57,7 +57,7 @@
         return NotifyComponent;
     }());
     NotifyComponent.ɵfac = function NotifyComponent_Factory(t) { return new (t || NotifyComponent)(i0.ɵɵdirectiveInject(NotifyService), i0.ɵɵdirectiveInject(i0.Renderer2)); };
-    NotifyComponent.ɵcmp = i0.ɵɵdefineComponent({ type: NotifyComponent, selectors: [["lib-notify"]], inputs: { header: "header", message: "message", type: "type" }, outputs: { destroy: "destroy" }, decls: 12, vars: 4, consts: [[1, "card", "container", "my-4", "stack-top"], [1, "card-header", "container-fluid"], [1, "row"], [1, "col"], ["type", "button", 3, "click"], [1, "card-body"], [1, "card-text"]], template: function NotifyComponent_Template(rf, ctx) {
+    NotifyComponent.ɵcmp = i0.ɵɵdefineComponent({ type: NotifyComponent, selectors: [["lib-notify"]], inputs: { header: "header", message: "message", type: "type" }, outputs: { destroy: "destroy" }, decls: 12, vars: 4, consts: [[1, "card", "container", "my-4", "stack-top"], [1, "card-header", "container-fluid"], [1, "row"], [1, "col-10"], [1, "col-2"], ["type", "button", 3, "click"], [1, "card-body"], [1, "card-text"]], template: function NotifyComponent_Template(rf, ctx) {
             if (rf & 1) {
                 i0.ɵɵelementStart(0, "div", 0);
                 i0.ɵɵelementStart(1, "div", 1);
@@ -67,16 +67,16 @@
                 i0.ɵɵtext(5);
                 i0.ɵɵelementEnd();
                 i0.ɵɵelementEnd();
-                i0.ɵɵelementStart(6, "div", 3);
-                i0.ɵɵelementStart(7, "a", 4);
+                i0.ɵɵelementStart(6, "div", 4);
+                i0.ɵɵelementStart(7, "a", 5);
                 i0.ɵɵlistener("click", function NotifyComponent_Template_a_click_7_listener() { return ctx.onClose(); });
                 i0.ɵɵtext(8, "X ");
                 i0.ɵɵelementEnd();
                 i0.ɵɵelementEnd();
                 i0.ɵɵelementEnd();
                 i0.ɵɵelementEnd();
-                i0.ɵɵelementStart(9, "div", 5);
-                i0.ɵɵelementStart(10, "p", 6);
+                i0.ɵɵelementStart(9, "div", 6);
+                i0.ɵɵelementStart(10, "p", 7);
                 i0.ɵɵtext(11);
                 i0.ɵɵelementEnd();
                 i0.ɵɵelementEnd();
@@ -90,7 +90,7 @@
                 i0.ɵɵadvance(6);
                 i0.ɵɵtextInterpolate(ctx.message);
             }
-        }, styles: [".stack-top[_ngcontent-%COMP%]{text-align:center;padding:0;width:50%;box-shadow:0 10px 19px 10px rgba(0,0,0,.04);color:#000;top:\"0\";right:\"50%\";display:flex;transform:translate(1%,calc(100% - 950px));z-index:1}"] });
+        }, styles: [".stack-top[_ngcontent-%COMP%]{text-align:center;padding:0;width:20%;box-shadow:0 10px 19px 10px rgba(0,0,0,.04);color:#000;top:\"0\";right:\"50%\";display:flex;transform:translate(195%,calc(100% - 940px));z-index:1}"] });
     (function () {
         (typeof ngDevMode === "undefined" || ngDevMode) && i0.ɵsetClassMetadata(NotifyComponent, [{
                 type: i0.Component,
@@ -158,7 +158,8 @@
         function NotifyService(elementService, appRef) {
             this.elementService = elementService;
             this.appRef = appRef;
-            this.maxLimit = 1;
+            this.maxLimit = 5;
+            this.countNotifications = 0;
             this.Queue = Array();
             this._children = [];
             this.NotifyContainerRef = this.elementService.createComponentinDom(NotifyContainerComponent);
@@ -181,6 +182,7 @@
             //Add child component to parent
             this.elementService.addChildtoElement(childElement, this.NotifyContainerElement);
             this._children.push(childComponentRef);
+            this.countNotifications++;
             if (type == "info") {
                 setTimeout(function () {
                     if (childComponentRef) {
@@ -190,9 +192,8 @@
             }
         };
         NotifyService.prototype.open = function (header, message, category) {
-            if (this.maxLimit < 5) {
-                this.appendComponentToContainer(header, message + this.maxLimit, category);
-                this.maxLimit++;
+            if (this.countNotifications < this.maxLimit) {
+                this.appendComponentToContainer(header, message, category);
             }
             else {
                 this.Queue.push({ header: header, message: message, type: category });
@@ -201,8 +202,8 @@
         NotifyService.prototype.destroy = function (childComponentRef) {
             this.elementService.destroyElement(childComponentRef);
             (this._children).splice((this._children).indexOf(childComponentRef), 1);
-            if (this.maxLimit > 0) {
-                this.maxLimit--;
+            if (this.countNotifications > 0) {
+                this.countNotifications--;
                 if (this.Queue.length >= 1) {
                     this.appendComponentToContainer(this.Queue[0].header, this.Queue[0].message, this.Queue[0].type);
                     this.Queue.shift();

@@ -7,6 +7,7 @@ export declare class NotifyService {
     private elementService;
     private appRef;
     maxLimit: number;
+    countNotifications: number;
     Queue: INotification[];
     private _children;
     private NotifyContainerElement;

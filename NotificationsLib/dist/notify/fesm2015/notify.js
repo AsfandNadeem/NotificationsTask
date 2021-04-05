@@ -47,7 +47,7 @@ class NotifyComponent {
     }
 }
 NotifyComponent.ɵfac = function NotifyComponent_Factory(t) { return new (t || NotifyComponent)(ɵɵdirectiveInject(NotifyService), ɵɵdirectiveInject(Renderer2)); };
-NotifyComponent.ɵcmp = ɵɵdefineComponent({ type: NotifyComponent, selectors: [["lib-notify"]], inputs: { header: "header", message: "message", type: "type" }, outputs: { destroy: "destroy" }, decls: 12, vars: 4, consts: [[1, "card", "container", "my-4", "stack-top"], [1, "card-header", "container-fluid"], [1, "row"], [1, "col"], ["type", "button", 3, "click"], [1, "card-body"], [1, "card-text"]], template: function NotifyComponent_Template(rf, ctx) { if (rf & 1) {
+NotifyComponent.ɵcmp = ɵɵdefineComponent({ type: NotifyComponent, selectors: [["lib-notify"]], inputs: { header: "header", message: "message", type: "type" }, outputs: { destroy: "destroy" }, decls: 12, vars: 4, consts: [[1, "card", "container", "my-4", "stack-top"], [1, "card-header", "container-fluid"], [1, "row"], [1, "col-10"], [1, "col-2"], ["type", "button", 3, "click"], [1, "card-body"], [1, "card-text"]], template: function NotifyComponent_Template(rf, ctx) { if (rf & 1) {
         ɵɵelementStart(0, "div", 0);
         ɵɵelementStart(1, "div", 1);
         ɵɵelementStart(2, "div", 2);
@@ -56,16 +56,16 @@ NotifyComponent.ɵcmp = ɵɵdefineComponent({ type: NotifyComponent, selectors: 
         ɵɵtext(5);
         ɵɵelementEnd();
         ɵɵelementEnd();
-        ɵɵelementStart(6, "div", 3);
-        ɵɵelementStart(7, "a", 4);
+        ɵɵelementStart(6, "div", 4);
+        ɵɵelementStart(7, "a", 5);
         ɵɵlistener("click", function NotifyComponent_Template_a_click_7_listener() { return ctx.onClose(); });
         ɵɵtext(8, "X ");
         ɵɵelementEnd();
         ɵɵelementEnd();
         ɵɵelementEnd();
         ɵɵelementEnd();
-        ɵɵelementStart(9, "div", 5);
-        ɵɵelementStart(10, "p", 6);
+        ɵɵelementStart(9, "div", 6);
+        ɵɵelementStart(10, "p", 7);
         ɵɵtext(11);
         ɵɵelementEnd();
         ɵɵelementEnd();
@@ -77,7 +77,7 @@ NotifyComponent.ɵcmp = ɵɵdefineComponent({ type: NotifyComponent, selectors: 
         ɵɵtextInterpolate(ctx.header);
         ɵɵadvance(6);
         ɵɵtextInterpolate(ctx.message);
-    } }, styles: [".stack-top[_ngcontent-%COMP%]{text-align:center;padding:0;width:50%;box-shadow:0 10px 19px 10px rgba(0,0,0,.04);color:#000;top:\"0\";right:\"50%\";display:flex;transform:translate(1%,calc(100% - 950px));z-index:1}"] });
+    } }, styles: [".stack-top[_ngcontent-%COMP%]{text-align:center;padding:0;width:20%;box-shadow:0 10px 19px 10px rgba(0,0,0,.04);color:#000;top:\"0\";right:\"50%\";display:flex;transform:translate(195%,calc(100% - 940px));z-index:1}"] });
 (function () { (typeof ngDevMode === "undefined" || ngDevMode) && ɵsetClassMetadata(NotifyComponent, [{
         type: Component,
         args: [{
@@ -139,7 +139,8 @@ class NotifyService {
     constructor(elementService, appRef) {
         this.elementService = elementService;
         this.appRef = appRef;
-        this.maxLimit = 1;
+        this.maxLimit = 5;
+        this.countNotifications = 0;
         this.Queue = Array();
         this._children = [];
         this.NotifyContainerRef = this.elementService.createComponentinDom(NotifyContainerComponent);
@@ -161,6 +162,7 @@ class NotifyService {
         //Add child component to parent
         this.elementService.addChildtoElement(childElement, this.NotifyContainerElement);
         this._children.push(childComponentRef);
+        this.countNotifications++;
         if (type == "info") {
             setTimeout(() => {
                 if (childComponentRef) {
@@ -170,9 +172,8 @@ class NotifyService {
         }
     }
     open(header, message, category) {
-        if (this.maxLimit < 5) {
-            this.appendComponentToContainer(header, message + this.maxLimit, category);
-            this.maxLimit++;
+        if (this.countNotifications < this.maxLimit) {
+            this.appendComponentToContainer(header, message, category);
         }
         else {
             this.Queue.push({ header: header, message: message, type: category });
@@ -181,8 +182,8 @@ class NotifyService {
     destroy(childComponentRef) {
         this.elementService.destroyElement(childComponentRef);
         (this._children).splice((this._children).indexOf(childComponentRef), 1);
-        if (this.maxLimit > 0) {
-            this.maxLimit--;
+        if (this.countNotifications > 0) {
+            this.countNotifications--;
             if (this.Queue.length >= 1) {
                 this.appendComponentToContainer(this.Queue[0].header, this.Queue[0].message, this.Queue[0].type);
                 this.Queue.shift();

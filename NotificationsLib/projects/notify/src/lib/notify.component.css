@@ -1,14 +1,14 @@
 .stack-top {
     text-align: center;
     padding: 0px;
-    width: 50%;
+    width: 20%;
     box-shadow: 0 10px 19px 10px rgba(0, 0, 0, 0.04);
     color: black;
     /* transition: 200ms cubic-bezier(0.75, 0, 0.75, 0.9); */
     top: '0';
     right: '50%';
     display: flex;
-    transform: translate(1%, calc(100% - 950px));
+    transform: translate(195%, calc(100% - 940px));
     z-index: 1;
 }
 

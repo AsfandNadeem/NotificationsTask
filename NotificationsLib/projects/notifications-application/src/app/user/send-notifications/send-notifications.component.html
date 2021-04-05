@@ -2,7 +2,7 @@
     <div class="container center_div">
         <div class="row">
             <div class="col-xs-12 col-sm-10, col-md-8 col-sm-offset-1 col-md-offset-2">
-                <form (ngSubmit)="send(f)" #f="ngForm">
+                <form (ngSubmit)="send(f)" #f="ngForm" autocomplete="off">
                     <div class="form-group">
                         <label for="header">Header</label>
                         <input type="text" class="form-control" id="header" required ngModel name="header">

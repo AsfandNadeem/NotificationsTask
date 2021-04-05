@@ -9,13 +9,13 @@ import { NotifyComponent } from './notify.component';
   providedIn: 'root'
 })
 export class NotifyService {
-
-  maxLimit = 1;
+  maxLimit = 5;
+  countNotifications = 0;
   Queue = Array<INotification>();
   private _children:ComponentRef<NotifyComponent>[] = [];
-
   private NotifyContainerElement: HTMLElement;
   private NotifyContainerRef: ComponentRef<NotifyContainerComponent>;
+
   constructor(private elementService: ElementAttachmentService,
     private appRef: ApplicationRef) {
 
@@ -46,7 +46,7 @@ export class NotifyService {
     //Add child component to parent
     this.elementService.addChildtoElement(childElement, this.NotifyContainerElement);
     this._children.push(childComponentRef);
-
+    this.countNotifications++;
 
     if (type == "info") {
       setTimeout(() => {
@@ -57,9 +57,8 @@ export class NotifyService {
   }
 
   open(header, message, category) {
-    if (this.maxLimit < 5) {
-      this.appendComponentToContainer(header, message + this.maxLimit, category);
-      this.maxLimit++;
+    if (this.countNotifications < this.maxLimit) {
+      this.appendComponentToContainer(header, message, category);
     }
     else {
       this.Queue.push({header:header,message:message, type:category});
@@ -69,8 +68,8 @@ export class NotifyService {
   destroy(childComponentRef: ComponentRef<any>) {
     this.elementService.destroyElement(childComponentRef);
     (this._children).splice((this._children).indexOf(childComponentRef), 1);
-    if (this.maxLimit > 0) {
-      this.maxLimit--;
+    if (this.countNotifications > 0) {
+      this.countNotifications--;
       if (this.Queue.length >= 1) {
         this.appendComponentToContainer(this.Queue[0].header, this.Queue[0].message, this.Queue[0].type);
         this.Queue.shift();
