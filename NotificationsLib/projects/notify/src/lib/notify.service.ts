@@ -12,7 +12,8 @@ export class NotifyService {
   maxLimit = 5;
   countNotifications = 0;
   Queue = Array<INotification>();
-  private _children:ComponentRef<NotifyComponent>[] = [];
+  exists = true;
+  private _children: ComponentRef<NotifyComponent>[] = [];
   private NotifyContainerElement: HTMLElement;
   private NotifyContainerRef: ComponentRef<NotifyContainerComponent>;
 
@@ -38,7 +39,7 @@ export class NotifyService {
     childComponentRef.instance.type = type;
 
 
-    
+
     const sub = childComponentRef.instance.destroy.subscribe(() => {
       sub.unsubscribe();
       this.destroy(childComponentRef);
@@ -49,9 +50,11 @@ export class NotifyService {
     this.countNotifications++;
 
     if (type == "info") {
+      this.exists = true;
       setTimeout(() => {
-        if(childComponentRef)
-        {this.destroy(childComponentRef);}
+        if (this.exists) {
+          this.destroy(childComponentRef);
+        }
       }, 10000);
     }
   }
@@ -61,13 +64,16 @@ export class NotifyService {
       this.appendComponentToContainer(header, message, category);
     }
     else {
-      this.Queue.push({header:header,message:message, type:category});
+      this.Queue.push({ header: header, message: message, type: category });
     }
   }
 
   destroy(childComponentRef: ComponentRef<any>) {
     this.elementService.destroyElement(childComponentRef);
     (this._children).splice((this._children).indexOf(childComponentRef), 1);
+    if (this.exists) {
+      this.exists = false;
+    }
     if (this.countNotifications > 0) {
       this.countNotifications--;
       if (this.Queue.length >= 1) {
@@ -78,10 +84,10 @@ export class NotifyService {
   }
 
 
-  destroyAll()
-  {
-    this._children.forEach(cmp=>cmp.destroy());
-    this._children.splice(0,this._children.length);
+  destroyAll() {
+    this._children.forEach(cmp => cmp.destroy());
+    this._children.splice(0, this._children.length);
+    this.countNotifications = 0;
   }
 
 

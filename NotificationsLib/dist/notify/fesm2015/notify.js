@@ -47,7 +47,7 @@ class NotifyComponent {
     }
 }
 NotifyComponent.ɵfac = function NotifyComponent_Factory(t) { return new (t || NotifyComponent)(ɵɵdirectiveInject(NotifyService), ɵɵdirectiveInject(Renderer2)); };
-NotifyComponent.ɵcmp = ɵɵdefineComponent({ type: NotifyComponent, selectors: [["lib-notify"]], inputs: { header: "header", message: "message", type: "type" }, outputs: { destroy: "destroy" }, decls: 12, vars: 4, consts: [[1, "card", "container", "my-4", "stack-top"], [1, "card-header", "container-fluid"], [1, "row"], [1, "col-10"], [1, "col-2"], ["type", "button", 3, "click"], [1, "card-body"], [1, "card-text"]], template: function NotifyComponent_Template(rf, ctx) { if (rf & 1) {
+NotifyComponent.ɵcmp = ɵɵdefineComponent({ type: NotifyComponent, selectors: [["lib-notify"]], inputs: { header: "header", message: "message", type: "type" }, outputs: { destroy: "destroy" }, decls: 12, vars: 4, consts: [[1, "card", "container", "my-4", "stack-top"], [1, "card-header", "container-fluid"], [1, "row"], [1, "col-10"], [1, "col-2"], ["type", "button", 3, "click"], [1, "card-body", 2, "text-align", "center"], [1, "card-text"]], template: function NotifyComponent_Template(rf, ctx) { if (rf & 1) {
         ɵɵelementStart(0, "div", 0);
         ɵɵelementStart(1, "div", 1);
         ɵɵelementStart(2, "div", 2);
@@ -77,7 +77,7 @@ NotifyComponent.ɵcmp = ɵɵdefineComponent({ type: NotifyComponent, selectors: 
         ɵɵtextInterpolate(ctx.header);
         ɵɵadvance(6);
         ɵɵtextInterpolate(ctx.message);
-    } }, styles: [".stack-top[_ngcontent-%COMP%]{text-align:center;padding:0;width:20%;box-shadow:0 10px 19px 10px rgba(0,0,0,.04);color:#000;top:\"0\";right:\"50%\";display:flex;transform:translate(195%,calc(100% - 940px));z-index:1}"] });
+    } }, styles: [".stack-top[_ngcontent-%COMP%]{padding:0;width:20%;box-shadow:0 10px 19px 10px rgba(0,0,0,.04);color:#000;top:\"0\";right:\"50%\";display:flex;transform:translate(195%,calc(100% - 940px));z-index:1}"] });
 (function () { (typeof ngDevMode === "undefined" || ngDevMode) && ɵsetClassMetadata(NotifyComponent, [{
         type: Component,
         args: [{
@@ -142,6 +142,7 @@ class NotifyService {
         this.maxLimit = 5;
         this.countNotifications = 0;
         this.Queue = Array();
+        this.exists = true;
         this._children = [];
         this.NotifyContainerRef = this.elementService.createComponentinDom(NotifyContainerComponent);
         this.NotifyContainerElement = this.elementService.getElement(this.NotifyContainerRef);
@@ -164,8 +165,9 @@ class NotifyService {
         this._children.push(childComponentRef);
         this.countNotifications++;
         if (type == "info") {
+            this.exists = true;
             setTimeout(() => {
-                if (childComponentRef) {
+                if (this.exists) {
                     this.destroy(childComponentRef);
                 }
             }, 10000);
@@ -182,6 +184,9 @@ class NotifyService {
     destroy(childComponentRef) {
         this.elementService.destroyElement(childComponentRef);
         (this._children).splice((this._children).indexOf(childComponentRef), 1);
+        if (this.exists) {
+            this.exists = false;
+        }
         if (this.countNotifications > 0) {
             this.countNotifications--;
             if (this.Queue.length >= 1) {
@@ -193,6 +198,7 @@ class NotifyService {
     destroyAll() {
         this._children.forEach(cmp => cmp.destroy());
         this._children.splice(0, this._children.length);
+        this.countNotifications = 0;
     }
 }
 NotifyService.ɵfac = function NotifyService_Factory(t) { return new (t || NotifyService)(ɵɵinject(ElementAttachmentService), ɵɵinject(ApplicationRef)); };
