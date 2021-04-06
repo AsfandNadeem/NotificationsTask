@@ -3,28 +3,14 @@
     width: 20%;
     box-shadow: 0 10px 19px 10px rgba(0, 0, 0, 0.04);
     color: black;
-    /* transition: 200ms cubic-bezier(0.75, 0, 0.75, 0.9); */
-    top: '0';
-    right: '50%';
     display: flex;
-    transform: translate(195%, calc(100% - 940px));
+    transform: translate(0%, calc(100% - 900px));
     z-index: 1;
+    margin-right: 1%;
 }
 
-
-/* .stack-top {
-    top: 0px;
-    right: 50%;
-    transform: translate(50%, calc(0% + 20px));
-    position: absolute;
-    display: -webkit-box;
-    display: flex;
-    opacity: 1;
-    box-shadow: 0 10px 19px 10px rgb(0 0 0 / 4%);
-    border-radius: 4px;
-    background-color: #fff;
-    font-family: Raleway, Arial, sans-serif;
-    -webkit-transition: .2s cubic-bezier(.75, 0, .75, .9);
-    transition: .2s cubic-bezier(.75, 0, .75, .9);
-    z-index: 1;
-} */
+@media all and (max-width: 1480px) {
+    .stack-top {
+        transform: translate(0%, calc(100% - 600px));
+    }
+}

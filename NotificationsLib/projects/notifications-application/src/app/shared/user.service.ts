@@ -106,6 +106,11 @@ export class UserService {
     clearTimeout(this.tokenTimer);
     this.clearAuthData();
     this.router.navigate(['/']);
+    this.selectedUser = {
+      fullName: '',
+      email: '',
+      password: ''
+    };
 
   }
 

@@ -16,7 +16,7 @@
     NotifyContainerComponent.ɵcmp = i0.ɵɵdefineComponent({ type: NotifyContainerComponent, selectors: [["lib-notify-container"]], ngContentSelectors: _c0, decls: 1, vars: 0, template: function NotifyContainerComponent_Template(rf, ctx) {
             if (rf & 1) {
                 i0.ɵɵprojectionDef();
-                i0.ɵɵprojection(0, 0, ["id", "parent"]);
+                i0.ɵɵprojection(0);
             }
         }, styles: [""] });
     (function () {
@@ -42,7 +42,7 @@
         };
         NotifyComponent.prototype.getBackground = function () {
             if (this.type === 'warning') {
-                return 'orange';
+                return 'darkorange';
             }
             else if (this.type == 'error') {
                 return 'red';
@@ -90,7 +90,7 @@
                 i0.ɵɵadvance(6);
                 i0.ɵɵtextInterpolate(ctx.message);
             }
-        }, styles: [".stack-top[_ngcontent-%COMP%]{padding:0;width:20%;box-shadow:0 10px 19px 10px rgba(0,0,0,.04);color:#000;top:\"0\";right:\"50%\";display:flex;transform:translate(195%,calc(100% - 940px));z-index:1}"] });
+        }, styles: [".stack-top[_ngcontent-%COMP%]{padding:0;width:20%;box-shadow:0 10px 19px 10px rgba(0,0,0,.04);color:#000;display:flex;transform:translateY(calc(100% - 900px));z-index:1;margin-right:1%}@media (max-width:1480px){.stack-top[_ngcontent-%COMP%]{transform:translateY(calc(100% - 600px))}}"] });
     (function () {
         (typeof ngDevMode === "undefined" || ngDevMode) && i0.ɵsetClassMetadata(NotifyComponent, [{
                 type: i0.Component,

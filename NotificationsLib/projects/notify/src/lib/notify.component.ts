@@ -27,7 +27,7 @@ export class NotifyComponent implements OnInit {
 
   getBackground(): string {
     if (this.type === 'warning') {
-      return 'orange';
+      return 'darkorange';
     }
     else if (this.type == 'error') {
       return 'red'
