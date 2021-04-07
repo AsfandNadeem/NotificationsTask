@@ -1,4 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { NotifyService } from 'notify';
 import { Subscription } from 'rxjs';
@@ -8,7 +9,8 @@ import { UserService } from '../../shared/user.service';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  styleUrls: ['./dashboard.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class DashboardComponent implements OnInit, OnDestroy {
 
@@ -22,7 +24,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
   bodyField = "";
   typeField = "";
   categories=["info","error","warning"];
+  @ViewChild('paginator') paginator: MatPaginator;
 
+ 
 
   constructor(private userService: UserService,private notify: NotifyService) { }
 
@@ -33,10 +37,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
       .subscribe((notificationData: { notifications: NotificationsModel[] }) => {
         this.notifications = notificationData.notifications;
         this.dataSource = new MatTableDataSource(notificationData.notifications);
+        this.dataSource.paginator = this.paginator;
       });
   }
-
-
 
 
   applyFilter(filterValue: string) {

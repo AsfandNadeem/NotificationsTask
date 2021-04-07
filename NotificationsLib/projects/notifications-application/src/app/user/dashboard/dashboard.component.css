@@ -52,3 +52,48 @@ th {
     overflow: hidden;
     vertical-align: middle;
 }
+
+.custom-style-paginator-select>mat-option:last-child:before {
+    content: "All";
+    float: left;
+    text-transform: none;
+    top: 4px;
+    position: relative;
+}
+
+.custom-style-paginator-select>mat-option:last-child .mat-option-text {
+    display: none;
+    position: relative;
+}
+
+.myMatOptions {
+    position: absolute;
+    top: 30vh;
+    left: 30vw;
+}
+
+.cdk-overlay-container {
+    left: 30vw;
+}
+
+::ng-deep .cdk-overlay-pane {
+    left: 0 !important;
+    transform: none !important;
+}
+
+::ng-deep .mat-select-panel {
+    left: 0
+}
+
+
+/* ::ng-deep .mat-select-panel {
+    position: fixed;
+    height: 300px;
+    width: 100%;
+} */
+
+
+/* .mat-select-panel-wrap {
+    margin-top: -20.7% !important;
+    margin-left: 59.1% !important;
+} */

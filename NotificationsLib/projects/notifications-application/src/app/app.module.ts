@@ -27,6 +27,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatMenuModule} from "@angular/material/menu";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
 import { AuthInterceptor } from './shared/auth-interceptor';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { AuthInterceptor } from './shared/auth-interceptor';
     HttpClientModule,
     AppRoutingModule,
     NotifyModule,
+    BrowserAnimationsModule,
     MatInputModule,
     MatCardModule,
     MatSelectModule,
@@ -53,7 +55,7 @@ import { AuthInterceptor } from './shared/auth-interceptor';
     MatTableModule,
     MatIconModule,
     MatMenuModule,
-    BrowserAnimationsModule
+    MatPaginatorModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
     ,UserService],
