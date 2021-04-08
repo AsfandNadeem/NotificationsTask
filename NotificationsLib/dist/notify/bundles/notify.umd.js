@@ -30,7 +30,6 @@
             }], function () { return []; }, null);
     })();
 
-    var _c0$1 = ["progressDiv"];
     function NotifyComponent_div_12_Template(rf, ctx) {
         if (rf & 1) {
             i0.ɵɵelementStart(0, "div", 9);
@@ -53,6 +52,7 @@
             this.progressTime = 0;
             this.actualTime = 0;
             this.destroy = new i0.EventEmitter();
+            // @ViewChild('progressDiv') divCurtain: ElementRef;
             this.setWidth = 0;
         }
         NotifyComponent.prototype.ngOnInit = function () {
@@ -62,7 +62,7 @@
             if (this.progressrequired) {
                 this.setWidth = ((this.actualTime / this.progressTime) * 100);
                 this.mySubscription = rxjs.interval(100).subscribe((function (x) {
-                    _this.getProgress();
+                    _this.setProgress();
                 }));
             }
         };
@@ -80,7 +80,7 @@
         NotifyComponent.prototype.onClose = function () {
             this.destroy.emit();
         };
-        NotifyComponent.prototype.getProgress = function () {
+        NotifyComponent.prototype.setProgress = function () {
             if (this.actualTime > 0) {
                 this.actualTime = this.actualTime - 100;
                 this.setWidth = ((this.actualTime / this.progressTime) * 100);
@@ -93,15 +93,7 @@
         return NotifyComponent;
     }());
     NotifyComponent.ɵfac = function NotifyComponent_Factory(t) { return new (t || NotifyComponent)(i0.ɵɵdirectiveInject(NotifyService), i0.ɵɵdirectiveInject(i0.Renderer2)); };
-    NotifyComponent.ɵcmp = i0.ɵɵdefineComponent({ type: NotifyComponent, selectors: [["lib-notify"]], viewQuery: function NotifyComponent_Query(rf, ctx) {
-            if (rf & 1) {
-                i0.ɵɵviewQuery(_c0$1, 1);
-            }
-            if (rf & 2) {
-                var _t = void 0;
-                i0.ɵɵqueryRefresh(_t = i0.ɵɵloadQuery()) && (ctx.divCurtain = _t.first);
-            }
-        }, inputs: { header: "header", message: "message", type: "type", progressrequired: "progressrequired", progressTime: "progressTime", actualTime: "actualTime" }, outputs: { destroy: "destroy" }, decls: 13, vars: 5, consts: [[1, "card", "container", "my-4", "stack-top"], [1, "card-header", "container-fluid"], [1, "row"], [1, "col-10"], [1, "col-2"], ["type", "button", 3, "click"], [1, "card-body", 2, "text-align", "center"], [1, "card-text"], ["class", "progress", 4, "ngIf"], [1, "progress"], ["role", "progressbar", "aria-valuemin", "0", "aria-valuemax", "100", 1, "progress-bar", "progress-bar-striped", "active"], ["progressDiv", ""]], template: function NotifyComponent_Template(rf, ctx) {
+    NotifyComponent.ɵcmp = i0.ɵɵdefineComponent({ type: NotifyComponent, selectors: [["lib-notify"]], inputs: { header: "header", message: "message", type: "type", progressrequired: "progressrequired", progressTime: "progressTime", actualTime: "actualTime" }, outputs: { destroy: "destroy" }, decls: 13, vars: 5, consts: [[1, "card", "container", "my-4", "stack-top"], [1, "card-header", "container-fluid"], [1, "row"], [1, "col-10"], [1, "col-2"], ["type", "button", 3, "click"], [1, "card-body", 2, "text-align", "center"], [1, "card-text"], ["class", "progress", 4, "ngIf"], [1, "progress"], ["role", "progressbar", "aria-valuemin", "0", "aria-valuemax", "100", 1, "progress-bar", "progress-bar-striped", "active"], ["progressDiv", ""]], template: function NotifyComponent_Template(rf, ctx) {
             if (rf & 1) {
                 i0.ɵɵelementStart(0, "div", 0);
                 i0.ɵɵelementStart(1, "div", 1);
@@ -161,9 +153,6 @@
                     type: i0.Input
                 }], destroy: [{
                     type: i0.Output
-                }], divCurtain: [{
-                    type: i0.ViewChild,
-                    args: ['progressDiv']
                 }] });
     })();
 

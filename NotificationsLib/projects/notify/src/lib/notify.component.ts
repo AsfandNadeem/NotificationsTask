@@ -21,7 +21,7 @@ export class NotifyComponent implements OnInit, AfterViewInit {
   @Input() actualTime = 0;
   @Output() destroy: EventEmitter<any> = new EventEmitter();
   mySubscription: Subscription;
-  @ViewChild('progressDiv') divCurtain: ElementRef;
+  // @ViewChild('progressDiv') divCurtain: ElementRef;
   setWidth = 0;
 
   // @HostBinding('class.redbackground') warning: boolean;
@@ -36,7 +36,7 @@ export class NotifyComponent implements OnInit, AfterViewInit {
     if (this.progressrequired) {
       this.setWidth = ((this.actualTime / this.progressTime) * 100);
       this.mySubscription = interval(100).subscribe((x => {
-        this.getProgress();
+        this.setProgress();
       }));
     }
 
@@ -58,7 +58,7 @@ export class NotifyComponent implements OnInit, AfterViewInit {
     this.destroy.emit();
   }
 
-  getProgress() {
+  setProgress() {
     if (this.actualTime > 0) {
       this.actualTime = this.actualTime - 100;
       this.setWidth = ((this.actualTime / this.progressTime) * 100);

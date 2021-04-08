@@ -1,4 +1,4 @@
-import { ɵɵdefineComponent, ɵɵprojectionDef, ɵɵprojection, ɵsetClassMetadata, Component, ɵɵelementStart, ɵɵelement, ɵɵelementEnd, ɵɵnextContext, ɵɵadvance, ɵɵstyleProp, EventEmitter, ɵɵdirectiveInject, Renderer2, ɵɵviewQuery, ɵɵqueryRefresh, ɵɵloadQuery, ɵɵtext, ɵɵlistener, ɵɵtemplate, ɵɵtextInterpolate, ɵɵproperty, Input, Output, ViewChild, ɵɵinject, ComponentFactoryResolver, ApplicationRef, Injector, ɵɵdefineInjectable, Injectable, ɵɵdefineNgModule, ɵɵdefineInjector, ɵɵsetNgModuleScope, NgModule } from '@angular/core';
+import { ɵɵdefineComponent, ɵɵprojectionDef, ɵɵprojection, ɵsetClassMetadata, Component, ɵɵelementStart, ɵɵelement, ɵɵelementEnd, ɵɵnextContext, ɵɵadvance, ɵɵstyleProp, EventEmitter, ɵɵdirectiveInject, Renderer2, ɵɵtext, ɵɵlistener, ɵɵtemplate, ɵɵtextInterpolate, ɵɵproperty, Input, Output, ɵɵinject, ComponentFactoryResolver, ApplicationRef, Injector, ɵɵdefineInjectable, Injectable, ɵɵdefineNgModule, ɵɵdefineInjector, ɵɵsetNgModuleScope, NgModule } from '@angular/core';
 import { interval } from 'rxjs';
 import 'rxjs/add/observable/interval';
 import { NgIf, CommonModule } from '@angular/common';
@@ -23,7 +23,6 @@ NotifyContainerComponent.ɵcmp = ɵɵdefineComponent({ type: NotifyContainerComp
             }]
     }], function () { return []; }, null); })();
 
-const _c0$1 = ["progressDiv"];
 function NotifyComponent_div_12_Template(rf, ctx) { if (rf & 1) {
     ɵɵelementStart(0, "div", 9);
     ɵɵelement(1, "div", 10, 11);
@@ -43,6 +42,7 @@ class NotifyComponent {
         this.progressTime = 0;
         this.actualTime = 0;
         this.destroy = new EventEmitter();
+        // @ViewChild('progressDiv') divCurtain: ElementRef;
         this.setWidth = 0;
     }
     ngOnInit() {
@@ -51,7 +51,7 @@ class NotifyComponent {
         if (this.progressrequired) {
             this.setWidth = ((this.actualTime / this.progressTime) * 100);
             this.mySubscription = interval(100).subscribe((x => {
-                this.getProgress();
+                this.setProgress();
             }));
         }
     }
@@ -69,7 +69,7 @@ class NotifyComponent {
     onClose() {
         this.destroy.emit();
     }
-    getProgress() {
+    setProgress() {
         if (this.actualTime > 0) {
             this.actualTime = this.actualTime - 100;
             this.setWidth = ((this.actualTime / this.progressTime) * 100);
@@ -81,12 +81,7 @@ class NotifyComponent {
     }
 }
 NotifyComponent.ɵfac = function NotifyComponent_Factory(t) { return new (t || NotifyComponent)(ɵɵdirectiveInject(NotifyService), ɵɵdirectiveInject(Renderer2)); };
-NotifyComponent.ɵcmp = ɵɵdefineComponent({ type: NotifyComponent, selectors: [["lib-notify"]], viewQuery: function NotifyComponent_Query(rf, ctx) { if (rf & 1) {
-        ɵɵviewQuery(_c0$1, 1);
-    } if (rf & 2) {
-        let _t;
-        ɵɵqueryRefresh(_t = ɵɵloadQuery()) && (ctx.divCurtain = _t.first);
-    } }, inputs: { header: "header", message: "message", type: "type", progressrequired: "progressrequired", progressTime: "progressTime", actualTime: "actualTime" }, outputs: { destroy: "destroy" }, decls: 13, vars: 5, consts: [[1, "card", "container", "my-4", "stack-top"], [1, "card-header", "container-fluid"], [1, "row"], [1, "col-10"], [1, "col-2"], ["type", "button", 3, "click"], [1, "card-body", 2, "text-align", "center"], [1, "card-text"], ["class", "progress", 4, "ngIf"], [1, "progress"], ["role", "progressbar", "aria-valuemin", "0", "aria-valuemax", "100", 1, "progress-bar", "progress-bar-striped", "active"], ["progressDiv", ""]], template: function NotifyComponent_Template(rf, ctx) { if (rf & 1) {
+NotifyComponent.ɵcmp = ɵɵdefineComponent({ type: NotifyComponent, selectors: [["lib-notify"]], inputs: { header: "header", message: "message", type: "type", progressrequired: "progressrequired", progressTime: "progressTime", actualTime: "actualTime" }, outputs: { destroy: "destroy" }, decls: 13, vars: 5, consts: [[1, "card", "container", "my-4", "stack-top"], [1, "card-header", "container-fluid"], [1, "row"], [1, "col-10"], [1, "col-2"], ["type", "button", 3, "click"], [1, "card-body", 2, "text-align", "center"], [1, "card-text"], ["class", "progress", 4, "ngIf"], [1, "progress"], ["role", "progressbar", "aria-valuemin", "0", "aria-valuemax", "100", 1, "progress-bar", "progress-bar-striped", "active"], ["progressDiv", ""]], template: function NotifyComponent_Template(rf, ctx) { if (rf & 1) {
         ɵɵelementStart(0, "div", 0);
         ɵɵelementStart(1, "div", 1);
         ɵɵelementStart(2, "div", 2);
@@ -142,9 +137,6 @@ NotifyComponent.ɵcmp = ɵɵdefineComponent({ type: NotifyComponent, selectors: 
             type: Input
         }], destroy: [{
             type: Output
-        }], divCurtain: [{
-            type: ViewChild,
-            args: ['progressDiv']
         }] }); })();
 
 class ElementAttachmentService {

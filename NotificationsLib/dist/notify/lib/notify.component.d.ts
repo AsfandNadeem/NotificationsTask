@@ -1,4 +1,4 @@
-import { AfterViewInit, ElementRef } from '@angular/core';
+import { AfterViewInit } from '@angular/core';
 import { Renderer2 } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { OnInit } from '@angular/core';
@@ -17,14 +17,13 @@ export declare class NotifyComponent implements OnInit, AfterViewInit {
     actualTime: number;
     destroy: EventEmitter<any>;
     mySubscription: Subscription;
-    divCurtain: ElementRef;
     setWidth: number;
     constructor(NotifyService: NotifyService, renderer: Renderer2);
     ngOnInit(): void;
     ngAfterViewInit(): void;
     getBackground(): string;
     onClose(): void;
-    getProgress(): void;
+    setProgress(): void;
     static ɵfac: i0.ɵɵFactoryDef<NotifyComponent, never>;
     static ɵcmp: i0.ɵɵComponentDefWithMeta<NotifyComponent, "lib-notify", never, { "header": "header"; "message": "message"; "type": "type"; "progressrequired": "progressrequired"; "progressTime": "progressTime"; "actualTime": "actualTime"; }, { "destroy": "destroy"; }, never, never>;
 }

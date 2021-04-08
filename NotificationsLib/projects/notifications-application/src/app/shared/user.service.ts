@@ -69,7 +69,7 @@ export class UserService {
           this.isAuthenticated = true;
           this.authStatusListener.next(true);
           const now = new Date();
-          const expirationDate = new Date(now.getTime() + (expiresInDuration * 100000));
+          const expirationDate = new Date(now.getTime() + (expiresInDuration));
           this.saveAuthData(token, expirationDate);
           this.message = '';
           this.logInErrorSubject.next(this.message);
@@ -86,7 +86,7 @@ export class UserService {
     this.tokenTimer = setTimeout(() => {
       this.logout();
     },
-      duration * 1000);
+      duration);
   }
 
   private saveAuthData(token: string, expirationDate: Date) {

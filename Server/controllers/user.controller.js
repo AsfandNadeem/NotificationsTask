@@ -52,7 +52,7 @@ module.exports.login = (req, res, next) => {
                 ); //signing token and generating it using JWT, this token will be used for further functions of user and will be used to authenticate user session
                 res.status(200).json({
                     token: token,
-                    expiresIn: 36000000
+                    expiresIn: 3600000
                 });
             })
             .catch(err => {
