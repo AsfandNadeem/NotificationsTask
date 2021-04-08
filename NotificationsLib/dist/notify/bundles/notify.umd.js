@@ -268,7 +268,8 @@
             }
         };
         NotifyService.prototype.destroyAll = function () {
-            this._children.forEach(function (cmp) { return cmp.destroy(); });
+            var _this = this;
+            this._children.forEach(function (cmp) { return _this.destroy(cmp); });
             this._children.splice(0, this._children.length);
             this.countNotifications = 0;
         };

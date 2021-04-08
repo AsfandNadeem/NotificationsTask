@@ -246,7 +246,7 @@ class NotifyService {
         }
     }
     destroyAll() {
-        this._children.forEach(cmp => cmp.destroy());
+        this._children.forEach(cmp => this.destroy(cmp));
         this._children.splice(0, this._children.length);
         this.countNotifications = 0;
     }

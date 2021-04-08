@@ -2,6 +2,10 @@ table {
     width: 100%;
 }
 
+button {
+    margin-left: 2%;
+}
+
 .mat-form-field {
     font-size: 14px;
     width: 100%;
@@ -83,4 +87,20 @@ th {
 
 ::ng-deep .mat-select-panel {
     left: 0
+}
+
+.mat-column-Header {
+    width: 25%;
+}
+
+.mat-column-Body {
+    width: 25%;
+}
+
+.mat-column-Type {
+    width: 25%;
+}
+
+.mat-column-Actions {
+    width: 25%;
 }
