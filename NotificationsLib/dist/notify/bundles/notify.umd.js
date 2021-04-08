@@ -57,6 +57,12 @@
             this.exists = true;
         }
         NotifyComponent.prototype.ngOnInit = function () {
+            var _this = this;
+            setTimeout(function () {
+                if (_this.type == "info" && _this.exists) {
+                    _this.destroy.emit();
+                }
+            }, 10500);
         };
         NotifyComponent.prototype.ngAfterViewInit = function () {
             var _this = this;
@@ -238,11 +244,11 @@
                 childComponentRef.instance.progressrequired = true;
                 childComponentRef.instance.progressTime = 10000;
                 childComponentRef.instance.actualTime = 10000;
-                setTimeout(function () {
-                    if (childComponentRef.instance.exists) {
-                        _this.destroy(childComponentRef);
-                    }
-                }, 10500);
+                // setTimeout(() => {
+                //   if (childComponentRef.instance.exists) {
+                //     this.destroy(childComponentRef);
+                //   }
+                // }, 10500);
             }
         };
         NotifyService.prototype.open = function (header, message, category) {

@@ -47,6 +47,11 @@ class NotifyComponent {
         this.exists = true;
     }
     ngOnInit() {
+        setTimeout(() => {
+            if (this.type == "info" && this.exists) {
+                this.destroy.emit();
+            }
+        }, 10500);
     }
     ngAfterViewInit() {
         if (this.progressrequired) {
@@ -216,11 +221,11 @@ class NotifyService {
             childComponentRef.instance.progressrequired = true;
             childComponentRef.instance.progressTime = 10000;
             childComponentRef.instance.actualTime = 10000;
-            setTimeout(() => {
-                if (childComponentRef.instance.exists) {
-                    this.destroy(childComponentRef);
-                }
-            }, 10500);
+            // setTimeout(() => {
+            //   if (childComponentRef.instance.exists) {
+            //     this.destroy(childComponentRef);
+            //   }
+            // }, 10500);
         }
     }
     open(header, message, category) {

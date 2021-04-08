@@ -11,10 +11,24 @@ const app = express();
 // var https = require('https');
 
 
+// const csurf = require('csurf');
+// const cookieParser = require('cookie-parser');
+
+// const csrfMiddleware = csurf({
+//     cookie: true
+// });
+
+// app.use(cookieParser());
+// app.use(csrfMiddleware);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+
+// app.all('*', function(req, res) {
+//     res.cookie('XSRF-TOKEN', req.csrfToken())
+
+// });
 
 app.use(cors());
 app.use('/api', routesIndex);

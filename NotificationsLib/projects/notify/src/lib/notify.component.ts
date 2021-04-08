@@ -31,6 +31,11 @@ export class NotifyComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    setTimeout(() => {
+      if (this.type == "info" && this.exists) {
+        this.destroy.emit();
+      }
+    }, 10500);
   }
 
   ngAfterViewInit() {

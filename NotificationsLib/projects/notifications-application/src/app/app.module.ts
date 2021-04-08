@@ -10,7 +10,7 @@ import { SendNotificationsComponent } from './user/send-notifications/send-notif
 import { NotifyModule, NotifyService } from 'notify';
 import { FormsModule } from '@angular/forms';
 import { UserService } from './shared/user.service';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HomepageComponent } from './user/homepage/homepage.component';
 import { DashboardComponent } from './user/dashboard/dashboard.component';
 
@@ -43,6 +43,10 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     BrowserModule,
     FormsModule,
     HttpClientModule,
+    // HttpClientXsrfModule.withOptions({
+    //   cookieName: 'XSRF-TOKEN',
+    //   headerName: 'X-XSRF-TOKEN'
+    // }),
     AppRoutingModule,
     NotifyModule,
     BrowserAnimationsModule,

@@ -54,12 +54,12 @@ export class NotifyService {
       childComponentRef.instance.exists = true;
       childComponentRef.instance.progressrequired = true;
       childComponentRef.instance.progressTime = 10000;
-      childComponentRef.instance.actualTime = 10000;      
-      setTimeout(() => {
-        if (childComponentRef.instance.exists) {
-          this.destroy(childComponentRef);
-        }
-      }, 10500);
+      childComponentRef.instance.actualTime = 10000;    
+      // setTimeout(() => {
+      //   if (childComponentRef.instance.exists) {
+      //     this.destroy(childComponentRef);
+      //   }
+      // }, 10500);
     }
   }
 
