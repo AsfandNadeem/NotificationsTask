@@ -18,6 +18,7 @@ export declare class NotifyComponent implements OnInit, AfterViewInit {
     destroy: EventEmitter<any>;
     mySubscription: Subscription;
     setWidth: number;
+    exists: boolean;
     constructor(NotifyService: NotifyService, renderer: Renderer2);
     ngOnInit(): void;
     ngAfterViewInit(): void;

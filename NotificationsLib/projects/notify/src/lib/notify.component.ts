@@ -23,6 +23,7 @@ export class NotifyComponent implements OnInit, AfterViewInit {
   mySubscription: Subscription;
   // @ViewChild('progressDiv') divCurtain: ElementRef;
   setWidth = 0;
+  exists = true;
 
   // @HostBinding('class.redbackground') warning: boolean;
   constructor(private NotifyService: NotifyService, public renderer: Renderer2) {
@@ -55,6 +56,9 @@ export class NotifyComponent implements OnInit, AfterViewInit {
   }
 
   onClose(): void {
+    if (this.progressrequired) {
+    this.mySubscription.unsubscribe();
+    }
     this.destroy.emit();
   }
 

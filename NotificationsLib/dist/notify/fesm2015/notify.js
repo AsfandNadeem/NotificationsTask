@@ -44,6 +44,7 @@ class NotifyComponent {
         this.destroy = new EventEmitter();
         // @ViewChild('progressDiv') divCurtain: ElementRef;
         this.setWidth = 0;
+        this.exists = true;
     }
     ngOnInit() {
     }
@@ -67,6 +68,9 @@ class NotifyComponent {
         }
     }
     onClose() {
+        if (this.progressrequired) {
+            this.mySubscription.unsubscribe();
+        }
         this.destroy.emit();
     }
     setProgress() {
@@ -185,7 +189,6 @@ class NotifyService {
         this.maxLimit = 5;
         this.countNotifications = 0;
         this.Queue = Array();
-        this.exists = true;
         this._children = [];
         this.NotifyContainerRef = this.elementService.createComponentinDom(NotifyContainerComponent);
         this.NotifyContainerElement = this.elementService.getElement(this.NotifyContainerRef);
@@ -199,6 +202,7 @@ class NotifyService {
         childComponentRef.instance.header = header;
         childComponentRef.instance.message = message;
         childComponentRef.instance.type = type;
+        childComponentRef.instance.exists = true;
         const sub = childComponentRef.instance.destroy.subscribe(() => {
             sub.unsubscribe();
             this.destroy(childComponentRef);
@@ -208,12 +212,12 @@ class NotifyService {
         this._children.push(childComponentRef);
         this.countNotifications++;
         if (type == "info") {
-            this.exists = true;
+            childComponentRef.instance.exists = true;
             childComponentRef.instance.progressrequired = true;
             childComponentRef.instance.progressTime = 10000;
             childComponentRef.instance.actualTime = 10000;
             setTimeout(() => {
-                if (this.exists) {
+                if (childComponentRef.instance.exists) {
                     this.destroy(childComponentRef);
                 }
             }, 10500);
@@ -230,8 +234,8 @@ class NotifyService {
     destroy(childComponentRef) {
         this.elementService.destroyElement(childComponentRef);
         (this._children).splice((this._children).indexOf(childComponentRef), 1);
-        if (this.exists) {
-            this.exists = false;
+        if (childComponentRef.instance.exists) {
+            childComponentRef.instance.exists = false;
         }
         if (this.countNotifications > 0) {
             this.countNotifications--;

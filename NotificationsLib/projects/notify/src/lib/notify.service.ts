@@ -12,7 +12,6 @@ export class NotifyService {
   maxLimit = 5;
   countNotifications = 0;
   Queue = Array<INotification>();
-  exists = true;
   private _children: ComponentRef<NotifyComponent>[] = [];
   private NotifyContainerElement: HTMLElement;
   private NotifyContainerRef: ComponentRef<NotifyContainerComponent>;
@@ -38,6 +37,8 @@ export class NotifyService {
 
     childComponentRef.instance.type = type;
 
+    childComponentRef.instance.exists = true;
+
 
 
     const sub = childComponentRef.instance.destroy.subscribe(() => {
@@ -50,12 +51,12 @@ export class NotifyService {
     this.countNotifications++;
 
     if (type == "info") {
-      this.exists = true;
+      childComponentRef.instance.exists = true;
       childComponentRef.instance.progressrequired = true;
       childComponentRef.instance.progressTime = 10000;
       childComponentRef.instance.actualTime = 10000;      
       setTimeout(() => {
-        if (this.exists) {
+        if (childComponentRef.instance.exists) {
           this.destroy(childComponentRef);
         }
       }, 10500);
@@ -74,8 +75,8 @@ export class NotifyService {
   destroy(childComponentRef: ComponentRef<any>) {
     this.elementService.destroyElement(childComponentRef);
     (this._children).splice((this._children).indexOf(childComponentRef), 1);
-    if (this.exists) {
-      this.exists = false;
+    if (childComponentRef.instance.exists) {
+      childComponentRef.instance.exists = false;
     }
     if (this.countNotifications > 0) {
       this.countNotifications--;

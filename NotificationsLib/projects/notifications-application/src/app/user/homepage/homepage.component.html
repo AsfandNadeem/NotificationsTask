@@ -1,5 +1,5 @@
 <mat-sidenav-container class="example-container">
-    <mat-sidenav #drawer mode="side" *ngIf="isUserAuthenticated" opened role="navigation" style="width:20%;" style="overflow: hidden;">
+    <mat-sidenav #drawer mode="side" *ngIf="isUserAuthenticated" opened role="navigation">
         <mat-nav-list>
             <a mat-list-item (click)="onNotify()" [ngClass]="{
                             'positive' : showform,
@@ -12,7 +12,7 @@
             <a mat-list-item (click)="onLogout()">Logout</a>
         </mat-nav-list>
     </mat-sidenav>
-    <mat-sidenav-content>
+    <mat-sidenav-content style="height: 30%;">
         <app-send-notifications *ngIf="showform"></app-send-notifications>
         <app-dashboard *ngIf="shownotifications"></app-dashboard>
     </mat-sidenav-content>

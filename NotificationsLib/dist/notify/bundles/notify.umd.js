@@ -54,6 +54,7 @@
             this.destroy = new i0.EventEmitter();
             // @ViewChild('progressDiv') divCurtain: ElementRef;
             this.setWidth = 0;
+            this.exists = true;
         }
         NotifyComponent.prototype.ngOnInit = function () {
         };
@@ -78,6 +79,9 @@
             }
         };
         NotifyComponent.prototype.onClose = function () {
+            if (this.progressrequired) {
+                this.mySubscription.unsubscribe();
+            }
             this.destroy.emit();
         };
         NotifyComponent.prototype.setProgress = function () {
@@ -206,7 +210,6 @@
             this.maxLimit = 5;
             this.countNotifications = 0;
             this.Queue = Array();
-            this.exists = true;
             this._children = [];
             this.NotifyContainerRef = this.elementService.createComponentinDom(NotifyContainerComponent);
             this.NotifyContainerElement = this.elementService.getElement(this.NotifyContainerRef);
@@ -221,6 +224,7 @@
             childComponentRef.instance.header = header;
             childComponentRef.instance.message = message;
             childComponentRef.instance.type = type;
+            childComponentRef.instance.exists = true;
             var sub = childComponentRef.instance.destroy.subscribe(function () {
                 sub.unsubscribe();
                 _this.destroy(childComponentRef);
@@ -230,12 +234,12 @@
             this._children.push(childComponentRef);
             this.countNotifications++;
             if (type == "info") {
-                this.exists = true;
+                childComponentRef.instance.exists = true;
                 childComponentRef.instance.progressrequired = true;
                 childComponentRef.instance.progressTime = 10000;
                 childComponentRef.instance.actualTime = 10000;
                 setTimeout(function () {
-                    if (_this.exists) {
+                    if (childComponentRef.instance.exists) {
                         _this.destroy(childComponentRef);
                     }
                 }, 10500);
@@ -252,8 +256,8 @@
         NotifyService.prototype.destroy = function (childComponentRef) {
             this.elementService.destroyElement(childComponentRef);
             (this._children).splice((this._children).indexOf(childComponentRef), 1);
-            if (this.exists) {
-                this.exists = false;
+            if (childComponentRef.instance.exists) {
+                childComponentRef.instance.exists = false;
             }
             if (this.countNotifications > 0) {
                 this.countNotifications--;

@@ -9,7 +9,6 @@ export declare class NotifyService {
     maxLimit: number;
     countNotifications: number;
     Queue: INotification[];
-    exists: boolean;
     private _children;
     private NotifyContainerElement;
     private NotifyContainerRef;

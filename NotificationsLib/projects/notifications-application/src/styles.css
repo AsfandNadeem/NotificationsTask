@@ -3,7 +3,7 @@
 /* BASIC */
 
 html {
-    background-color: lavenderblush;
+    background-color: blue;
 }
 
 body {
@@ -341,4 +341,6 @@ mat-card {
     width: 59%;
     margin: 20%;
     margin-top: 10%;
+    border: 1px solid lightgray;
+    box-shadow: 14px 26px 22px 9px rgb(4 5 30 / 30%);
 }

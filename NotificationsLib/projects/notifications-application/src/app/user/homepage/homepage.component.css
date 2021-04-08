@@ -11,8 +11,6 @@ mat-drawer {
 mat-drawer-content {
     margin-left: 90px;
     background-color: lavenderblush;
-    height: 100%;
-    /*width:80%;*/
 }
 
 ul {
@@ -32,4 +30,13 @@ a {
 
 .negative {
     color: black;
+}
+
+mat-sidenav {
+    border-right: 1px solid blue;
+    border-bottom: 1px solid blue;
+    box-shadow: 0 37px 15px 7px rgb(4 5 30 / 30%);
+    width: 10%;
+    height: 80%;
+    overflow: hidden;
 }

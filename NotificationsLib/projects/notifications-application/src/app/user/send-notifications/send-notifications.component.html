@@ -1,31 +1,27 @@
-<mat-card>
-    <div class="container center_div">
-        <div class="row">
-            <div class="col-xs-12 col-sm-10, col-md-8 col-sm-offset-1 col-md-offset-2">
-                <form (ngSubmit)="send(f)" #f="ngForm" autocomplete="off">
-                    <div class="form-group">
-                        <label for="header">Header</label>
-                        <input type="text" class="form-control" id="header" required ngModel name="header">
-                    </div>
+<mat-card style="
+padding-left: 12%;
+padding-right: 12%;">
+    <form (ngSubmit)="send(f)" #f="ngForm" autocomplete="off">
+        <div class="form-group">
+            <label for="header">Header</label>
+            <input type="text" class="form-control" id="header" required ngModel name="header">
+        </div>
 
-                    <div class="form-group">
-                        <label for="body">Body&nbsp;&nbsp;&nbsp;</label>
-                        <input type="text" class="form-control" id="body" required ngModel name="body">
-                    </div>
+        <div class="form-group">
+            <label for="body">Body&nbsp;&nbsp;&nbsp;</label>
+            <input type="text" class="form-control" id="body" required ngModel name="body">
+        </div>
 
-                    <div class="form-group">
-                        <label for="category">Category</label>
-                        <select class="form-control" id="category" [(ngModel)]="categorySelected" name="category" required>
+        <div class="form-group">
+            <label for="category">Category</label>
+            <select class="form-control" id="category" [(ngModel)]="categorySelected" name="category" required>
               <option *ngFor="let category of categories" [value]="category">{{category}}</option>
             </select>
-                    </div>
-
-                    <button class="btn btn-primary" [disabled]="!f.valid" type="submit">Send</button>
-
-                </form>
-            </div>
         </div>
-    </div>
+
+        <button class="btn btn-primary" [disabled]="!f.valid" type="submit">Send</button>
+
+    </form>
     <!-- Error message -->
     <div class="alert" *ngIf="serverErrorMessages">
         {{serverErrorMessages}}

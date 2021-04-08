@@ -84,16 +84,3 @@ th {
 ::ng-deep .mat-select-panel {
     left: 0
 }
-
-
-/* ::ng-deep .mat-select-panel {
-    position: fixed;
-    height: 300px;
-    width: 100%;
-} */
-
-
-/* .mat-select-panel-wrap {
-    margin-top: -20.7% !important;
-    margin-left: 59.1% !important;
-} */
