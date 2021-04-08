@@ -86,7 +86,7 @@ export class UserService {
     this.tokenTimer = setTimeout(() => {
       this.logout();
     },
-      duration * 100000);
+      duration * 1000);
   }
 
   private saveAuthData(token: string, expirationDate: Date) {

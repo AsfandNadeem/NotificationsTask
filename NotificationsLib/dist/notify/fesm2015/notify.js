@@ -1,5 +1,7 @@
-import { ɵɵdefineComponent, ɵɵprojectionDef, ɵɵprojection, ɵsetClassMetadata, Component, EventEmitter, ɵɵdirectiveInject, Renderer2, ɵɵelementStart, ɵɵtext, ɵɵelementEnd, ɵɵlistener, ɵɵadvance, ɵɵstyleProp, ɵɵtextInterpolate, Input, Output, ɵɵinject, ComponentFactoryResolver, ApplicationRef, Injector, ɵɵdefineInjectable, Injectable, ɵɵdefineNgModule, ɵɵdefineInjector, ɵɵsetNgModuleScope, NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { ɵɵdefineComponent, ɵɵprojectionDef, ɵɵprojection, ɵsetClassMetadata, Component, ɵɵelementStart, ɵɵelement, ɵɵelementEnd, ɵɵnextContext, ɵɵadvance, ɵɵstyleProp, EventEmitter, ɵɵdirectiveInject, Renderer2, ɵɵviewQuery, ɵɵqueryRefresh, ɵɵloadQuery, ɵɵtext, ɵɵlistener, ɵɵtemplate, ɵɵtextInterpolate, ɵɵproperty, Input, Output, ViewChild, ɵɵinject, ComponentFactoryResolver, ApplicationRef, Injector, ɵɵdefineInjectable, Injectable, ɵɵdefineNgModule, ɵɵdefineInjector, ɵɵsetNgModuleScope, NgModule } from '@angular/core';
+import { interval } from 'rxjs';
+import 'rxjs/add/observable/interval';
+import { NgIf, CommonModule } from '@angular/common';
 
 const _c0 = ["*"];
 class NotifyContainerComponent {
@@ -21,15 +23,37 @@ NotifyContainerComponent.ɵcmp = ɵɵdefineComponent({ type: NotifyContainerComp
             }]
     }], function () { return []; }, null); })();
 
+const _c0$1 = ["progressDiv"];
+function NotifyComponent_div_12_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "div", 9);
+    ɵɵelement(1, "div", 10, 11);
+    ɵɵelementEnd();
+} if (rf & 2) {
+    const ctx_r0 = ɵɵnextContext();
+    ɵɵadvance(1);
+    ɵɵstyleProp("width", ctx_r0.setWidth, "%");
+} }
 class NotifyComponent {
     // @HostBinding('class.redbackground') warning: boolean;
     constructor(NotifyService, renderer) {
         this.NotifyService = NotifyService;
         this.renderer = renderer;
         this.type = '';
+        this.progressrequired = false;
+        this.progressTime = 0;
+        this.actualTime = 0;
         this.destroy = new EventEmitter();
+        this.setWidth = 0;
     }
     ngOnInit() {
+    }
+    ngAfterViewInit() {
+        if (this.progressrequired) {
+            this.setWidth = ((this.actualTime / this.progressTime) * 100);
+            this.mySubscription = interval(100).subscribe((x => {
+                this.getProgress();
+            }));
+        }
     }
     getBackground() {
         if (this.type === 'warning') {
@@ -45,9 +69,24 @@ class NotifyComponent {
     onClose() {
         this.destroy.emit();
     }
+    getProgress() {
+        if (this.actualTime > 0) {
+            this.actualTime = this.actualTime - 100;
+            this.setWidth = ((this.actualTime / this.progressTime) * 100);
+            // this.divCurtain.nativeElement.style.width = (this.actualTime / this.progressTime).toString() + '%';
+        }
+        else {
+            this.mySubscription.unsubscribe();
+        }
+    }
 }
 NotifyComponent.ɵfac = function NotifyComponent_Factory(t) { return new (t || NotifyComponent)(ɵɵdirectiveInject(NotifyService), ɵɵdirectiveInject(Renderer2)); };
-NotifyComponent.ɵcmp = ɵɵdefineComponent({ type: NotifyComponent, selectors: [["lib-notify"]], inputs: { header: "header", message: "message", type: "type" }, outputs: { destroy: "destroy" }, decls: 12, vars: 4, consts: [[1, "card", "container", "my-4", "stack-top"], [1, "card-header", "container-fluid"], [1, "row"], [1, "col-10"], [1, "col-2"], ["type", "button", 3, "click"], [1, "card-body", 2, "text-align", "center"], [1, "card-text"]], template: function NotifyComponent_Template(rf, ctx) { if (rf & 1) {
+NotifyComponent.ɵcmp = ɵɵdefineComponent({ type: NotifyComponent, selectors: [["lib-notify"]], viewQuery: function NotifyComponent_Query(rf, ctx) { if (rf & 1) {
+        ɵɵviewQuery(_c0$1, 1);
+    } if (rf & 2) {
+        let _t;
+        ɵɵqueryRefresh(_t = ɵɵloadQuery()) && (ctx.divCurtain = _t.first);
+    } }, inputs: { header: "header", message: "message", type: "type", progressrequired: "progressrequired", progressTime: "progressTime", actualTime: "actualTime" }, outputs: { destroy: "destroy" }, decls: 13, vars: 5, consts: [[1, "card", "container", "my-4", "stack-top"], [1, "card-header", "container-fluid"], [1, "row"], [1, "col-10"], [1, "col-2"], ["type", "button", 3, "click"], [1, "card-body", 2, "text-align", "center"], [1, "card-text"], ["class", "progress", 4, "ngIf"], [1, "progress"], ["role", "progressbar", "aria-valuemin", "0", "aria-valuemax", "100", 1, "progress-bar", "progress-bar-striped", "active"], ["progressDiv", ""]], template: function NotifyComponent_Template(rf, ctx) { if (rf & 1) {
         ɵɵelementStart(0, "div", 0);
         ɵɵelementStart(1, "div", 1);
         ɵɵelementStart(2, "div", 2);
@@ -69,6 +108,7 @@ NotifyComponent.ɵcmp = ɵɵdefineComponent({ type: NotifyComponent, selectors: 
         ɵɵtext(11);
         ɵɵelementEnd();
         ɵɵelementEnd();
+        ɵɵtemplate(12, NotifyComponent_div_12_Template, 3, 2, "div", 8);
         ɵɵelementEnd();
     } if (rf & 2) {
         ɵɵadvance(1);
@@ -77,7 +117,9 @@ NotifyComponent.ɵcmp = ɵɵdefineComponent({ type: NotifyComponent, selectors: 
         ɵɵtextInterpolate(ctx.header);
         ɵɵadvance(6);
         ɵɵtextInterpolate(ctx.message);
-    } }, styles: [".stack-top[_ngcontent-%COMP%]{padding:0;width:20%;box-shadow:0 10px 19px 10px rgba(0,0,0,.04);color:#000;display:flex;transform:translateY(calc(100% - 900px));z-index:1;margin-right:1%}@media (max-width:1480px){.stack-top[_ngcontent-%COMP%]{transform:translateY(calc(100% - 600px))}}"] });
+        ɵɵadvance(1);
+        ɵɵproperty("ngIf", ctx.progressrequired);
+    } }, directives: [NgIf], styles: [".stack-top[_ngcontent-%COMP%]{padding:0;width:20%;box-shadow:0 10px 19px 10px rgba(0,0,0,.04);color:#000;display:flex;transform:translateY(calc(100% - 900px));z-index:1;margin-right:1%}@media (max-width:1480px){.stack-top[_ngcontent-%COMP%]{transform:translateY(calc(100% - 600px))}}"] });
 (function () { (typeof ngDevMode === "undefined" || ngDevMode) && ɵsetClassMetadata(NotifyComponent, [{
         type: Component,
         args: [{
@@ -92,8 +134,17 @@ NotifyComponent.ɵcmp = ɵɵdefineComponent({ type: NotifyComponent, selectors: 
             type: Input
         }], type: [{
             type: Input
+        }], progressrequired: [{
+            type: Input
+        }], progressTime: [{
+            type: Input
+        }], actualTime: [{
+            type: Input
         }], destroy: [{
             type: Output
+        }], divCurtain: [{
+            type: ViewChild,
+            args: ['progressDiv']
         }] }); })();
 
 class ElementAttachmentService {
@@ -166,11 +217,14 @@ class NotifyService {
         this.countNotifications++;
         if (type == "info") {
             this.exists = true;
+            childComponentRef.instance.progressrequired = true;
+            childComponentRef.instance.progressTime = 10000;
+            childComponentRef.instance.actualTime = 10000;
             setTimeout(() => {
                 if (this.exists) {
                     this.destroy(childComponentRef);
                 }
-            }, 10000);
+            }, 10500);
         }
     }
     open(header, message, category) {

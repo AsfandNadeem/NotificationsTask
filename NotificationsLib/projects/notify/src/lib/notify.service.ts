@@ -51,11 +51,14 @@ export class NotifyService {
 
     if (type == "info") {
       this.exists = true;
+      childComponentRef.instance.progressrequired = true;
+      childComponentRef.instance.progressTime = 10000;
+      childComponentRef.instance.actualTime = 10000;      
       setTimeout(() => {
         if (this.exists) {
           this.destroy(childComponentRef);
         }
-      }, 10000);
+      }, 10500);
     }
   }
 

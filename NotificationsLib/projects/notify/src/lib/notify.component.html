@@ -14,4 +14,9 @@
     <div class="card-body" style="text-align: center;">
         <p class="card-text">{{message}}</p>
     </div>
+    <div *ngIf="progressrequired" class="progress">
+        <div #progressDiv [style.width.%]="setWidth" class="progress-bar progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+
+        </div>
+    </div>
 </div>
