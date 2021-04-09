@@ -3,13 +3,14 @@
 }
 
 mat-drawer {
-    background-color: lavenderblush;
-    border: 1px solid #555;
+    padding: 10px;
+    padding-left: 20px;
     width: 20%;
+    position: absolute;
 }
 
 mat-drawer-content {
-    margin-left: 90px;
+    /* margin-left: 90px; */
     background-color: lavenderblush;
 }
 
@@ -36,7 +37,7 @@ mat-sidenav {
     border-right: 1px solid blue;
     border-bottom: 1px solid blue;
     box-shadow: 0 37px 15px 7px rgb(4 5 30 / 30%);
-    width: 10%;
-    height: 80%;
+    /* width: 10%; */
+    height: 90%;
     overflow: hidden;
 }

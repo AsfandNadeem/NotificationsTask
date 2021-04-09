@@ -107,7 +107,7 @@ NotifyComponent.ɵcmp = i0.ɵɵdefineComponent({ type: NotifyComponent, selector
         i0.ɵɵtextInterpolate(ctx.message);
         i0.ɵɵadvance(1);
         i0.ɵɵproperty("ngIf", ctx.progressrequired);
-    } }, directives: [i2.NgIf], styles: [".stack-top[_ngcontent-%COMP%]{padding:0;width:20%;box-shadow:0 10px 19px 10px rgba(0,0,0,.04);color:#000;display:flex;transform:translateY(calc(100% - 900px));z-index:1;margin-right:1%}@media (max-width:1480px){.stack-top[_ngcontent-%COMP%]{transform:translateY(calc(100% - 600px))}}"] });
+    } }, directives: [i2.NgIf], styles: [".stack-top[_ngcontent-%COMP%]{padding:0;box-shadow:0 10px 19px 10px rgba(0,0,0,.04);color:#000;display:flex;z-index:1}[_nghost-%COMP%]{position:absolute;top:0;right:1%;width:18%}"] });
 (function () { (typeof ngDevMode === "undefined" || ngDevMode) && i0.ɵsetClassMetadata(NotifyComponent, [{
         type: Component,
         args: [{
