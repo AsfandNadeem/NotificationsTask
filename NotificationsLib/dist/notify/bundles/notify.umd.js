@@ -18,7 +18,7 @@
                 i0.ɵɵprojectionDef();
                 i0.ɵɵprojection(0);
             }
-        }, styles: [""] });
+        }, styles: ["[_nghost-%COMP%]{position:absolute;margin-top:1%;right:2%;width:16%}"] });
     (function () {
         (typeof ngDevMode === "undefined" || ngDevMode) && i0.ɵsetClassMetadata(NotifyContainerComponent, [{
                 type: i0.Component,
@@ -139,7 +139,7 @@
                 i0.ɵɵadvance(1);
                 i0.ɵɵproperty("ngIf", ctx.progressrequired);
             }
-        }, directives: [i2.NgIf], styles: [".stack-top[_ngcontent-%COMP%]{padding:0;box-shadow:0 10px 19px 10px rgba(0,0,0,.04);color:#000;display:flex;z-index:1}[_nghost-%COMP%]{position:absolute;top:0;right:1%;width:18%}"] });
+        }, directives: [i2.NgIf], styles: [".stack-top[_ngcontent-%COMP%]{padding:0;box-shadow:0 10px 19px 10px rgba(0,0,0,.04);color:#000;display:flex;z-index:1}"] });
     (function () {
         (typeof ngDevMode === "undefined" || ngDevMode) && i0.ɵsetClassMetadata(NotifyComponent, [{
                 type: i0.Component,

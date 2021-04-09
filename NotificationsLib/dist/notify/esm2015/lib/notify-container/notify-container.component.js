@@ -10,7 +10,7 @@ NotifyContainerComponent.ɵfac = function NotifyContainerComponent_Factory(t) { 
 NotifyContainerComponent.ɵcmp = i0.ɵɵdefineComponent({ type: NotifyContainerComponent, selectors: [["lib-notify-container"]], ngContentSelectors: _c0, decls: 1, vars: 0, template: function NotifyContainerComponent_Template(rf, ctx) { if (rf & 1) {
         i0.ɵɵprojectionDef();
         i0.ɵɵprojection(0);
-    } }, styles: [""] });
+    } }, styles: ["[_nghost-%COMP%]{position:absolute;margin-top:1%;right:2%;width:16%}"] });
 (function () { (typeof ngDevMode === "undefined" || ngDevMode) && i0.ɵsetClassMetadata(NotifyContainerComponent, [{
         type: Component,
         args: [{

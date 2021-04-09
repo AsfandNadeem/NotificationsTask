@@ -20,9 +20,10 @@
     }
 } */
 
-:host {
+
+/* :host {
     position: absolute;
     top: 0;
     right: 1%;
     width: 18%;
-}
+} */

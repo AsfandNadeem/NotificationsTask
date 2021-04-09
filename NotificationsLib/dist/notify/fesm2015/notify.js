@@ -13,7 +13,7 @@ NotifyContainerComponent.ɵfac = function NotifyContainerComponent_Factory(t) { 
 NotifyContainerComponent.ɵcmp = ɵɵdefineComponent({ type: NotifyContainerComponent, selectors: [["lib-notify-container"]], ngContentSelectors: _c0, decls: 1, vars: 0, template: function NotifyContainerComponent_Template(rf, ctx) { if (rf & 1) {
         ɵɵprojectionDef();
         ɵɵprojection(0);
-    } }, styles: [""] });
+    } }, styles: ["[_nghost-%COMP%]{position:absolute;margin-top:1%;right:2%;width:16%}"] });
 (function () { (typeof ngDevMode === "undefined" || ngDevMode) && ɵsetClassMetadata(NotifyContainerComponent, [{
         type: Component,
         args: [{
@@ -123,7 +123,7 @@ NotifyComponent.ɵcmp = ɵɵdefineComponent({ type: NotifyComponent, selectors: 
         ɵɵtextInterpolate(ctx.message);
         ɵɵadvance(1);
         ɵɵproperty("ngIf", ctx.progressrequired);
-    } }, directives: [NgIf], styles: [".stack-top[_ngcontent-%COMP%]{padding:0;box-shadow:0 10px 19px 10px rgba(0,0,0,.04);color:#000;display:flex;z-index:1}[_nghost-%COMP%]{position:absolute;top:0;right:1%;width:18%}"] });
+    } }, directives: [NgIf], styles: [".stack-top[_ngcontent-%COMP%]{padding:0;box-shadow:0 10px 19px 10px rgba(0,0,0,.04);color:#000;display:flex;z-index:1}"] });
 (function () { (typeof ngDevMode === "undefined" || ngDevMode) && ɵsetClassMetadata(NotifyComponent, [{
         type: Component,
         args: [{
