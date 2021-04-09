@@ -75,6 +75,7 @@ export class NotifyService {
   destroy(childComponentRef: ComponentRef<any>) {
     this.elementService.destroyElement(childComponentRef);
     (this._children).splice((this._children).indexOf(childComponentRef), 1);
+    
     if (childComponentRef.instance.exists) {
       childComponentRef.instance.exists = false;
     }

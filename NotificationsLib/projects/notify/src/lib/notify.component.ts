@@ -1,4 +1,4 @@
-import { AfterViewInit, ElementRef, HostBinding, Input, ViewChild } from '@angular/core';
+import { AfterContentInit, AfterViewInit, ElementRef, HostBinding, Input, ViewChild } from '@angular/core';
 import { Renderer2 } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { Output } from '@angular/core';
@@ -12,7 +12,7 @@ import { NotifyService } from './notify.service';
   styleUrls: ['./notify.component.css'
   ]
 })
-export class NotifyComponent implements OnInit, AfterViewInit {
+export class NotifyComponent implements OnInit, AfterContentInit {
   @Input() header: string;
   @Input() message: string;
   @Input() type = '';
@@ -38,7 +38,7 @@ export class NotifyComponent implements OnInit, AfterViewInit {
     }, 10500);
   }
 
-  ngAfterViewInit() {
+  ngAfterContentInit() {
     if (this.progressrequired) {
       this.setWidth = ((this.actualTime / this.progressTime) * 100);
       this.mySubscription = interval(100).subscribe((x => {

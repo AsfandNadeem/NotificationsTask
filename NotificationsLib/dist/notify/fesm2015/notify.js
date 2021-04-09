@@ -53,7 +53,7 @@ class NotifyComponent {
             }
         }, 10500);
     }
-    ngAfterViewInit() {
+    ngAfterContentInit() {
         if (this.progressrequired) {
             this.setWidth = ((this.actualTime / this.progressTime) * 100);
             this.mySubscription = interval(100).subscribe((x => {

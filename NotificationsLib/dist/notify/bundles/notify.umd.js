@@ -64,7 +64,7 @@
                 }
             }, 10500);
         };
-        NotifyComponent.prototype.ngAfterViewInit = function () {
+        NotifyComponent.prototype.ngAfterContentInit = function () {
             var _this = this;
             if (this.progressrequired) {
                 this.setWidth = ((this.actualTime / this.progressTime) * 100);
