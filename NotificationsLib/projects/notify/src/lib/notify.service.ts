@@ -12,7 +12,7 @@ export class NotifyService {
   maxLimit = 5;
   countNotifications = 0;
   Queue = Array<INotification>();
-  private _children: ComponentRef<NotifyComponent>[] = [];
+  private _children: NotifyComponent[] = [];
   private NotifyContainerElement: HTMLElement;
   private NotifyContainerRef: ComponentRef<NotifyContainerComponent>;
 
@@ -47,19 +47,14 @@ export class NotifyService {
     });
     //Add child component to parent
     this.elementService.addChildtoElement(childElement, this.NotifyContainerElement);
-    this._children.push(childComponentRef);
+    this._children.push(childComponentRef.instance);
     this.countNotifications++;
 
     if (type == "info") {
       childComponentRef.instance.exists = true;
       childComponentRef.instance.progressrequired = true;
       childComponentRef.instance.progressTime = 10000;
-      childComponentRef.instance.actualTime = 10000;    
-      // setTimeout(() => {
-      //   if (childComponentRef.instance.exists) {
-      //     this.destroy(childComponentRef);
-      //   }
-      // }, 10500);
+      childComponentRef.instance.actualTime = 10000;   
     }
   }
 
@@ -74,7 +69,7 @@ export class NotifyService {
 
   destroy(childComponentRef: ComponentRef<any>) {
     this.elementService.destroyElement(childComponentRef);
-    (this._children).splice((this._children).indexOf(childComponentRef), 1);
+    // (this._children).splice((this._children).indexOf(childComponentRef.instance), 1);
     
     if (childComponentRef.instance.exists) {
       childComponentRef.instance.exists = false;
@@ -90,14 +85,13 @@ export class NotifyService {
 
 
   destroyAll() {
-    this._children.forEach(cmp => this.destroy(cmp));
-    this._children.splice(0, this._children.length);
+    this.Queue = [];
+    this._children.forEach(cmp => {
+      cmp.onClose();
+    });
+    this._children = [];
     this.countNotifications = 0;
     
   }
-
-
-
-
 
 }

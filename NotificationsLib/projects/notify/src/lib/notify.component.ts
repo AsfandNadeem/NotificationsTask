@@ -33,7 +33,7 @@ export class NotifyComponent implements OnInit, AfterContentInit {
   ngOnInit(): void {
     setTimeout(() => {
       if (this.type == "info" && this.exists) {
-        this.destroy.emit();
+        this.onClose();
       }
     }, 10500);
   }

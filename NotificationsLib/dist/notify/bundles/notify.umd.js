@@ -60,7 +60,7 @@
             var _this = this;
             setTimeout(function () {
                 if (_this.type == "info" && _this.exists) {
-                    _this.destroy.emit();
+                    _this.onClose();
                 }
             }, 10500);
         };
@@ -237,18 +237,13 @@
             });
             //Add child component to parent
             this.elementService.addChildtoElement(childElement, this.NotifyContainerElement);
-            this._children.push(childComponentRef);
+            this._children.push(childComponentRef.instance);
             this.countNotifications++;
             if (type == "info") {
                 childComponentRef.instance.exists = true;
                 childComponentRef.instance.progressrequired = true;
                 childComponentRef.instance.progressTime = 10000;
                 childComponentRef.instance.actualTime = 10000;
-                // setTimeout(() => {
-                //   if (childComponentRef.instance.exists) {
-                //     this.destroy(childComponentRef);
-                //   }
-                // }, 10500);
             }
         };
         NotifyService.prototype.open = function (header, message, category) {
@@ -261,7 +256,7 @@
         };
         NotifyService.prototype.destroy = function (childComponentRef) {
             this.elementService.destroyElement(childComponentRef);
-            (this._children).splice((this._children).indexOf(childComponentRef), 1);
+            // (this._children).splice((this._children).indexOf(childComponentRef.instance), 1);
             if (childComponentRef.instance.exists) {
                 childComponentRef.instance.exists = false;
             }
@@ -274,9 +269,11 @@
             }
         };
         NotifyService.prototype.destroyAll = function () {
-            var _this = this;
-            this._children.forEach(function (cmp) { return _this.destroy(cmp); });
-            this._children.splice(0, this._children.length);
+            this.Queue = [];
+            this._children.forEach(function (cmp) {
+                cmp.onClose();
+            });
+            this._children = [];
             this.countNotifications = 0;
         };
         return NotifyService;
