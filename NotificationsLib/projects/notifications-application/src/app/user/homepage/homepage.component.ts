@@ -1,8 +1,11 @@
 import { Component, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav, MatSidenavContainer } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { UserService } from '../../shared/user.service';
+import * as fromApp from '../../store/app.reducers';
+import * as fromAuth from '../../shared/auth-store/auth.reducer';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-homepage',
@@ -11,6 +14,7 @@ import { UserService } from '../../shared/user.service';
 })
 export class HomepageComponent implements OnInit, OnDestroy {
 
+  authState: Observable<fromAuth.State>;
   isUserAuthenticated = false;
   showform = false;
   shownotifications = false;
@@ -31,12 +35,16 @@ export class HomepageComponent implements OnInit, OnDestroy {
     }
   }
 
-  constructor(public userService: UserService, private router: Router) { }
+  constructor(public userService: UserService, 
+    private router: Router,
+    private store: Store<fromApp.Appstate>) { }
 
   ngOnInit() {
-    this.isUserAuthenticated = this.userService.getIsAuth();
+    this.authState = this.store.select('auth');
 
-    if (this.isUserAuthenticated) {
+    // this.isUserAuthenticated = this.userService.getIsAuth();
+
+    if (this.authState) {
       this.showform = true;
       this.shownotifications = false;
       this.isUserAuthenticated = true;

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { StoreModule } from "@ngrx/store";
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -28,6 +29,7 @@ import {MatMenuModule} from "@angular/material/menu";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
 import { AuthInterceptor } from './shared/auth-interceptor';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { reducers } from './store/app.reducers';
 
 @NgModule({
   declarations: [
@@ -59,7 +61,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatTableModule,
     MatIconModule,
     MatMenuModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    StoreModule.forRoot(reducers)
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
     ,UserService],

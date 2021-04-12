@@ -1,5 +1,8 @@
 <mat-sidenav-container class="example-container" fullscreen>
-    <mat-sidenav #drawer mode="side" *ngIf="isUserAuthenticated" opened role="navigation">
+    <!-- <mat-sidenav #drawer mode="side" *ngIf="isUserAuthenticated" opened role="navigation"> -->
+    <!-- <ng-template > -->
+    <mat-sidenav *ngIf="(authState | async).authenticated" #drawer mode="side" opened role="navigation">
+
         <mat-nav-list style="overflow: hidden;">
             <a mat-list-item (click)="onNotify()" [ngClass]="{
                             'positive' : showform,
@@ -12,6 +15,7 @@
             <a mat-list-item (click)="onLogout()">Logout</a>
         </mat-nav-list>
     </mat-sidenav>
+    <!-- </ng-template> -->
     <mat-sidenav-content>
         <button *ngIf="toggleRequired" mat-button style="border: none; background-color: white;" (click)="sidenav.toggle()"><mat-icon>menu</mat-icon></button>
         <mat-card>

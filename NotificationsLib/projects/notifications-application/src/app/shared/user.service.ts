@@ -6,6 +6,10 @@ import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { User } from './user';
 import { NotificationsModel } from './notifications-model';
+import {Store} from '@ngrx/store';
+import * as fromApp from '../store/app.reducers';
+import * as AuthActions from '../shared/auth-store/auth-actions';
+
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +29,9 @@ export class UserService {
     email: '',
     password: ''
   };
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient,
+     private router: Router,
+     private store: Store<fromApp.Appstate>) { }
   public getLoginErrors(): Subject<string> {
     return this.logInErrorSubject;
   }
@@ -63,7 +69,8 @@ export class UserService {
       .subscribe(response => {
         const token = response.token;
         this.token = token;
-        if (token) {
+        this.store.dispatch(new AuthActions.Signin());
+        if (response.token) {
           const expiresInDuration = response.expiresIn;
           this.setAuthTimer(expiresInDuration);
           this.isAuthenticated = true;
@@ -73,6 +80,7 @@ export class UserService {
           this.saveAuthData(token, expirationDate);
           this.message = '';
           this.logInErrorSubject.next(this.message);
+          this.store.dispatch(new AuthActions.SetToken(response.token));
           this.router.navigate(['/homepage']).then();
         }
       }, error => {
@@ -105,6 +113,7 @@ export class UserService {
     this.authStatusListener.next(false);
     clearTimeout(this.tokenTimer);
     this.clearAuthData();
+    this.store.dispatch(new AuthActions.Logout());
     this.router.navigate(['/']);
     this.selectedUser = {
       fullName: '',
