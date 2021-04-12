@@ -40,4 +40,9 @@ mat-sidenav {
     /* width: 10%; */
     height: 90%;
     overflow: hidden;
+    background-color: white !important;
+}
+
+mat-card {
+    background-color: white !important;
 }

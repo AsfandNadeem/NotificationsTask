@@ -2,13 +2,12 @@
 
 /* BASIC */
 
-html {
-    background-color: blue;
-}
+html {}
 
 body {
     font-family: "Poppins", sans-serif;
     /* height: 100vh; */
+    background-color: aliceblue;
 }
 
 a {
