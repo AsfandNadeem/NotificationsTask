@@ -6,6 +6,7 @@ import { Router } from "@angular/router";
 import {Store} from "@ngrx/store";
 import * as fromApp from '../../store/app.reducers';
 import * as AuthActions from '../../shared/auth-store/auth-actions';
+import { from } from 'rxjs';
 
 @Component({
   selector: 'app-sign-up',
@@ -24,13 +25,15 @@ export class SignUpComponent implements OnInit {
   ngOnInit(): void {
   }
   onSubmit(form: NgForm) {
+    // this.store.dispatch(new AuthActions.TrySignup({username: form.value.email
+    // , password: form.value.password}));
     this.userService.postUser(form.value).subscribe(
       res => {
-        // this.showSucessMessage = true;
-        // setTimeout(() => this.showSucessMessage = false, 2);
-        // this.router.navigate(['/login']).then();
-        // this.resetForm(form);
         this.store.dispatch(new AuthActions.Signup());
+        this.showSucessMessage = true;
+        setTimeout(() => this.showSucessMessage = false, 2);
+        this.router.navigate(['/login']).then();
+        this.resetForm(form);
       },
       err => {
         if (err.status === 422) {

@@ -30,6 +30,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthInterceptor } from './shared/auth-interceptor';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { reducers } from './store/app.reducers';
+import { EffectsModule } from '@ngrx/effects';
+// import { AuthEffects } from './shared/auth-store/auth.effects';
 
 @NgModule({
   declarations: [
@@ -62,7 +64,8 @@ import { reducers } from './store/app.reducers';
     MatIconModule,
     MatMenuModule,
     MatPaginatorModule,
-    StoreModule.forRoot(reducers)
+    StoreModule.forRoot(reducers),
+    // EffectsModule.forRoot([AuthEffects])
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
     ,UserService],

@@ -2,9 +2,10 @@ import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@ang
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { NotifyService } from 'notify';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { NotificationsModel } from '../../shared/notifications-model';
 import { UserService } from '../../shared/user.service';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,6 +14,7 @@ import { UserService } from '../../shared/user.service';
   encapsulation: ViewEncapsulation.None
 })
 export class DashboardComponent implements OnInit, OnDestroy {
+  destroy$: Subject<boolean> = new Subject<boolean>();
 
   dataSource: MatTableDataSource<NotificationsModel>;
   displayedColumns: string[] = ['Header', 'Body', 'Type', 'Actions'];
@@ -33,7 +35,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
 
     this.userService.getNotifications();
-    this.notificationsSub = this.userService.getNotificationsUpdateListener()
+    this.userService.getNotificationsUpdateListener()
+    .pipe(takeUntil(this.destroy$))
       .subscribe((notificationData: { notifications: NotificationsModel[] }) => {
         this.notifications = notificationData.notifications;
         this.dataSource = new MatTableDataSource(notificationData.notifications);
@@ -56,7 +59,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
 
   ngOnDestroy(): void {
-    this.notificationsSub.unsubscribe();
+    // this.notificationsSub.unsubscribe();
+    this.destroy$.next(true);
+    this.destroy$.complete();
     this.notify.destroyAll();
   }
 

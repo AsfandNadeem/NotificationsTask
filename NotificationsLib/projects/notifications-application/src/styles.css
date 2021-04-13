@@ -343,3 +343,7 @@ mat-card {
     border: 1px solid lightgray;
     box-shadow: 14px 26px 22px 9px rgb(4 5 30 / 30%);
 }
+
+.cdk-overlay-container {
+    overflow-y: hidden;
+}

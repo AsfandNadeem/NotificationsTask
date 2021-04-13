@@ -62,7 +62,7 @@
                 if (_this.type == "info" && _this.exists) {
                     _this.onClose();
                 }
-            }, 10500);
+            }, this.progressTime + 500);
         };
         NotifyComponent.prototype.ngAfterContentInit = function () {
             var _this = this;
@@ -92,7 +92,7 @@
         };
         NotifyComponent.prototype.setProgress = function () {
             if (this.actualTime > 0) {
-                this.actualTime = this.actualTime - 100;
+                this.actualTime = this.actualTime - ((this.progressTime) / 100);
                 this.setWidth = ((this.actualTime / this.progressTime) * 100);
                 // this.divCurtain.nativeElement.style.width = (this.actualTime / this.progressTime).toString() + '%';
             }

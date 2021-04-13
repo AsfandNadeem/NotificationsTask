@@ -51,7 +51,7 @@ class NotifyComponent {
             if (this.type == "info" && this.exists) {
                 this.onClose();
             }
-        }, 10500);
+        }, this.progressTime + 500);
     }
     ngAfterContentInit() {
         if (this.progressrequired) {
@@ -80,7 +80,7 @@ class NotifyComponent {
     }
     setProgress() {
         if (this.actualTime > 0) {
-            this.actualTime = this.actualTime - 100;
+            this.actualTime = this.actualTime - ((this.progressTime) / 100);
             this.setWidth = ((this.actualTime / this.progressTime) * 100);
             // this.divCurtain.nativeElement.style.width = (this.actualTime / this.progressTime).toString() + '%';
         }
