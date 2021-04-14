@@ -1,31 +1,34 @@
-<!-- <mat-card style="
-padding-left: 12%;
-padding-right: 12%;"> -->
-<form (ngSubmit)="send(f)" #f="ngForm" autocomplete="off" style="
-padding-left: 12%;
-padding-right: 12%;">
-    <div class="form-group">
-        <label for="header">Header</label>
-        <input type="text" class="form-control" id="header" required ngModel name="header">
+<form (ngSubmit)="f.valid && send(f)" #f="ngForm" autocomplete="off">
+    <input type="text" class="form-control" id="header" placeholder="Header" required #header="ngModel" ngModel name="header">
+    <div *ngIf="f.submitted && header.errors">
+        <label *ngIf="header.errors.required" class="validation-message">This field is required.</label>
     </div>
-
-    <div class="form-group">
-        <label for="body">Body&nbsp;&nbsp;&nbsp;</label>
-        <input type="text" class="form-control" id="body" required ngModel name="body">
+    <input type="text" class="form-control" id="body" placeholder="Body" required #body="ngModel" ngModel name="body">
+    <div *ngIf="f.submitted && body.errors">
+        <label *ngIf="body.errors.required" class="validation-message">This field is required.</label>
     </div>
-
-    <div class="form-group">
-        <label for="category">Category</label>
-        <select class="form-control" id="category" [(ngModel)]="categorySelected" name="category" required>
+    <select class="form-control" id="category" [(ngModel)]="categorySelected" name="category" required>
               <option *ngFor="let category of categories" [value]="category">{{category}}</option>
             </select>
-    </div>
-
-    <button class="btn btn-primary" [disabled]="!f.valid" type="submit">Send Notification</button>
+    <input type="submit" value="Send Notification">
+    <!-- <button class="btn btn-primary" [disabled]="!f.valid" type="submit">Send Notification</button> -->
 
 </form>
-<!-- Error message -->
 <div class="alert" *ngIf="serverErrorMessages">
     {{serverErrorMessages}}
 </div>
-<!-- </mat-card> -->
+
+
+<!-- <form #signUpForm="ngForm" (ngSubmit)="signUpForm.valid && onLogin(signUpForm)">
+    <input type="text" #email="ngModel" [(ngModel)]="userService.selectedUser.email" name="email" placeholder="Email" required [pattern]="emailRegex" [ngClass]="{'invalid-textbox' :signUpForm.submitted && !email.valid }">
+    <div *ngIf="signUpForm.submitted && email.errors">
+        <label *ngIf="email.errors.required" class="validation-message">This field is required.</label>
+        <label *ngIf="email.errors.pattern" class="validation-message">Invalid email address.</label>
+    </div>
+    <input type="password" #password="ngModel" [(ngModel)]="userService.selectedUser.password" name="password" placeholder="Password" minlength="4" required [ngClass]="{'invalid-textbox' :signUpForm.submitted && !password.valid }">
+    <div *ngIf="signUpForm.submitted && password.errors">
+        <label *ngIf="password.errors.required" class="validation-message">This field is required.</label>
+        <label *ngIf="password.errors.minlength" class="validation-message">Enter atleast 4 characters.</label>
+    </div>
+    <input type="submit" value="Login">
+</form> -->

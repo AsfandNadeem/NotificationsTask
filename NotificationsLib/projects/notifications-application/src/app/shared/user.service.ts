@@ -35,19 +35,7 @@ export class UserService {
   public getLoginErrors(): Subject<string> {
     return this.logInErrorSubject;
   }
-  getToken() {
-    return localStorage.getItem('token');
-  }
-
-  getName() {
-    return localStorage.getItem('username');
-  }
-  getIsAuth() {
-    if (this.getToken()) {
-      this.isAuthenticated = true;
-    }
-    return this.isAuthenticated;
-  }
+  
 
   getAuthStatusListener() {
     return this.authStatusListener.asObservable();
@@ -77,7 +65,7 @@ export class UserService {
           this.authStatusListener.next(true);
           const now = new Date();
           const expirationDate = new Date(now.getTime() + (expiresInDuration));
-          this.saveAuthData(token, expirationDate);
+          // this.saveAuthData(token, expirationDate);
           this.message = '';
           this.logInErrorSubject.next(this.message);
           this.store.dispatch(new AuthActions.SetToken(response.token));
@@ -97,22 +85,13 @@ export class UserService {
       duration);
   }
 
-  private saveAuthData(token: string, expirationDate: Date) {
-    localStorage.setItem('token', token);
-    localStorage.setItem('expiration', expirationDate.toISOString());
-  }
-
-  private clearAuthData() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('expiration');
-  }
 
   logout() {
     this.token = null;
     this.isAuthenticated = false;
     this.authStatusListener.next(false);
     clearTimeout(this.tokenTimer);
-    this.clearAuthData();
+    // this.clearAuthData();
     this.store.dispatch(new AuthActions.Logout());
     this.router.navigate(['/']);
     this.selectedUser = {

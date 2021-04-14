@@ -1,6 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import {NotifyService} from 'notify';
+import { NotifyService } from 'notify';
 import { Subscription } from 'rxjs';
 import { UserService } from '../../shared/user.service';
 
@@ -9,26 +9,28 @@ import { UserService } from '../../shared/user.service';
   templateUrl: './send-notifications.component.html',
   styleUrls: ['./send-notifications.component.css']
 })
-export class SendNotificationsComponent implements OnInit, OnDestroy {
-categories=["info","error","warning"];
-categorySelected = "info";
-serverErrorMessages: string;
+export class SendNotificationsComponent implements OnInit {
+  categories = ["info", "error", "warning"];
+  categorySelected = "info";
+  serverErrorMessages: string;
 
   constructor(private notify: NotifyService, private userService: UserService) { }
 
   ngOnInit(): void {
-  
+
   }
 
-  send(form: NgForm)
-  {
+  send(form: NgForm) {
+    if (form.invalid) {
+      return;
+    }
     this.serverErrorMessages = '';
     this.userService.addNotification(form.value.header, form.value.body, form.value.category).subscribe(
       res => {
         this.notify.open(form.value.header, form.value.body, form.value.category);
         form.controls['header'].reset();
         form.controls['body'].reset();
-        this.categories=["info","error","warning"];
+        this.categories = ["info", "error", "warning"];
         this.categorySelected = "info";
       },
       err => {
@@ -37,13 +39,9 @@ serverErrorMessages: string;
           this.userService.logout();
         }, 2000);
       }
-  );
-    
+    );
+
   }
 
-  ngOnDestroy()
-  {
-    this.notify.destroyAll();
-  }
 
 }

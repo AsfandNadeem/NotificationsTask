@@ -13,7 +13,9 @@ module.exports.register = (req, res, next) => {
         });
         user.save((err, doc) => {
             if (!err)
-                res.send(doc);
+                res.status(201).json({ success: true, message: 'user added' });
+
+            // res.send(doc);
             else {
                 if (err.code == 11000)
                     res.status(422).send(['Email address already exists']);
@@ -22,7 +24,7 @@ module.exports.register = (req, res, next) => {
             }
         });
     } catch {
-        return res.status(401).json({
+        return res.status(500).json({
             message: "failed"
         });
     }
@@ -62,7 +64,7 @@ module.exports.login = (req, res, next) => {
                 });
             });
     } catch {
-        return res.status(401).json({
+        return res.status(500).json({
             message: "failed"
         });
     }
@@ -75,11 +77,11 @@ module.exports.createNotification =
             User.findById({ _id: req.userData.userId }, (err, user) => {
                 if (err) {
                     console.log("no user");
-                    res.status(401).json({ success: false, message: 'soemthing went worng' });
+                    res.status(404).json({ success: false, message: 'soemthing went worng' });
                 } else {
                     if (!user) {
                         console.log("no found user");
-                        res.status(401).json({ success: false, message: 'user not Found' });
+                        res.status(404).json({ success: false, message: 'user not Found' });
                     } else {
                         const notification = new Notification({
                             header: req.body.header,
@@ -90,9 +92,9 @@ module.exports.createNotification =
                         notification.save((err) => {
                             if (err) {
                                 console.log('here');
-                                res.status(401).json({ success: false, message: 'something went wrong' });
+                                res.status(400).json({ success: false, message: 'something went wrong' });
                             } else {
-                                res.status(200).json({ success: true, message: 'notification added' });
+                                res.status(201).json({ success: true, message: 'notification added' });
                             }
                         });
                     }
@@ -101,7 +103,7 @@ module.exports.createNotification =
 
             });
         } catch {
-            return res.status(401).json({
+            return res.status(500).json({
                 message: "failed"
             });
         }
@@ -128,7 +130,7 @@ module.exports.getNotifications = (req, res, next) => {
                 });
             });
     } catch {
-        return res.status(401).json({
+        return res.status(500).json({
             message: "failed"
         });
     }
@@ -146,7 +148,7 @@ module.exports.deleteNotification =
                 }
             });
         } catch {
-            return res.status(401).json({
+            return res.status(500).json({
                 message: "failed"
             });
         }
@@ -165,17 +167,17 @@ module.exports.updateNotification = (req, res, next) => {
                 });
                 Notification.updateOne({ _id: notifDoc._id }, notification).then(result => {
                     if (result.nModified > 0) {
-                        return res.status(200).json({ success: true, message: 'Notification Updated' });
+                        return res.status(201).json({ success: true, message: 'Notification Updated' });
                     } else {
                         res.status(401).json({ message: "Unable to update!" });
                     }
                 });
             } else {
-                res.status(401).json({ success: false, message: 'Notification not Found' });
+                res.status(404).json({ success: false, message: 'Notification not Found' });
             }
         });
     } catch {
-        return res.status(401).json({
+        return res.status(500).json({
             message: "failed"
         });
     }

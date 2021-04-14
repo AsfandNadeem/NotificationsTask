@@ -18,9 +18,13 @@
     <!-- </ng-template> -->
     <mat-sidenav-content>
         <button *ngIf="toggleRequired" mat-button style="border: none; background: none;;" (click)="sidenav.toggle()"><mat-icon>menu</mat-icon></button>
-        <mat-card>
-            <app-send-notifications *ngIf="showform"></app-send-notifications>
-            <app-dashboard *ngIf="shownotifications"></app-dashboard>
-        </mat-card>
+        <div class="wrapper fadeInDown">
+            <!-- <div id="formContentHome"> -->
+            <mat-card>
+                <app-send-notifications *ngIf="showform"></app-send-notifications>
+                <app-dashboard *ngIf="shownotifications"></app-dashboard>
+            </mat-card>
+            <!-- </div> -->
+        </div>
     </mat-sidenav-content>
 </mat-sidenav-container>

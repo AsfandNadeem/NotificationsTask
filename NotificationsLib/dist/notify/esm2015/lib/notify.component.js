@@ -107,7 +107,7 @@ NotifyComponent.ɵcmp = i0.ɵɵdefineComponent({ type: NotifyComponent, selector
         i0.ɵɵtextInterpolate(ctx.message);
         i0.ɵɵadvance(1);
         i0.ɵɵproperty("ngIf", ctx.progressrequired);
-    } }, directives: [i2.NgIf], styles: [".stack-top[_ngcontent-%COMP%]{padding:0;box-shadow:0 10px 19px 10px rgba(0,0,0,.04);color:#000;display:flex;z-index:1}"] });
+    } }, directives: [i2.NgIf], styles: [".stack-top[_ngcontent-%COMP%]{padding:0;border:none;box-shadow:0 10px 19px 10px rgba(0,0,0,.04);color:#000;display:flex;z-index:1}"] });
 (function () { (typeof ngDevMode === "undefined" || ngDevMode) && i0.ɵsetClassMetadata(NotifyComponent, [{
         type: Component,
         args: [{

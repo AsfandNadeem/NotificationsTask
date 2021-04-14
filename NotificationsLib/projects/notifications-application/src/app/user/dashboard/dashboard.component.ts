@@ -30,7 +30,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
  
 
-  constructor(private userService: UserService,private notify: NotifyService) { }
+  constructor(private userService: UserService) { }
 
   ngOnInit(): void {
 
@@ -62,7 +62,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
     // this.notificationsSub.unsubscribe();
     this.destroy$.next(true);
     this.destroy$.complete();
-    this.notify.destroyAll();
   }
 
   editRow(id: string, header: string, body: string, type:string){
