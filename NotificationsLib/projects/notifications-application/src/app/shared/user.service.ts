@@ -103,7 +103,7 @@ export class UserService {
   }
 
   addNotification(header: string, body: string, type: string) {
-    return this.http.post(environment.apiBaseUrl + '/user/saveNotification',
+    return this.http.post(environment.apiBaseUrl + '/user/Notification',
       { header, body, type });
   }
 
@@ -112,7 +112,7 @@ export class UserService {
   getNotifications() {
     this.http
       .get<{ message: string, notifications: any, maxNotifications: number }>(
-        environment.apiBaseUrl + '/user/getNotifications'
+        environment.apiBaseUrl + '/user/Notification'
       )
       .pipe(map((notificationData) => {
         return {
@@ -143,12 +143,12 @@ export class UserService {
 
 
   deleteNotification(id: string) {
-    return this.http.delete(environment.apiBaseUrl + '/user/deleteNotification/' + id);
+    return this.http.delete(environment.apiBaseUrl + '/user/Notification/' + id);
   }
 
   editNotification(id: string, header: string, body: string, type: string) {
 
-    return this.http.put(environment.apiBaseUrl + '/user/editNotification/' + id,
+    return this.http.put(environment.apiBaseUrl + '/user/Notification/' + id,
       { header, body, type });
   }
 

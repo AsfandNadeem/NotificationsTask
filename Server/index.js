@@ -1,8 +1,9 @@
 require('./config/config');
-require('./models/db');
+require('./config/db');
 
 const express = require("express");
 const bodyParser = require("body-parser");
+const expressValidator = require("express-validator");
 
 const routesIndex = require('./routes/index.router');
 const app = express();
@@ -10,6 +11,7 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
 
 app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "http://localhost:4200");
