@@ -6,3 +6,19 @@
     display: flex;
     z-index: 1;
 }
+
+.info {
+    background-color: blue;
+}
+
+.warning {
+    background-color: darkorange;
+}
+
+.error {
+    background-color: red;
+}
+
+.card-body {
+    text-align: center;
+}

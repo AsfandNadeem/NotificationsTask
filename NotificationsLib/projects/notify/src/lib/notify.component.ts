@@ -21,21 +21,18 @@ export class NotifyComponent implements OnInit, AfterContentInit {
   @Input() actualTime = 0;
   @Output() destroy: EventEmitter<any> = new EventEmitter();
   mySubscription: Subscription;
-  // @ViewChild('progressDiv') divCurtain: ElementRef;
+  myVar;
   setWidth = 0;
-  exists = true;
-
-  // @HostBinding('class.redbackground') warning: boolean;
   constructor(private NotifyService: NotifyService, public renderer: Renderer2) {
 
   }
 
   ngOnInit(): void {
-    setTimeout(() => {
-      if (this.type == "info" && this.exists) {
+    if (this.type == "info"){
+    this.myVar = setTimeout(() => {
         this.onClose();
-      }
     }, this.progressTime + 500);
+  }
   }
 
   ngAfterContentInit() {
@@ -47,22 +44,12 @@ export class NotifyComponent implements OnInit, AfterContentInit {
     }
 
   }
-
-  getBackground(): string {
-    if (this.type === 'warning') {
-      return 'darkorange';
-    }
-    else if (this.type == 'error') {
-      return 'red'
-    }
-    else {
-      return 'blue';
-    }
-  }
+  
 
   onClose(): void {
     if (this.progressrequired) {
     this.mySubscription.unsubscribe();
+    clearTimeout(this.myVar);
     }
     this.destroy.emit();
   }
@@ -71,8 +58,6 @@ export class NotifyComponent implements OnInit, AfterContentInit {
     if (this.actualTime > 0) {
       this.actualTime = this.actualTime - ((this.progressTime)/100);
       this.setWidth = ((this.actualTime / this.progressTime) * 100);
-      
-      // this.divCurtain.nativeElement.style.width = (this.actualTime / this.progressTime).toString() + '%';
     }
     else {
       this.mySubscription.unsubscribe();

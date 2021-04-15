@@ -19,7 +19,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
   dataSource: MatTableDataSource<NotificationsModel>;
   displayedColumns: string[] = ['Header', 'Body', 'Type', 'Actions'];
   notifications: NotificationsModel[] = [];
-  private notificationsSub: Subscription;
   editField = false;
   editId = "";
   headerField = "";

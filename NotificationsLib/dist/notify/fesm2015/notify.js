@@ -1,7 +1,7 @@
-import { ɵɵdefineComponent, ɵɵprojectionDef, ɵɵprojection, ɵsetClassMetadata, Component, ɵɵelementStart, ɵɵelement, ɵɵelementEnd, ɵɵnextContext, ɵɵadvance, ɵɵstyleProp, EventEmitter, ɵɵdirectiveInject, Renderer2, ɵɵtext, ɵɵlistener, ɵɵtemplate, ɵɵtextInterpolate, ɵɵproperty, Input, Output, ɵɵinject, ComponentFactoryResolver, ApplicationRef, Injector, ɵɵdefineInjectable, Injectable, ɵɵdefineNgModule, ɵɵdefineInjector, ɵɵsetNgModuleScope, NgModule } from '@angular/core';
+import { ɵɵdefineComponent, ɵɵprojectionDef, ɵɵprojection, ɵsetClassMetadata, Component, ɵɵelementStart, ɵɵelement, ɵɵelementEnd, ɵɵnextContext, ɵɵadvance, ɵɵstyleProp, EventEmitter, ɵɵdirectiveInject, Renderer2, ɵɵtext, ɵɵlistener, ɵɵtemplate, ɵɵproperty, ɵɵtextInterpolate, Input, Output, ɵɵinject, ComponentFactoryResolver, ApplicationRef, Injector, ɵɵdefineInjectable, Injectable, ɵɵdefineNgModule, ɵɵdefineInjector, ɵɵsetNgModuleScope, NgModule } from '@angular/core';
 import { interval } from 'rxjs';
 import 'rxjs/add/observable/interval';
-import { NgIf, CommonModule } from '@angular/common';
+import { NgClass, NgIf, CommonModule } from '@angular/common';
 
 const _c0 = ["*"];
 class NotifyContainerComponent {
@@ -44,14 +44,13 @@ class NotifyComponent {
         this.destroy = new EventEmitter();
         // @ViewChild('progressDiv') divCurtain: ElementRef;
         this.setWidth = 0;
-        this.exists = true;
     }
     ngOnInit() {
-        setTimeout(() => {
-            if (this.type == "info" && this.exists) {
+        if (this.type == "info") {
+            this.myVar = setTimeout(() => {
                 this.onClose();
-            }
-        }, this.progressTime + 500);
+            }, this.progressTime + 500);
+        }
     }
     ngAfterContentInit() {
         if (this.progressrequired) {
@@ -75,6 +74,7 @@ class NotifyComponent {
     onClose() {
         if (this.progressrequired) {
             this.mySubscription.unsubscribe();
+            clearTimeout(this.myVar);
         }
         this.destroy.emit();
     }
@@ -82,7 +82,6 @@ class NotifyComponent {
         if (this.actualTime > 0) {
             this.actualTime = this.actualTime - ((this.progressTime) / 100);
             this.setWidth = ((this.actualTime / this.progressTime) * 100);
-            // this.divCurtain.nativeElement.style.width = (this.actualTime / this.progressTime).toString() + '%';
         }
         else {
             this.mySubscription.unsubscribe();
@@ -90,7 +89,7 @@ class NotifyComponent {
     }
 }
 NotifyComponent.ɵfac = function NotifyComponent_Factory(t) { return new (t || NotifyComponent)(ɵɵdirectiveInject(NotifyService), ɵɵdirectiveInject(Renderer2)); };
-NotifyComponent.ɵcmp = ɵɵdefineComponent({ type: NotifyComponent, selectors: [["lib-notify"]], inputs: { header: "header", message: "message", type: "type", progressrequired: "progressrequired", progressTime: "progressTime", actualTime: "actualTime" }, outputs: { destroy: "destroy" }, decls: 13, vars: 5, consts: [[1, "card", "container", "my-4", "stack-top"], [1, "card-header", "container-fluid"], [1, "row"], [1, "col-10"], [1, "col-2"], ["type", "button", 3, "click"], [1, "card-body", 2, "text-align", "center"], [1, "card-text"], ["class", "progress", 4, "ngIf"], [1, "progress"], ["role", "progressbar", "aria-valuemin", "0", "aria-valuemax", "100", 1, "progress-bar", "progress-bar-striped", "active"], ["progressDiv", ""]], template: function NotifyComponent_Template(rf, ctx) { if (rf & 1) {
+NotifyComponent.ɵcmp = ɵɵdefineComponent({ type: NotifyComponent, selectors: [["lib-notify"]], inputs: { header: "header", message: "message", type: "type", progressrequired: "progressrequired", progressTime: "progressTime", actualTime: "actualTime" }, outputs: { destroy: "destroy" }, decls: 13, vars: 4, consts: [[1, "card", "container", "my-4", "stack-top"], [1, "card-header", "container-fluid", 3, "ngClass"], [1, "row"], [1, "col-10"], [1, "col-2"], ["type", "button", 3, "click"], [1, "card-body", 2, "text-align", "center"], [1, "card-text"], ["class", "progress", 4, "ngIf"], [1, "progress"], ["role", "progressbar", "aria-valuemin", "0", "aria-valuemax", "100", 1, "progress-bar", "progress-bar-striped", "active"], ["progressDiv", ""]], template: function NotifyComponent_Template(rf, ctx) { if (rf & 1) {
         ɵɵelementStart(0, "div", 0);
         ɵɵelementStart(1, "div", 1);
         ɵɵelementStart(2, "div", 2);
@@ -116,14 +115,14 @@ NotifyComponent.ɵcmp = ɵɵdefineComponent({ type: NotifyComponent, selectors: 
         ɵɵelementEnd();
     } if (rf & 2) {
         ɵɵadvance(1);
-        ɵɵstyleProp("background-color", ctx.getBackground());
+        ɵɵproperty("ngClass", ctx.type);
         ɵɵadvance(4);
         ɵɵtextInterpolate(ctx.header);
         ɵɵadvance(6);
         ɵɵtextInterpolate(ctx.message);
         ɵɵadvance(1);
         ɵɵproperty("ngIf", ctx.progressrequired);
-    } }, directives: [NgIf], styles: [".stack-top[_ngcontent-%COMP%]{padding:0;border:none;box-shadow:0 10px 19px 10px rgba(0,0,0,.04);color:#000;display:flex;z-index:1}"] });
+    } }, directives: [NgClass, NgIf], styles: [".stack-top[_ngcontent-%COMP%]{padding:0;border:none;box-shadow:0 10px 19px 10px rgba(0,0,0,.04);color:#000;display:flex;z-index:1}.info[_ngcontent-%COMP%]{background-color:#00f}.warning[_ngcontent-%COMP%]{background-color:#ff8c00}.error[_ngcontent-%COMP%]{background-color:red}"] });
 (function () { (typeof ngDevMode === "undefined" || ngDevMode) && ɵsetClassMetadata(NotifyComponent, [{
         type: Component,
         args: [{
@@ -207,7 +206,6 @@ class NotifyService {
         childComponentRef.instance.header = header;
         childComponentRef.instance.message = message;
         childComponentRef.instance.type = type;
-        childComponentRef.instance.exists = true;
         const sub = childComponentRef.instance.destroy.subscribe(() => {
             sub.unsubscribe();
             this.destroy(childComponentRef);
@@ -217,7 +215,6 @@ class NotifyService {
         this._children.push(childComponentRef.instance);
         this.countNotifications++;
         if (type == "info") {
-            childComponentRef.instance.exists = true;
             childComponentRef.instance.progressrequired = true;
             childComponentRef.instance.progressTime = 10000;
             childComponentRef.instance.actualTime = 10000;
@@ -233,10 +230,6 @@ class NotifyService {
     }
     destroy(childComponentRef) {
         this.elementService.destroyElement(childComponentRef);
-        // (this._children).splice((this._children).indexOf(childComponentRef.instance), 1);
-        if (childComponentRef.instance.exists) {
-            childComponentRef.instance.exists = false;
-        }
         if (this.countNotifications > 0) {
             this.countNotifications--;
             if (this.Queue.length >= 1) {

@@ -17,14 +17,12 @@
     </mat-sidenav>
     <!-- </ng-template> -->
     <mat-sidenav-content>
-        <button *ngIf="toggleRequired" mat-button style="border: none; background: none;;" (click)="sidenav.toggle()"><mat-icon>menu</mat-icon></button>
-        <div class="wrapper fadeInDown">
-            <!-- <div id="formContentHome"> -->
-            <mat-card>
+        <button *ngIf="toggleRequired" class="internalbutton" mat-button (click)="sidenav.toggle()"><mat-icon>menu</mat-icon></button>
+        <div class="wrapperHome fadeInDown">
+            <div id="formContentHome">
                 <app-send-notifications *ngIf="showform"></app-send-notifications>
                 <app-dashboard *ngIf="shownotifications"></app-dashboard>
-            </mat-card>
-            <!-- </div> -->
+            </div>
         </div>
     </mat-sidenav-content>
 </mat-sidenav-container>

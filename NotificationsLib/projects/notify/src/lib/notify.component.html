@@ -1,5 +1,5 @@
 <div class="card container  my-4 stack-top">
-    <div class="card-header container-fluid" [style.backgroundColor]="getBackground()">
+    <div class="card-header container-fluid" [ngClass]="type">
         <div class="row">
             <div class="col-10">
                 <h3>{{header}}</h3>
@@ -11,7 +11,7 @@
         </div>
     </div>
 
-    <div class="card-body" style="text-align: center;">
+    <div class="card-body">
         <p class="card-text">{{message}}</p>
     </div>
     <div *ngIf="progressrequired" class="progress">

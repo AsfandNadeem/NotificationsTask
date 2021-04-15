@@ -54,15 +54,14 @@
             this.destroy = new i0.EventEmitter();
             // @ViewChild('progressDiv') divCurtain: ElementRef;
             this.setWidth = 0;
-            this.exists = true;
         }
         NotifyComponent.prototype.ngOnInit = function () {
             var _this = this;
-            setTimeout(function () {
-                if (_this.type == "info" && _this.exists) {
+            if (this.type == "info") {
+                this.myVar = setTimeout(function () {
                     _this.onClose();
-                }
-            }, this.progressTime + 500);
+                }, this.progressTime + 500);
+            }
         };
         NotifyComponent.prototype.ngAfterContentInit = function () {
             var _this = this;
@@ -87,6 +86,7 @@
         NotifyComponent.prototype.onClose = function () {
             if (this.progressrequired) {
                 this.mySubscription.unsubscribe();
+                clearTimeout(this.myVar);
             }
             this.destroy.emit();
         };
@@ -94,7 +94,6 @@
             if (this.actualTime > 0) {
                 this.actualTime = this.actualTime - ((this.progressTime) / 100);
                 this.setWidth = ((this.actualTime / this.progressTime) * 100);
-                // this.divCurtain.nativeElement.style.width = (this.actualTime / this.progressTime).toString() + '%';
             }
             else {
                 this.mySubscription.unsubscribe();
@@ -103,7 +102,7 @@
         return NotifyComponent;
     }());
     NotifyComponent.ɵfac = function NotifyComponent_Factory(t) { return new (t || NotifyComponent)(i0.ɵɵdirectiveInject(NotifyService), i0.ɵɵdirectiveInject(i0.Renderer2)); };
-    NotifyComponent.ɵcmp = i0.ɵɵdefineComponent({ type: NotifyComponent, selectors: [["lib-notify"]], inputs: { header: "header", message: "message", type: "type", progressrequired: "progressrequired", progressTime: "progressTime", actualTime: "actualTime" }, outputs: { destroy: "destroy" }, decls: 13, vars: 5, consts: [[1, "card", "container", "my-4", "stack-top"], [1, "card-header", "container-fluid"], [1, "row"], [1, "col-10"], [1, "col-2"], ["type", "button", 3, "click"], [1, "card-body", 2, "text-align", "center"], [1, "card-text"], ["class", "progress", 4, "ngIf"], [1, "progress"], ["role", "progressbar", "aria-valuemin", "0", "aria-valuemax", "100", 1, "progress-bar", "progress-bar-striped", "active"], ["progressDiv", ""]], template: function NotifyComponent_Template(rf, ctx) {
+    NotifyComponent.ɵcmp = i0.ɵɵdefineComponent({ type: NotifyComponent, selectors: [["lib-notify"]], inputs: { header: "header", message: "message", type: "type", progressrequired: "progressrequired", progressTime: "progressTime", actualTime: "actualTime" }, outputs: { destroy: "destroy" }, decls: 13, vars: 4, consts: [[1, "card", "container", "my-4", "stack-top"], [1, "card-header", "container-fluid", 3, "ngClass"], [1, "row"], [1, "col-10"], [1, "col-2"], ["type", "button", 3, "click"], [1, "card-body", 2, "text-align", "center"], [1, "card-text"], ["class", "progress", 4, "ngIf"], [1, "progress"], ["role", "progressbar", "aria-valuemin", "0", "aria-valuemax", "100", 1, "progress-bar", "progress-bar-striped", "active"], ["progressDiv", ""]], template: function NotifyComponent_Template(rf, ctx) {
             if (rf & 1) {
                 i0.ɵɵelementStart(0, "div", 0);
                 i0.ɵɵelementStart(1, "div", 1);
@@ -131,7 +130,7 @@
             }
             if (rf & 2) {
                 i0.ɵɵadvance(1);
-                i0.ɵɵstyleProp("background-color", ctx.getBackground());
+                i0.ɵɵproperty("ngClass", ctx.type);
                 i0.ɵɵadvance(4);
                 i0.ɵɵtextInterpolate(ctx.header);
                 i0.ɵɵadvance(6);
@@ -139,7 +138,7 @@
                 i0.ɵɵadvance(1);
                 i0.ɵɵproperty("ngIf", ctx.progressrequired);
             }
-        }, directives: [i2.NgIf], styles: [".stack-top[_ngcontent-%COMP%]{padding:0;border:none;box-shadow:0 10px 19px 10px rgba(0,0,0,.04);color:#000;display:flex;z-index:1}"] });
+        }, directives: [i2.NgClass, i2.NgIf], styles: [".stack-top[_ngcontent-%COMP%]{padding:0;border:none;box-shadow:0 10px 19px 10px rgba(0,0,0,.04);color:#000;display:flex;z-index:1}.info[_ngcontent-%COMP%]{background-color:#00f}.warning[_ngcontent-%COMP%]{background-color:#ff8c00}.error[_ngcontent-%COMP%]{background-color:red}"] });
     (function () {
         (typeof ngDevMode === "undefined" || ngDevMode) && i0.ɵsetClassMetadata(NotifyComponent, [{
                 type: i0.Component,
@@ -230,7 +229,6 @@
             childComponentRef.instance.header = header;
             childComponentRef.instance.message = message;
             childComponentRef.instance.type = type;
-            childComponentRef.instance.exists = true;
             var sub = childComponentRef.instance.destroy.subscribe(function () {
                 sub.unsubscribe();
                 _this.destroy(childComponentRef);
@@ -240,7 +238,6 @@
             this._children.push(childComponentRef.instance);
             this.countNotifications++;
             if (type == "info") {
-                childComponentRef.instance.exists = true;
                 childComponentRef.instance.progressrequired = true;
                 childComponentRef.instance.progressTime = 10000;
                 childComponentRef.instance.actualTime = 10000;
@@ -256,10 +253,6 @@
         };
         NotifyService.prototype.destroy = function (childComponentRef) {
             this.elementService.destroyElement(childComponentRef);
-            // (this._children).splice((this._children).indexOf(childComponentRef.instance), 1);
-            if (childComponentRef.instance.exists) {
-                childComponentRef.instance.exists = false;
-            }
             if (this.countNotifications > 0) {
                 this.countNotifications--;
                 if (this.Queue.length >= 1) {

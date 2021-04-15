@@ -6,6 +6,7 @@ import { UserService } from '../../shared/user.service';
 import * as fromApp from '../../store/app.reducers';
 import * as fromAuth from '../../shared/auth-store/auth.reducer';
 import { Store } from '@ngrx/store';
+import { NotifyService } from 'notify';
 
 @Component({
   selector: 'app-homepage',
@@ -37,7 +38,8 @@ export class HomepageComponent implements OnInit, OnDestroy {
 
   constructor(public userService: UserService, 
     private router: Router,
-    private store: Store<fromApp.Appstate>) { }
+    private store: Store<fromApp.Appstate>,
+    private notify: NotifyService) { }
 
   ngOnInit() {
     this.authState = this.store.select('auth');
@@ -73,6 +75,7 @@ export class HomepageComponent implements OnInit, OnDestroy {
   onLogout() {
     this.isUserAuthenticated = false;
     this.userService.logout();
+    this.notify.destroyAll();
   }
 
   ngOnDestroy() {

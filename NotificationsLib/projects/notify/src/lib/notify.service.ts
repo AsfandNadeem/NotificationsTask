@@ -37,8 +37,6 @@ export class NotifyService {
 
     childComponentRef.instance.type = type;
 
-    childComponentRef.instance.exists = true;
-
 
 
     const sub = childComponentRef.instance.destroy.subscribe(() => {
@@ -51,7 +49,6 @@ export class NotifyService {
     this.countNotifications++;
 
     if (type == "info") {
-      childComponentRef.instance.exists = true;
       childComponentRef.instance.progressrequired = true;
       childComponentRef.instance.progressTime = 10000;
       childComponentRef.instance.actualTime = 10000;   
@@ -69,11 +66,6 @@ export class NotifyService {
 
   destroy(childComponentRef: ComponentRef<any>) {
     this.elementService.destroyElement(childComponentRef);
-    // (this._children).splice((this._children).indexOf(childComponentRef.instance), 1);
-    
-    if (childComponentRef.instance.exists) {
-      childComponentRef.instance.exists = false;
-    }
     if (this.countNotifications > 0) {
       this.countNotifications--;
       if (this.Queue.length >= 1) {
