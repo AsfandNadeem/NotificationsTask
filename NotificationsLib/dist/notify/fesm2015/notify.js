@@ -1,7 +1,9 @@
-import { ɵɵdefineComponent, ɵɵprojectionDef, ɵɵprojection, ɵsetClassMetadata, Component, ɵɵelementStart, ɵɵelement, ɵɵelementEnd, ɵɵnextContext, ɵɵadvance, ɵɵstyleProp, EventEmitter, ɵɵdirectiveInject, Renderer2, ɵɵtext, ɵɵlistener, ɵɵtemplate, ɵɵproperty, ɵɵtextInterpolate, Input, Output, ɵɵinject, ComponentFactoryResolver, ApplicationRef, Injector, ɵɵdefineInjectable, Injectable, ɵɵdefineNgModule, ɵɵdefineInjector, ɵɵsetNgModuleScope, NgModule } from '@angular/core';
+import { InjectionToken, ɵɵdefineComponent, ɵɵprojectionDef, ɵɵprojection, ɵsetClassMetadata, Component, ɵɵelementStart, ɵɵelement, ɵɵelementEnd, ɵɵnextContext, ɵɵadvance, ɵɵstyleProp, ɵɵproperty, ɵɵpureFunction2, EventEmitter, ɵɵdirectiveInject, Renderer2, ɵɵtext, ɵɵlistener, ɵɵtemplate, ɵɵtextInterpolate, Input, Output, ɵɵinject, ComponentFactoryResolver, ApplicationRef, Injector, ɵɵdefineInjectable, Injectable, Inject, ɵɵdefineNgModule, ɵɵdefineInjector, ɵɵsetNgModuleScope, NgModule } from '@angular/core';
 import { interval } from 'rxjs';
 import 'rxjs/add/observable/interval';
 import { NgClass, NgIf, CommonModule } from '@angular/common';
+
+const LibConfigService = new InjectionToken('libconfig');
 
 const _c0 = ["*"];
 class NotifyContainerComponent {
@@ -23,6 +25,7 @@ NotifyContainerComponent.ɵcmp = ɵɵdefineComponent({ type: NotifyContainerComp
             }]
     }], function () { return []; }, null); })();
 
+const _c0$1 = function (a0, a1) { return { "bg-warning": a0, "bg-danger": a1 }; };
 function NotifyComponent_div_12_Template(rf, ctx) { if (rf & 1) {
     ɵɵelementStart(0, "div", 9);
     ɵɵelement(1, "div", 10, 11);
@@ -31,9 +34,9 @@ function NotifyComponent_div_12_Template(rf, ctx) { if (rf & 1) {
     const ctx_r0 = ɵɵnextContext();
     ɵɵadvance(1);
     ɵɵstyleProp("width", ctx_r0.setWidth, "%");
+    ɵɵproperty("ngClass", ɵɵpureFunction2(3, _c0$1, ctx_r0.type === "warning", ctx_r0.type === "error"));
 } }
 class NotifyComponent {
-    // @HostBinding('class.redbackground') warning: boolean;
     constructor(NotifyService, renderer) {
         this.NotifyService = NotifyService;
         this.renderer = renderer;
@@ -42,11 +45,10 @@ class NotifyComponent {
         this.progressTime = 0;
         this.actualTime = 0;
         this.destroy = new EventEmitter();
-        // @ViewChild('progressDiv') divCurtain: ElementRef;
         this.setWidth = 0;
     }
     ngOnInit() {
-        if (this.type == "info") {
+        if (this.progressrequired) {
             this.myVar = setTimeout(() => {
                 this.onClose();
             }, this.progressTime + 500);
@@ -54,21 +56,10 @@ class NotifyComponent {
     }
     ngAfterContentInit() {
         if (this.progressrequired) {
-            this.setWidth = ((this.actualTime / this.progressTime) * 100);
+            this.setWidthMethod();
             this.mySubscription = interval(100).subscribe((x => {
                 this.setProgress();
             }));
-        }
-    }
-    getBackground() {
-        if (this.type === 'warning') {
-            return 'darkorange';
-        }
-        else if (this.type == 'error') {
-            return 'red';
-        }
-        else {
-            return 'blue';
         }
     }
     onClose() {
@@ -81,15 +72,18 @@ class NotifyComponent {
     setProgress() {
         if (this.actualTime > 0) {
             this.actualTime = this.actualTime - ((this.progressTime) / 100);
-            this.setWidth = ((this.actualTime / this.progressTime) * 100);
+            this.setWidthMethod();
         }
         else {
             this.mySubscription.unsubscribe();
         }
     }
+    setWidthMethod() {
+        this.setWidth = ((this.actualTime / this.progressTime) * 100);
+    }
 }
 NotifyComponent.ɵfac = function NotifyComponent_Factory(t) { return new (t || NotifyComponent)(ɵɵdirectiveInject(NotifyService), ɵɵdirectiveInject(Renderer2)); };
-NotifyComponent.ɵcmp = ɵɵdefineComponent({ type: NotifyComponent, selectors: [["lib-notify"]], inputs: { header: "header", message: "message", type: "type", progressrequired: "progressrequired", progressTime: "progressTime", actualTime: "actualTime" }, outputs: { destroy: "destroy" }, decls: 13, vars: 4, consts: [[1, "card", "container", "my-4", "stack-top"], [1, "card-header", "container-fluid", 3, "ngClass"], [1, "row"], [1, "col-10"], [1, "col-2"], ["type", "button", 3, "click"], [1, "card-body", 2, "text-align", "center"], [1, "card-text"], ["class", "progress", 4, "ngIf"], [1, "progress"], ["role", "progressbar", "aria-valuemin", "0", "aria-valuemax", "100", 1, "progress-bar", "progress-bar-striped", "active"], ["progressDiv", ""]], template: function NotifyComponent_Template(rf, ctx) { if (rf & 1) {
+NotifyComponent.ɵcmp = ɵɵdefineComponent({ type: NotifyComponent, selectors: [["lib-notify"]], inputs: { header: "header", message: "message", type: "type", progressrequired: "progressrequired", progressTime: "progressTime", actualTime: "actualTime" }, outputs: { destroy: "destroy" }, decls: 13, vars: 4, consts: [[1, "card", "container", "my-4", "stack-top"], [1, "card-header", "container-fluid", 3, "ngClass"], [1, "row"], [1, "col-10"], [1, "col-2"], ["type", "button", 3, "click"], [1, "card-body"], [1, "card-text"], ["class", "progress", 4, "ngIf"], [1, "progress"], ["role", "progressbar", "aria-valuemin", "0", "aria-valuemax", "100", 1, "progress-bar", "progress-bar-striped", "active", 3, "ngClass"], ["progressDiv", ""]], template: function NotifyComponent_Template(rf, ctx) { if (rf & 1) {
         ɵɵelementStart(0, "div", 0);
         ɵɵelementStart(1, "div", 1);
         ɵɵelementStart(2, "div", 2);
@@ -111,7 +105,7 @@ NotifyComponent.ɵcmp = ɵɵdefineComponent({ type: NotifyComponent, selectors: 
         ɵɵtext(11);
         ɵɵelementEnd();
         ɵɵelementEnd();
-        ɵɵtemplate(12, NotifyComponent_div_12_Template, 3, 2, "div", 8);
+        ɵɵtemplate(12, NotifyComponent_div_12_Template, 3, 6, "div", 8);
         ɵɵelementEnd();
     } if (rf & 2) {
         ɵɵadvance(1);
@@ -122,7 +116,7 @@ NotifyComponent.ɵcmp = ɵɵdefineComponent({ type: NotifyComponent, selectors: 
         ɵɵtextInterpolate(ctx.message);
         ɵɵadvance(1);
         ɵɵproperty("ngIf", ctx.progressrequired);
-    } }, directives: [NgClass, NgIf], styles: [".stack-top[_ngcontent-%COMP%]{padding:0;border:none;box-shadow:0 10px 19px 10px rgba(0,0,0,.04);color:#000;display:flex;z-index:1}.info[_ngcontent-%COMP%]{background-color:#00f}.warning[_ngcontent-%COMP%]{background-color:#ff8c00}.error[_ngcontent-%COMP%]{background-color:red}"] });
+    } }, directives: [NgClass, NgIf], styles: [".stack-top[_ngcontent-%COMP%]{padding:0;border:none;box-shadow:0 10px 19px 10px rgba(0,0,0,.04);color:#000;display:flex;z-index:1}.info[_ngcontent-%COMP%]{background-color:#00f}.warning[_ngcontent-%COMP%]{background-color:#ff8c00}.error[_ngcontent-%COMP%]{background-color:red}.card-body[_ngcontent-%COMP%]{text-align:center}"] });
 (function () { (typeof ngDevMode === "undefined" || ngDevMode) && ɵsetClassMetadata(NotifyComponent, [{
         type: Component,
         args: [{
@@ -187,38 +181,30 @@ ElementAttachmentService.ɵprov = ɵɵdefineInjectable({ token: ElementAttachmen
     }], function () { return [{ type: ComponentFactoryResolver }, { type: ApplicationRef }, { type: Injector }]; }, null); })();
 
 class NotifyService {
-    constructor(elementService, appRef) {
+    constructor(elementService, appRef, config) {
         this.elementService = elementService;
         this.appRef = appRef;
-        this.maxLimit = 5;
+        this.config = config;
+        this.maxLimit = 0;
         this.countNotifications = 0;
         this.Queue = Array();
         this._children = [];
         this.NotifyContainerRef = this.elementService.createComponentinDom(NotifyContainerComponent);
         this.NotifyContainerElement = this.elementService.getElement(this.NotifyContainerRef);
         this.elementService.addChildtoElement(this.NotifyContainerElement);
+        this.libConfig = this.config;
+        this.maxLimit = this.libConfig.maxLimit;
     }
     appendComponentToContainer(header, message, type) {
         //Create Child Component
         const childComponentRef = this.elementService.createComponentinDom(NotifyComponent);
         //Get child Component
         const childElement = this.elementService.getElement(childComponentRef);
-        childComponentRef.instance.header = header;
-        childComponentRef.instance.message = message;
-        childComponentRef.instance.type = type;
-        const sub = childComponentRef.instance.destroy.subscribe(() => {
-            sub.unsubscribe();
-            this.destroy(childComponentRef);
-        });
+        this.defineComponentValues(childComponentRef, header, message, type);
         //Add child component to parent
         this.elementService.addChildtoElement(childElement, this.NotifyContainerElement);
         this._children.push(childComponentRef.instance);
         this.countNotifications++;
-        if (type == "info") {
-            childComponentRef.instance.progressrequired = true;
-            childComponentRef.instance.progressTime = 10000;
-            childComponentRef.instance.actualTime = 10000;
-        }
     }
     open(header, message, category) {
         if (this.countNotifications < this.maxLimit) {
@@ -246,17 +232,48 @@ class NotifyService {
         this._children = [];
         this.countNotifications = 0;
     }
+    insertTimeOut(childComponentRef) {
+        childComponentRef.instance.progressrequired = true;
+        childComponentRef.instance.progressTime = this.libConfig.timeOut;
+        childComponentRef.instance.actualTime = this.libConfig.timeOut;
+    }
+    defineComponentValues(childComponentRef, header, message, type) {
+        childComponentRef.instance.header = header;
+        childComponentRef.instance.message = message;
+        childComponentRef.instance.type = type;
+        const sub = childComponentRef.instance.destroy.subscribe(() => {
+            sub.unsubscribe();
+            this.destroy(childComponentRef);
+        });
+        if (this.libConfig.timeOutRequiredCategories.includes(type)) {
+            this.insertTimeOut(childComponentRef);
+        }
+    }
 }
-NotifyService.ɵfac = function NotifyService_Factory(t) { return new (t || NotifyService)(ɵɵinject(ElementAttachmentService), ɵɵinject(ApplicationRef)); };
+NotifyService.ɵfac = function NotifyService_Factory(t) { return new (t || NotifyService)(ɵɵinject(ElementAttachmentService), ɵɵinject(ApplicationRef), ɵɵinject(LibConfigService)); };
 NotifyService.ɵprov = ɵɵdefineInjectable({ token: NotifyService, factory: NotifyService.ɵfac, providedIn: 'root' });
 (function () { (typeof ngDevMode === "undefined" || ngDevMode) && ɵsetClassMetadata(NotifyService, [{
         type: Injectable,
         args: [{
                 providedIn: 'root'
             }]
-    }], function () { return [{ type: ElementAttachmentService }, { type: ApplicationRef }]; }, null); })();
+    }], function () { return [{ type: ElementAttachmentService }, { type: ApplicationRef }, { type: undefined, decorators: [{
+                type: Inject,
+                args: [LibConfigService]
+            }] }]; }, null); })();
 
 class NotifyModule {
+    static forRoot(config) {
+        return {
+            ngModule: NotifyModule,
+            providers: [
+                {
+                    provide: LibConfigService,
+                    useValue: config
+                }
+            ]
+        };
+    }
 }
 NotifyModule.ɵfac = function NotifyModule_Factory(t) { return new (t || NotifyModule)(); };
 NotifyModule.ɵmod = ɵɵdefineNgModule({ type: NotifyModule });
@@ -270,6 +287,7 @@ NotifyModule.ɵinj = ɵɵdefineInjector({ imports: [[CommonModule
                 imports: [CommonModule
                 ],
                 exports: [NotifyComponent]
+                // providers: [ { provide: APP_CONFIG, useValue: AppConfig }]
             }]
     }], null, null); })();
 

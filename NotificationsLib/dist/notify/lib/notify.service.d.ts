@@ -6,17 +6,21 @@ import * as i0 from "@angular/core";
 export declare class NotifyService {
     private elementService;
     private appRef;
+    private config;
+    private libConfig;
     maxLimit: number;
     countNotifications: number;
     Queue: INotification[];
     private _children;
     private NotifyContainerElement;
     private NotifyContainerRef;
-    constructor(elementService: ElementAttachmentService, appRef: ApplicationRef);
+    constructor(elementService: ElementAttachmentService, appRef: ApplicationRef, config: any);
     private appendComponentToContainer;
     open(header: any, message: any, category: any): void;
     destroy(childComponentRef: ComponentRef<any>): void;
     destroyAll(): void;
+    insertTimeOut(childComponentRef: ComponentRef<any>): void;
+    defineComponentValues(childComponentRef: ComponentRef<any>, header: any, message: any, type: any): void;
     static ɵfac: i0.ɵɵFactoryDef<NotifyService, never>;
     static ɵprov: i0.ɵɵInjectableDef<NotifyService>;
 }

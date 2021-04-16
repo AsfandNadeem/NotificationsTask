@@ -1,0 +1,1 @@
+{"version":3,"file":"libconfig.d.ts","sourceRoot":"","sources":["../../../projects/notify/src/lib/libconfig.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,cAAc,EAAE,MAAM,eAAe,CAAC;AAE/C,MAAM,WAAW,SAAS;IACtB,OAAO,EAAE,MAAM,CAAC;IAChB,yBAAyB,EAAE,KAAK,CAAC,MAAM,CAAC,CAAC;IACzC,QAAQ,EAAE,MAAM,CAAC;CACpB;AAED,eAAO,MAAM,gBAAgB,2BAA6C,CAAC"}

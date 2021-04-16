@@ -15,7 +15,10 @@
         <p class="card-text">{{message}}</p>
     </div>
     <div *ngIf="progressrequired" class="progress">
-        <div #progressDiv [style.width.%]="setWidth" class="progress-bar progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+        <div #progressDiv [style.width.%]="setWidth" [ngClass]="{
+            'bg-warning': type === 'warning',
+            'bg-danger': type === 'error'
+          }" class="progress-bar progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
 
         </div>
     </div>

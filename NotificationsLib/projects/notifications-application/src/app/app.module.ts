@@ -8,10 +8,10 @@ import { UserComponent } from './user/user.component';
 import { LoginComponent } from './user/login/login.component';
 import { SignUpComponent } from './user/sign-up/sign-up.component';
 import { SendNotificationsComponent } from './user/send-notifications/send-notifications.component';
-import { NotifyModule, NotifyService } from 'notify';
+import { NotifyModule } from 'notify';
 import { FormsModule } from '@angular/forms';
 import { UserService } from './shared/user.service';
-import { HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule,HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HomepageComponent } from './user/homepage/homepage.component';
 import { DashboardComponent } from './user/dashboard/dashboard.component';
 
@@ -31,6 +31,7 @@ import { AuthInterceptor } from './shared/auth-interceptor';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { reducers } from './store/app.reducers';
 import { EffectsModule } from '@ngrx/effects';
+import { environment } from '../environments/environment';
 // import { AuthEffects } from './shared/auth-store/auth.effects';
 
 @NgModule({
@@ -52,7 +53,6 @@ import { EffectsModule } from '@ngrx/effects';
     //   headerName: 'X-XSRF-TOKEN'
     // }),
     AppRoutingModule,
-    NotifyModule,
     BrowserAnimationsModule,
     MatInputModule,
     MatCardModule,
@@ -65,6 +65,11 @@ import { EffectsModule } from '@ngrx/effects';
     MatMenuModule,
     MatPaginatorModule,
     StoreModule.forRoot(reducers),
+    NotifyModule.forRoot({
+      timeOut: environment.timeOut,
+      timeOutRequiredCategories: environment.timeOutRequiredCategories,
+      maxLimit: environment.maxLimit
+    })
     // EffectsModule.forRoot([AuthEffects])
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}

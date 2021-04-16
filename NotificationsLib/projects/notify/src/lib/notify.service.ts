@@ -1,6 +1,8 @@
-import { ComponentRef } from '@angular/core';
+import { ComponentRef, Inject } from '@angular/core';
 import { ApplicationRef, ComponentFactoryResolver, EmbeddedViewRef, Injectable, Injector } from '@angular/core';
+
 import { ElementAttachmentService } from './elementAttachment.service';
+import { libconfig, LibConfigService } from './libconfig';
 import { INotification } from './notification.interface';
 import { NotifyContainerComponent } from './notify-container/notify-container.component';
 import { NotifyComponent } from './notify.component';
@@ -9,7 +11,8 @@ import { NotifyComponent } from './notify.component';
   providedIn: 'root'
 })
 export class NotifyService {
-  maxLimit = 5;
+  private libConfig: libconfig;
+  maxLimit = 0;
   countNotifications = 0;
   Queue = Array<INotification>();
   private _children: NotifyComponent[] = [];
@@ -17,11 +20,13 @@ export class NotifyService {
   private NotifyContainerRef: ComponentRef<NotifyContainerComponent>;
 
   constructor(private elementService: ElementAttachmentService,
-    private appRef: ApplicationRef) {
+    private appRef: ApplicationRef, @Inject(LibConfigService) private config) {
 
     this.NotifyContainerRef = this.elementService.createComponentinDom(NotifyContainerComponent);
     this.NotifyContainerElement = this.elementService.getElement(this.NotifyContainerRef);
     this.elementService.addChildtoElement(this.NotifyContainerElement);
+    this.libConfig = this.config;
+    this.maxLimit = this.libConfig.maxLimit;
   }
 
 
@@ -31,28 +36,13 @@ export class NotifyService {
     //Get child Component
     const childElement = this.elementService.getElement(childComponentRef);
 
-    childComponentRef.instance.header = header;
-
-    childComponentRef.instance.message = message;
-
-    childComponentRef.instance.type = type;
-
-
-
-    const sub = childComponentRef.instance.destroy.subscribe(() => {
-      sub.unsubscribe();
-      this.destroy(childComponentRef);
-    });
+    this.defineComponentValues(childComponentRef,header,message,type);
     //Add child component to parent
     this.elementService.addChildtoElement(childElement, this.NotifyContainerElement);
     this._children.push(childComponentRef.instance);
     this.countNotifications++;
 
-    if (type == "info") {
-      childComponentRef.instance.progressrequired = true;
-      childComponentRef.instance.progressTime = 10000;
-      childComponentRef.instance.actualTime = 10000;   
-    }
+  
   }
 
   open(header, message, category) {
@@ -84,6 +74,28 @@ export class NotifyService {
     this._children = [];
     this.countNotifications = 0;
     
+  }
+
+  insertTimeOut(childComponentRef: ComponentRef<any>){
+    childComponentRef.instance.progressrequired = true;
+    childComponentRef.instance.progressTime = this.libConfig.timeOut;
+    childComponentRef.instance.actualTime =  this.libConfig.timeOut;
+  }
+
+
+  defineComponentValues(childComponentRef: ComponentRef<any>, header, message, type)
+  {
+    childComponentRef.instance.header = header;
+    childComponentRef.instance.message = message;
+    childComponentRef.instance.type = type;
+    const sub = childComponentRef.instance.destroy.subscribe(() => {
+      sub.unsubscribe();
+      this.destroy(childComponentRef);
+    });
+
+    if (this.libConfig.timeOutRequiredCategories.includes(type)) {  
+      this.insertTimeOut(childComponentRef);
+    }
   }
 
 }

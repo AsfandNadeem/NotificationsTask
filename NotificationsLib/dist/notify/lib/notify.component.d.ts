@@ -22,9 +22,9 @@ export declare class NotifyComponent implements OnInit, AfterContentInit {
     constructor(NotifyService: NotifyService, renderer: Renderer2);
     ngOnInit(): void;
     ngAfterContentInit(): void;
-    getBackground(): string;
     onClose(): void;
     setProgress(): void;
+    setWidthMethod(): void;
     static ɵfac: i0.ɵɵFactoryDef<NotifyComponent, never>;
     static ɵcmp: i0.ɵɵComponentDefWithMeta<NotifyComponent, "lib-notify", never, { "header": "header"; "message": "message"; "type": "type"; "progressrequired": "progressrequired"; "progressTime": "progressTime"; "actualTime": "actualTime"; }, { "destroy": "destroy"; }, never, never>;
 }

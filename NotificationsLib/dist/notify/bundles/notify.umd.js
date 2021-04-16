@@ -4,6 +4,8 @@
     (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.notify = {}, global.ng.core, global.rxjs, global.rxjs['add/observable/interval'], global.ng.common));
 }(this, (function (exports, i0, rxjs, interval, i2) { 'use strict';
 
+    var LibConfigService = new i0.InjectionToken('libconfig');
+
     var _c0 = ["*"];
     var NotifyContainerComponent = /** @class */ (function () {
         function NotifyContainerComponent() {
@@ -30,6 +32,7 @@
             }], function () { return []; }, null);
     })();
 
+    var _c0$1 = function (a0, a1) { return { "bg-warning": a0, "bg-danger": a1 }; };
     function NotifyComponent_div_12_Template(rf, ctx) {
         if (rf & 1) {
             i0.ɵɵelementStart(0, "div", 9);
@@ -40,10 +43,10 @@
             var ctx_r0 = i0.ɵɵnextContext();
             i0.ɵɵadvance(1);
             i0.ɵɵstyleProp("width", ctx_r0.setWidth, "%");
+            i0.ɵɵproperty("ngClass", i0.ɵɵpureFunction2(3, _c0$1, ctx_r0.type === "warning", ctx_r0.type === "error"));
         }
     }
     var NotifyComponent = /** @class */ (function () {
-        // @HostBinding('class.redbackground') warning: boolean;
         function NotifyComponent(NotifyService, renderer) {
             this.NotifyService = NotifyService;
             this.renderer = renderer;
@@ -52,12 +55,11 @@
             this.progressTime = 0;
             this.actualTime = 0;
             this.destroy = new i0.EventEmitter();
-            // @ViewChild('progressDiv') divCurtain: ElementRef;
             this.setWidth = 0;
         }
         NotifyComponent.prototype.ngOnInit = function () {
             var _this = this;
-            if (this.type == "info") {
+            if (this.progressrequired) {
                 this.myVar = setTimeout(function () {
                     _this.onClose();
                 }, this.progressTime + 500);
@@ -66,21 +68,10 @@
         NotifyComponent.prototype.ngAfterContentInit = function () {
             var _this = this;
             if (this.progressrequired) {
-                this.setWidth = ((this.actualTime / this.progressTime) * 100);
+                this.setWidthMethod();
                 this.mySubscription = rxjs.interval(100).subscribe((function (x) {
                     _this.setProgress();
                 }));
-            }
-        };
-        NotifyComponent.prototype.getBackground = function () {
-            if (this.type === 'warning') {
-                return 'darkorange';
-            }
-            else if (this.type == 'error') {
-                return 'red';
-            }
-            else {
-                return 'blue';
             }
         };
         NotifyComponent.prototype.onClose = function () {
@@ -93,16 +84,19 @@
         NotifyComponent.prototype.setProgress = function () {
             if (this.actualTime > 0) {
                 this.actualTime = this.actualTime - ((this.progressTime) / 100);
-                this.setWidth = ((this.actualTime / this.progressTime) * 100);
+                this.setWidthMethod();
             }
             else {
                 this.mySubscription.unsubscribe();
             }
         };
+        NotifyComponent.prototype.setWidthMethod = function () {
+            this.setWidth = ((this.actualTime / this.progressTime) * 100);
+        };
         return NotifyComponent;
     }());
     NotifyComponent.ɵfac = function NotifyComponent_Factory(t) { return new (t || NotifyComponent)(i0.ɵɵdirectiveInject(NotifyService), i0.ɵɵdirectiveInject(i0.Renderer2)); };
-    NotifyComponent.ɵcmp = i0.ɵɵdefineComponent({ type: NotifyComponent, selectors: [["lib-notify"]], inputs: { header: "header", message: "message", type: "type", progressrequired: "progressrequired", progressTime: "progressTime", actualTime: "actualTime" }, outputs: { destroy: "destroy" }, decls: 13, vars: 4, consts: [[1, "card", "container", "my-4", "stack-top"], [1, "card-header", "container-fluid", 3, "ngClass"], [1, "row"], [1, "col-10"], [1, "col-2"], ["type", "button", 3, "click"], [1, "card-body", 2, "text-align", "center"], [1, "card-text"], ["class", "progress", 4, "ngIf"], [1, "progress"], ["role", "progressbar", "aria-valuemin", "0", "aria-valuemax", "100", 1, "progress-bar", "progress-bar-striped", "active"], ["progressDiv", ""]], template: function NotifyComponent_Template(rf, ctx) {
+    NotifyComponent.ɵcmp = i0.ɵɵdefineComponent({ type: NotifyComponent, selectors: [["lib-notify"]], inputs: { header: "header", message: "message", type: "type", progressrequired: "progressrequired", progressTime: "progressTime", actualTime: "actualTime" }, outputs: { destroy: "destroy" }, decls: 13, vars: 4, consts: [[1, "card", "container", "my-4", "stack-top"], [1, "card-header", "container-fluid", 3, "ngClass"], [1, "row"], [1, "col-10"], [1, "col-2"], ["type", "button", 3, "click"], [1, "card-body"], [1, "card-text"], ["class", "progress", 4, "ngIf"], [1, "progress"], ["role", "progressbar", "aria-valuemin", "0", "aria-valuemax", "100", 1, "progress-bar", "progress-bar-striped", "active", 3, "ngClass"], ["progressDiv", ""]], template: function NotifyComponent_Template(rf, ctx) {
             if (rf & 1) {
                 i0.ɵɵelementStart(0, "div", 0);
                 i0.ɵɵelementStart(1, "div", 1);
@@ -125,7 +119,7 @@
                 i0.ɵɵtext(11);
                 i0.ɵɵelementEnd();
                 i0.ɵɵelementEnd();
-                i0.ɵɵtemplate(12, NotifyComponent_div_12_Template, 3, 2, "div", 8);
+                i0.ɵɵtemplate(12, NotifyComponent_div_12_Template, 3, 6, "div", 8);
                 i0.ɵɵelementEnd();
             }
             if (rf & 2) {
@@ -138,7 +132,7 @@
                 i0.ɵɵadvance(1);
                 i0.ɵɵproperty("ngIf", ctx.progressrequired);
             }
-        }, directives: [i2.NgClass, i2.NgIf], styles: [".stack-top[_ngcontent-%COMP%]{padding:0;border:none;box-shadow:0 10px 19px 10px rgba(0,0,0,.04);color:#000;display:flex;z-index:1}.info[_ngcontent-%COMP%]{background-color:#00f}.warning[_ngcontent-%COMP%]{background-color:#ff8c00}.error[_ngcontent-%COMP%]{background-color:red}"] });
+        }, directives: [i2.NgClass, i2.NgIf], styles: [".stack-top[_ngcontent-%COMP%]{padding:0;border:none;box-shadow:0 10px 19px 10px rgba(0,0,0,.04);color:#000;display:flex;z-index:1}.info[_ngcontent-%COMP%]{background-color:#00f}.warning[_ngcontent-%COMP%]{background-color:#ff8c00}.error[_ngcontent-%COMP%]{background-color:red}.card-body[_ngcontent-%COMP%]{text-align:center}"] });
     (function () {
         (typeof ngDevMode === "undefined" || ngDevMode) && i0.ɵsetClassMetadata(NotifyComponent, [{
                 type: i0.Component,
@@ -209,39 +203,30 @@
     })();
 
     var NotifyService = /** @class */ (function () {
-        function NotifyService(elementService, appRef) {
+        function NotifyService(elementService, appRef, config) {
             this.elementService = elementService;
             this.appRef = appRef;
-            this.maxLimit = 5;
+            this.config = config;
+            this.maxLimit = 0;
             this.countNotifications = 0;
             this.Queue = Array();
             this._children = [];
             this.NotifyContainerRef = this.elementService.createComponentinDom(NotifyContainerComponent);
             this.NotifyContainerElement = this.elementService.getElement(this.NotifyContainerRef);
             this.elementService.addChildtoElement(this.NotifyContainerElement);
+            this.libConfig = this.config;
+            this.maxLimit = this.libConfig.maxLimit;
         }
         NotifyService.prototype.appendComponentToContainer = function (header, message, type) {
-            var _this = this;
             //Create Child Component
             var childComponentRef = this.elementService.createComponentinDom(NotifyComponent);
             //Get child Component
             var childElement = this.elementService.getElement(childComponentRef);
-            childComponentRef.instance.header = header;
-            childComponentRef.instance.message = message;
-            childComponentRef.instance.type = type;
-            var sub = childComponentRef.instance.destroy.subscribe(function () {
-                sub.unsubscribe();
-                _this.destroy(childComponentRef);
-            });
+            this.defineComponentValues(childComponentRef, header, message, type);
             //Add child component to parent
             this.elementService.addChildtoElement(childElement, this.NotifyContainerElement);
             this._children.push(childComponentRef.instance);
             this.countNotifications++;
-            if (type == "info") {
-                childComponentRef.instance.progressrequired = true;
-                childComponentRef.instance.progressTime = 10000;
-                childComponentRef.instance.actualTime = 10000;
-            }
         };
         NotifyService.prototype.open = function (header, message, category) {
             if (this.countNotifications < this.maxLimit) {
@@ -269,9 +254,27 @@
             this._children = [];
             this.countNotifications = 0;
         };
+        NotifyService.prototype.insertTimeOut = function (childComponentRef) {
+            childComponentRef.instance.progressrequired = true;
+            childComponentRef.instance.progressTime = this.libConfig.timeOut;
+            childComponentRef.instance.actualTime = this.libConfig.timeOut;
+        };
+        NotifyService.prototype.defineComponentValues = function (childComponentRef, header, message, type) {
+            var _this = this;
+            childComponentRef.instance.header = header;
+            childComponentRef.instance.message = message;
+            childComponentRef.instance.type = type;
+            var sub = childComponentRef.instance.destroy.subscribe(function () {
+                sub.unsubscribe();
+                _this.destroy(childComponentRef);
+            });
+            if (this.libConfig.timeOutRequiredCategories.includes(type)) {
+                this.insertTimeOut(childComponentRef);
+            }
+        };
         return NotifyService;
     }());
-    NotifyService.ɵfac = function NotifyService_Factory(t) { return new (t || NotifyService)(i0.ɵɵinject(ElementAttachmentService), i0.ɵɵinject(i0.ApplicationRef)); };
+    NotifyService.ɵfac = function NotifyService_Factory(t) { return new (t || NotifyService)(i0.ɵɵinject(ElementAttachmentService), i0.ɵɵinject(i0.ApplicationRef), i0.ɵɵinject(LibConfigService)); };
     NotifyService.ɵprov = i0.ɵɵdefineInjectable({ token: NotifyService, factory: NotifyService.ɵfac, providedIn: 'root' });
     (function () {
         (typeof ngDevMode === "undefined" || ngDevMode) && i0.ɵsetClassMetadata(NotifyService, [{
@@ -279,12 +282,28 @@
                 args: [{
                         providedIn: 'root'
                     }]
-            }], function () { return [{ type: ElementAttachmentService }, { type: i0.ApplicationRef }]; }, null);
+            }], function () {
+            return [{ type: ElementAttachmentService }, { type: i0.ApplicationRef }, { type: undefined, decorators: [{
+                            type: i0.Inject,
+                            args: [LibConfigService]
+                        }] }];
+        }, null);
     })();
 
     var NotifyModule = /** @class */ (function () {
         function NotifyModule() {
         }
+        NotifyModule.forRoot = function (config) {
+            return {
+                ngModule: NotifyModule,
+                providers: [
+                    {
+                        provide: LibConfigService,
+                        useValue: config
+                    }
+                ]
+            };
+        };
         return NotifyModule;
     }());
     NotifyModule.ɵfac = function NotifyModule_Factory(t) { return new (t || NotifyModule)(); };
@@ -300,6 +319,7 @@
                         imports: [i2.CommonModule
                         ],
                         exports: [NotifyComponent]
+                        // providers: [ { provide: APP_CONFIG, useValue: AppConfig }]
                     }]
             }], null, null);
     })();

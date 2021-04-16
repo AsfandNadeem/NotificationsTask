@@ -28,7 +28,7 @@ export class NotifyComponent implements OnInit, AfterContentInit {
   }
 
   ngOnInit(): void {
-    if (this.type == "info"){
+    if (this.progressrequired){
     this.myVar = setTimeout(() => {
         this.onClose();
     }, this.progressTime + 500);
@@ -37,7 +37,7 @@ export class NotifyComponent implements OnInit, AfterContentInit {
 
   ngAfterContentInit() {
     if (this.progressrequired) {
-      this.setWidth = ((this.actualTime / this.progressTime) * 100);
+      this.setWidthMethod();
       this.mySubscription = interval(100).subscribe((x => {
         this.setProgress();
       }));
@@ -57,10 +57,15 @@ export class NotifyComponent implements OnInit, AfterContentInit {
   setProgress() {
     if (this.actualTime > 0) {
       this.actualTime = this.actualTime - ((this.progressTime)/100);
-      this.setWidth = ((this.actualTime / this.progressTime) * 100);
+      this.setWidthMethod();
     }
     else {
       this.mySubscription.unsubscribe();
     }
+  }
+
+  setWidthMethod()
+  {
+    this.setWidth = ((this.actualTime / this.progressTime) * 100);
   }
 }
