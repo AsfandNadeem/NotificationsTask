@@ -47,9 +47,8 @@
         }
     }
     var NotifyComponent = /** @class */ (function () {
-        function NotifyComponent(NotifyService, renderer) {
+        function NotifyComponent(NotifyService) {
             this.NotifyService = NotifyService;
-            this.renderer = renderer;
             this.type = '';
             this.progressrequired = false;
             this.progressTime = 0;
@@ -95,7 +94,7 @@
         };
         return NotifyComponent;
     }());
-    NotifyComponent.ɵfac = function NotifyComponent_Factory(t) { return new (t || NotifyComponent)(i0.ɵɵdirectiveInject(NotifyService), i0.ɵɵdirectiveInject(i0.Renderer2)); };
+    NotifyComponent.ɵfac = function NotifyComponent_Factory(t) { return new (t || NotifyComponent)(i0.ɵɵdirectiveInject(NotifyService)); };
     NotifyComponent.ɵcmp = i0.ɵɵdefineComponent({ type: NotifyComponent, selectors: [["lib-notify"]], inputs: { header: "header", message: "message", type: "type", progressrequired: "progressrequired", progressTime: "progressTime", actualTime: "actualTime" }, outputs: { destroy: "destroy" }, decls: 13, vars: 4, consts: [[1, "card", "container", "my-4", "stack-top"], [1, "card-header", "container-fluid", 3, "ngClass"], [1, "row"], [1, "col-10"], [1, "col-2"], ["type", "button", 3, "click"], [1, "card-body"], [1, "card-text"], ["class", "progress", 4, "ngIf"], [1, "progress"], ["role", "progressbar", "aria-valuemin", "0", "aria-valuemax", "100", 1, "progress-bar", "progress-bar-striped", "active", 3, "ngClass"], ["progressDiv", ""]], template: function NotifyComponent_Template(rf, ctx) {
             if (rf & 1) {
                 i0.ɵɵelementStart(0, "div", 0);
@@ -142,7 +141,7 @@
                         styleUrls: ['./notify.component.css'
                         ]
                     }]
-            }], function () { return [{ type: NotifyService }, { type: i0.Renderer2 }]; }, { header: [{
+            }], function () { return [{ type: NotifyService }]; }, { header: [{
                     type: i0.Input
                 }], message: [{
                     type: i0.Input

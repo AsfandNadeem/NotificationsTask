@@ -1,27 +1,95 @@
-# NotificationsLib
+# Usage 
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.6.
+### 1. Import `notify` into your`app.module`
+Also provide the required configuartions for manipulating the library:
+* timeOut: <br> Can set the time after which the notification will be removed (in milliseconds)
+* timeOutRequiredCategories: <br> Is an array where you can add the categories of notifications where timeout is required
+* maxLimit: <br> maximum number of notifications on the screen
 
-## Development server
+```javascript
+import { NotifyModule } from 'notify';
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+@NgModule({
+  imports: [
+    NotifyModule.forRoot({
+      timeOut: 10000,
+      timeOutRequiredCategories: ["info","error"],
+      maxLimit: 5
+    })
+  ],
+  declarations: [...],
+  exports: [...],
+  providers: [...]
+})
+```
 
-## Code scaffolding
+### 2. Inject `NotifyService` service into your component
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```javascript
+import { NotifyService } from 'notify';
 
-## Build
+export class myComponent {
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+  constructor(
+    private notify: NotifyService
+  ) { }
 
-## Running unit tests
+}
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### 3. That's it!, start using it
+Following two methods are required:
+* open: you can send header, body and the type of notification as arguments.
+* destroyAll: will remove all notifactions that are visible on the screen
 
-## Running end-to-end tests
+```javascript
+alert() {
+   this.notify.open("header", "body", "type");
+}
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+ngOnDestroy() {
+   this.notify.destroyAll();
+}
 
-## Further help
+```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+# Customizing 
+
+### 1. Change the notification delay
+
+```javascript
+// The toast now lasts 8 seconds
+imports: [
+    NotifyModule.forRoot({
+      timeOut: 8000,
+      timeOutRequiredCategories: ["info","error"],
+      maxLimit: 5
+    })
+  ],
+```
+
+### 2. Change the toast style
+
+```javascript
+// Can have 6 notifications on the screen at a time
+imports: [
+    NotifyModule.forRoot({
+      timeOut: 10000,
+      timeOutRequiredCategories: ["info","error"],
+      maxLimit: 6
+    })
+  ],
+```
+
+### 3. Change the toast container style
+
+```javascript
+// Info and Error type notifications will follow timeout and be removed after 10 seconds
+imports: [
+    NotifyModule.forRoot({
+      timeOut: 10000,
+      timeOutRequiredCategories: ["info","error"],
+      maxLimit: 6
+    })
+  ],
+```

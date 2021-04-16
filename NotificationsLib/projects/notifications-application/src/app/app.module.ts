@@ -30,7 +30,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthInterceptor } from './shared/auth-interceptor';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { reducers } from './store/app.reducers';
-import { EffectsModule } from '@ngrx/effects';
 import { environment } from '../environments/environment';
 // import { AuthEffects } from './shared/auth-store/auth.effects';
 

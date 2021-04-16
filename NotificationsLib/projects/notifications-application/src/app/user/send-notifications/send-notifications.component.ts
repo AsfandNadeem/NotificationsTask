@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { NotifyService } from 'notify';
-import { Subscription } from 'rxjs';
 import { UserService } from '../../shared/user.service';
 
 @Component({

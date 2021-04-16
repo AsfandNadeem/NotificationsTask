@@ -1,4 +1,4 @@
-import { InjectionToken, ɵɵdefineComponent, ɵɵprojectionDef, ɵɵprojection, ɵsetClassMetadata, Component, ɵɵelementStart, ɵɵelement, ɵɵelementEnd, ɵɵnextContext, ɵɵadvance, ɵɵstyleProp, ɵɵproperty, ɵɵpureFunction2, EventEmitter, ɵɵdirectiveInject, Renderer2, ɵɵtext, ɵɵlistener, ɵɵtemplate, ɵɵtextInterpolate, Input, Output, ɵɵinject, ComponentFactoryResolver, ApplicationRef, Injector, ɵɵdefineInjectable, Injectable, Inject, ɵɵdefineNgModule, ɵɵdefineInjector, ɵɵsetNgModuleScope, NgModule } from '@angular/core';
+import { InjectionToken, ɵɵdefineComponent, ɵɵprojectionDef, ɵɵprojection, ɵsetClassMetadata, Component, ɵɵelementStart, ɵɵelement, ɵɵelementEnd, ɵɵnextContext, ɵɵadvance, ɵɵstyleProp, ɵɵproperty, ɵɵpureFunction2, EventEmitter, ɵɵdirectiveInject, ɵɵtext, ɵɵlistener, ɵɵtemplate, ɵɵtextInterpolate, Input, Output, ɵɵinject, ComponentFactoryResolver, ApplicationRef, Injector, ɵɵdefineInjectable, Injectable, Inject, ɵɵdefineNgModule, ɵɵdefineInjector, ɵɵsetNgModuleScope, NgModule } from '@angular/core';
 import { interval } from 'rxjs';
 import 'rxjs/add/observable/interval';
 import { NgClass, NgIf, CommonModule } from '@angular/common';
@@ -37,9 +37,8 @@ function NotifyComponent_div_12_Template(rf, ctx) { if (rf & 1) {
     ɵɵproperty("ngClass", ɵɵpureFunction2(3, _c0$1, ctx_r0.type === "warning", ctx_r0.type === "error"));
 } }
 class NotifyComponent {
-    constructor(NotifyService, renderer) {
+    constructor(NotifyService) {
         this.NotifyService = NotifyService;
-        this.renderer = renderer;
         this.type = '';
         this.progressrequired = false;
         this.progressTime = 0;
@@ -82,7 +81,7 @@ class NotifyComponent {
         this.setWidth = ((this.actualTime / this.progressTime) * 100);
     }
 }
-NotifyComponent.ɵfac = function NotifyComponent_Factory(t) { return new (t || NotifyComponent)(ɵɵdirectiveInject(NotifyService), ɵɵdirectiveInject(Renderer2)); };
+NotifyComponent.ɵfac = function NotifyComponent_Factory(t) { return new (t || NotifyComponent)(ɵɵdirectiveInject(NotifyService)); };
 NotifyComponent.ɵcmp = ɵɵdefineComponent({ type: NotifyComponent, selectors: [["lib-notify"]], inputs: { header: "header", message: "message", type: "type", progressrequired: "progressrequired", progressTime: "progressTime", actualTime: "actualTime" }, outputs: { destroy: "destroy" }, decls: 13, vars: 4, consts: [[1, "card", "container", "my-4", "stack-top"], [1, "card-header", "container-fluid", 3, "ngClass"], [1, "row"], [1, "col-10"], [1, "col-2"], ["type", "button", 3, "click"], [1, "card-body"], [1, "card-text"], ["class", "progress", 4, "ngIf"], [1, "progress"], ["role", "progressbar", "aria-valuemin", "0", "aria-valuemax", "100", 1, "progress-bar", "progress-bar-striped", "active", 3, "ngClass"], ["progressDiv", ""]], template: function NotifyComponent_Template(rf, ctx) { if (rf & 1) {
         ɵɵelementStart(0, "div", 0);
         ɵɵelementStart(1, "div", 1);
@@ -125,7 +124,7 @@ NotifyComponent.ɵcmp = ɵɵdefineComponent({ type: NotifyComponent, selectors: 
                 styleUrls: ['./notify.component.css'
                 ]
             }]
-    }], function () { return [{ type: NotifyService }, { type: Renderer2 }]; }, { header: [{
+    }], function () { return [{ type: NotifyService }]; }, { header: [{
             type: Input
         }], message: [{
             type: Input

@@ -1,5 +1,4 @@
-import { AfterContentInit, AfterViewInit, ElementRef, HostBinding, Input, ViewChild } from '@angular/core';
-import { Renderer2 } from '@angular/core';
+import { AfterContentInit,Input } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { Output } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
@@ -23,7 +22,7 @@ export class NotifyComponent implements OnInit, AfterContentInit {
   mySubscription: Subscription;
   myVar;
   setWidth = 0;
-  constructor(private NotifyService: NotifyService, public renderer: Renderer2) {
+  constructor(private NotifyService: NotifyService) {
 
   }
 
