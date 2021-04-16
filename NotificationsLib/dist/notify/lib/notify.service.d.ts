@@ -16,8 +16,9 @@ export declare class NotifyService {
     private NotifyContainerRef;
     constructor(elementService: ElementAttachmentService, appRef: ApplicationRef, config: any);
     private appendComponentToContainer;
-    open(header: any, message: any, category: any): void;
+    open(header: any, message: any, category: any): Promise<void>;
     destroy(childComponentRef: ComponentRef<any>): void;
+    groupOlder(): void;
     destroyAll(): void;
     insertTimeOut(childComponentRef: ComponentRef<any>): void;
     defineComponentValues(childComponentRef: ComponentRef<any>, header: any, message: any, type: any): void;

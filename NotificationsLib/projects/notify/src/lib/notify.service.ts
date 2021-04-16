@@ -36,33 +36,37 @@ export class NotifyService {
     //Get child Component
     const childElement = this.elementService.getElement(childComponentRef);
 
-    this.defineComponentValues(childComponentRef,header,message,type);
+    this.defineComponentValues(childComponentRef, header, message, type);
     //Add child component to parent
     this.elementService.addChildtoElement(childElement, this.NotifyContainerElement);
     this._children.push(childComponentRef.instance);
     this.countNotifications++;
 
-  
+
   }
 
-  open(header, message, category) {
-    if (this.countNotifications < this.maxLimit) {
-      this.appendComponentToContainer(header, message, category);
+  async open(header, message, category) {
+    if (this.countNotifications >= this.maxLimit) {
+      await this.groupOlder();
     }
-    else {
-      this.Queue.push({ header: header, message: message, type: category });
-    }
+    this.appendComponentToContainer(header, message, category);
   }
 
   destroy(childComponentRef: ComponentRef<any>) {
     this.elementService.destroyElement(childComponentRef);
     if (this.countNotifications > 0) {
       this.countNotifications--;
-      if (this.Queue.length >= 1) {
-        this.appendComponentToContainer(this.Queue[0].header, this.Queue[0].message, this.Queue[0].type);
-        this.Queue.shift();
-      }
+      // if (this.Queue.length >= 1) {
+      //   this.appendComponentToContainer(this.Queue[0].header, this.Queue[0].message, this.Queue[0].type);
+      //   this.Queue.shift();
+      // }
     }
+  }
+
+  groupOlder() {
+    this.Queue.push({ header: this._children[0].header, message: this._children[0].message, type: this._children[0].type });
+    this._children[0].onClose();
+    this._children.shift();
   }
 
 
@@ -73,18 +77,17 @@ export class NotifyService {
     });
     this._children = [];
     this.countNotifications = 0;
-    
+
   }
 
-  insertTimeOut(childComponentRef: ComponentRef<any>){
+  insertTimeOut(childComponentRef: ComponentRef<any>) {
     childComponentRef.instance.progressrequired = true;
     childComponentRef.instance.progressTime = this.libConfig.timeOut;
-    childComponentRef.instance.actualTime =  this.libConfig.timeOut;
+    childComponentRef.instance.actualTime = this.libConfig.timeOut;
   }
 
 
-  defineComponentValues(childComponentRef: ComponentRef<any>, header, message, type)
-  {
+  defineComponentValues(childComponentRef: ComponentRef<any>, header, message, type) {
     childComponentRef.instance.header = header;
     childComponentRef.instance.message = message;
     childComponentRef.instance.type = type;
@@ -93,7 +96,7 @@ export class NotifyService {
       this.destroy(childComponentRef);
     });
 
-    if (this.libConfig.timeOutRequiredCategories.includes(type)) {  
+    if (this.libConfig.timeOutRequiredCategories.includes(type)) {
       this.insertTimeOut(childComponentRef);
     }
   }

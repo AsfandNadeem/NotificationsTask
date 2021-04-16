@@ -37,10 +37,10 @@ export class SignUpComponent implements OnInit {
       },
       err => {
         if (err.status === 422) {
-          this.serverErrorMessages = err.error.join('<br/>');
+          this.serverErrorMessages = err.error.message;
         }
         else
-          this.serverErrorMessages = 'Something went wrong';
+          this.serverErrorMessages = err.error.message;
       }
     );
   }

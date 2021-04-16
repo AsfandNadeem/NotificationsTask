@@ -46,12 +46,14 @@ module.exports.validate = (req, res, next) => {
     if (errors.isEmpty()) {
         return next();
     }
-    const extractedErrors = [];
-    errors.array().map(err => extractedErrors.push({
-        [err.param]: err.msg
-    }));
 
-    return res.status(422).json({
-        errors: extractedErrors,
+    var errostring = "";
+    errors.array().forEach(element => {
+        errostring = errostring + " invalid " + element.param;
+    });
+
+    return res.status(401).json({
+        success: false,
+        message: errostring,
     })
 }

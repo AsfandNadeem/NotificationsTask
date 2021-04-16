@@ -1,3 +1,4 @@
+import { __awaiter } from 'tslib';
 import { InjectionToken, ɵɵdefineComponent, ɵɵprojectionDef, ɵɵprojection, ɵsetClassMetadata, Component, ɵɵelementStart, ɵɵelement, ɵɵelementEnd, ɵɵnextContext, ɵɵadvance, ɵɵstyleProp, ɵɵproperty, ɵɵpureFunction2, EventEmitter, ɵɵdirectiveInject, ɵɵtext, ɵɵlistener, ɵɵtemplate, ɵɵtextInterpolate, Input, Output, ɵɵinject, ComponentFactoryResolver, ApplicationRef, Injector, ɵɵdefineInjectable, Injectable, Inject, ɵɵdefineNgModule, ɵɵdefineInjector, ɵɵsetNgModuleScope, NgModule } from '@angular/core';
 import { interval } from 'rxjs';
 import 'rxjs/add/observable/interval';
@@ -206,22 +207,27 @@ class NotifyService {
         this.countNotifications++;
     }
     open(header, message, category) {
-        if (this.countNotifications < this.maxLimit) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (this.countNotifications >= this.maxLimit) {
+                yield this.groupOlder();
+            }
             this.appendComponentToContainer(header, message, category);
-        }
-        else {
-            this.Queue.push({ header: header, message: message, type: category });
-        }
+        });
     }
     destroy(childComponentRef) {
         this.elementService.destroyElement(childComponentRef);
         if (this.countNotifications > 0) {
             this.countNotifications--;
-            if (this.Queue.length >= 1) {
-                this.appendComponentToContainer(this.Queue[0].header, this.Queue[0].message, this.Queue[0].type);
-                this.Queue.shift();
-            }
+            // if (this.Queue.length >= 1) {
+            //   this.appendComponentToContainer(this.Queue[0].header, this.Queue[0].message, this.Queue[0].type);
+            //   this.Queue.shift();
+            // }
         }
+    }
+    groupOlder() {
+        this.Queue.push({ header: this._children[0].header, message: this._children[0].message, type: this._children[0].type });
+        this._children[0].onClose();
+        this._children.shift();
     }
     destroyAll() {
         this.Queue = [];
